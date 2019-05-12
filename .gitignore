@@ -1,0 +1,9 @@
+*.class
+\.metadata/
+\.RemoteSystemsTempFiles/
+\Scrapbook/
+\Servers/
+\Acme-Dating/target/
+\Acme-Dating/.settings/
+\Acme-Dating/.classpath
+\Acme-Dating/src/main/resources/Entities.map
