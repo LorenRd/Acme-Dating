@@ -6,6 +6,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -101,6 +102,8 @@ public class Experience extends DomainEntity{
 
 	// Relationships----------------------------------------------
 	private Category category;
+	private Company	company;
+	private Collection<Feature> features;
 	
 	@NotNull
 	@Valid
@@ -113,4 +116,26 @@ public class Experience extends DomainEntity{
 		this.category = category;
 	}
 	
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Company getCompany() {
+		return this.company;
+	}
+
+	public void setCompany(final Company company) {
+		this.company = company;
+	}
+	
+	@Valid
+	@ManyToMany
+	public Collection<Feature> getFeatures() {
+		return features;
+	}
+	public void setFeatures(Collection<Feature> features) {
+		this.features = features;
+	}
+	
+	
+
 }
