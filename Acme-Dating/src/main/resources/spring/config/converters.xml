@@ -18,10 +18,63 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.StringToActorConverter" />
+
+		<bean class="converters.AdministratorToStringConverter" />
+		<bean class="converters.StringToAdministratorConverter" />
+
+		<bean class="converters.AuthorityToStringConverter" />
+		<bean class="converters.StringToAuthorityConverter" />
+
+		<bean class="converters.CompanyToStringConverter" />
+		<bean class="converters.StringToCompanyConverter" />
+
+		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.StringToCreditCardConverter" />
+
+		<bean class="converters.MessageToStringConverter" />
+		<bean class="converters.StringToMessageConverter" />
+
+		<bean class="converters.MessageBoxToStringConverter" />
+		<bean class="converters.StringToMessageBoxConverter" />
+				
+		<bean class="converters.BookToStringConverter" />
+		<bean class="converters.StringToBookConverter" />
+				
+		<bean class="converters.CategoryToStringConverter" />
+		<bean class="converters.StringToCategoryConverter" />
+
+		<bean class="converters.ChallengeToStringConverter" />
+		<bean class="converters.StringToChallengeConverter" />				
+
+		<bean class="converters.CoupleToStringConverter" />
+		<bean class="converters.StringToCoupleConverter" />				
+
+		<bean class="converters.CoupleRequestToStringConverter" />
+		<bean class="converters.StringToCoupleRequestConverter" />	
+		
+		<bean class="converters.DiaryToStringConverter" />
+		<bean class="converters.StringToDiaryConverter" />
+
+		<bean class="converters.ExperienceToStringConverter" />
+		<bean class="converters.StringToExperienceConverter" />	
+
+		<bean class="converters.FeatureToStringConverter" />
+		<bean class="converters.StringToFeatureConverter" />
+		
+		<bean class="converters.RecordToStringConverter" />
+		<bean class="converters.StringToRecordConverter" />	
+		
+		<bean class="converters.SocialNetworkToStringConverter" />
+		<bean class="converters.StringToSocialNetworkConverter" />
+		
+		<bean class="converters.TaskToStringConverter" />
+		<bean class="converters.StringToTaskConverter" />
+		
+		<bean class="converters.TrophyToStringConverter" />
+		<bean class="converters.StringToTrophyConverter" />			
 	</util:list>
 	
 </beans>

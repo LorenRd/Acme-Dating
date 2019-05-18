@@ -9,18 +9,18 @@ import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class SocialProfile extends DomainEntity {
+public class SocialNetwork extends DomainEntity {
 
-	private String socialNetwork;
+	private String name;
 	private String linkProfile;
 
 	@NotBlank
-	public String getSocialNetwork() {
-		return this.socialNetwork;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setSocialNetwork(final String socialNetwork) {
-		this.socialNetwork = socialNetwork;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	@NotBlank
