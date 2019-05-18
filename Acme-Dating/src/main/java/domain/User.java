@@ -38,16 +38,16 @@ public class User extends Actor {
 	
 	// Relationships----------------------------------------------
 	
-	private Collection<SocialProfile>	socialProfiles;
+	private Collection<SocialNetwork>	socialProfiles;
 	private Couple 						couple;
 
 	@NotNull
 	@OneToMany
-	public Collection<SocialProfile> getSocialProfiles() {
+	public Collection<SocialNetwork> getSocialProfiles() {
 		return this.socialProfiles;
 	}
 
-	public void setSocialProfiles(final Collection<SocialProfile> socialProfiles) {
+	public void setSocialProfiles(final Collection<SocialNetwork> socialProfiles) {
 		this.socialProfiles = socialProfiles;
 	}
 

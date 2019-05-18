@@ -14,14 +14,14 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.SocialProfile;
+import domain.SocialNetwork;
 
 @Component
 @Transactional
-public class SocialProfileToStringConverter implements Converter<SocialProfile, String> {
+public class SocialNetworkToStringConverter implements Converter<SocialNetwork, String> {
 
 	@Override
-	public String convert(final SocialProfile socialProfile) {
+	public String convert(final SocialNetwork socialProfile) {
 		String result;
 
 		if (socialProfile == null)
