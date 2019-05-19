@@ -14,20 +14,10 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class Customisation extends DomainEntity {
 
-	private String	systemName;
 	private String	welcomeBanner;
 	private String	welcomeMessage;
 	private String	countryCode;
-	private Double vatNumber;
-
-	@NotBlank
-	public String getSystemName() {
-		return this.systemName;
-	}
-
-	public void setSystemName(final String systemName) {
-		this.systemName = systemName;
-	}
+	private Double  vatNumber;
 
 	@NotBlank
 	@URL

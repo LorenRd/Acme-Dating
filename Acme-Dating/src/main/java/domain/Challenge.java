@@ -26,7 +26,6 @@ public class Challenge extends DomainEntity {
 	private Date				endDate;
 	private boolean 			isAccepted;
 	
-
 	@NotNull
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -38,7 +37,7 @@ public class Challenge extends DomainEntity {
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-
+	
 	@NotBlank
 	public String getTitle() {
 		return this.title;
@@ -65,9 +64,8 @@ public class Challenge extends DomainEntity {
 	public void setScore(int score) {
 		this.score = score;
 	}
-
+	
 	@NotNull
-	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getEndDate() {

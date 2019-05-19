@@ -34,7 +34,6 @@ public class Book extends DomainEntity{
 	}
 	
 	@NotNull
-	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDate() {

@@ -24,8 +24,6 @@ public class Actor extends DomainEntity implements Cloneable {
 	private String surname;
 	private String photo;
 	private String phone;
-	private String address;
-	private double vatNumber;
 
 	@NotBlank
 	public String getName() {
@@ -62,23 +60,6 @@ public class Actor extends DomainEntity implements Cloneable {
 		this.phone = phone;
 	}
 
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(final String address) {
-		this.address = address;
-	}
-
-	@NotNull
-	public double getVatNumber() {
-		return this.vatNumber;
-	}
-
-	public void setVatNumber(final double vatNumber) {
-		this.vatNumber = vatNumber;
-	}
-
 	// Relationships----------------------------------------------
 
 	private UserAccount userAccount;
@@ -109,7 +90,7 @@ public class Actor extends DomainEntity implements Cloneable {
 	}
 	
 
-	@OneToMany(mappedBy = "actor")
+	@OneToMany
 	public List<MessageBox> getMessageBoxes() {
 		return this.messageBoxes;
 	}
