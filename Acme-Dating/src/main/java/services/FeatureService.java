@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+
 import repositories.FeatureRepository;
 import domain.Company;
 import domain.Feature;
@@ -21,7 +24,10 @@ public class FeatureService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private CompanyService		companyService;
-
+	
+	@Autowired
+	private Validator validator;
+	
 
 	// Simple CRUD Methods
 
@@ -80,6 +86,23 @@ public class FeatureService {
 
 		result = this.featureRepository.findAllByCompanyId(companyId);
 
+		return result;
+	}
+	
+	public Feature reconstruct(final Feature feature, final BindingResult binding) {
+		Feature result;
+		if (feature.getId() == 0)
+			result = feature;
+		else
+			result = this.featureRepository.findOne(feature.getId());
+
+		result.setTitle(feature.getTitle());
+		result.setDescription(feature.getDescription());
+		result.setPhoto(feature.getPhoto());
+		result.setSuplement(feature.getSuplement());
+		result.setCompany(this.companyService.findByPrincipal());
+
+		this.validator.validate(result, binding);
 		return result;
 	}
 }

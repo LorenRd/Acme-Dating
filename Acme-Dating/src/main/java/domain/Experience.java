@@ -25,7 +25,7 @@ public class Experience extends DomainEntity{
 	private String 	body;
 	private String 	photo;
 	private String 	ubication;
-	private int    	score;
+	private double    	score;
 	private Collection<String> comments;
 	private double 	prize;
 	private int 	coupleLimit;
@@ -65,10 +65,10 @@ public class Experience extends DomainEntity{
 	}
 	
 	@Range(min = 0, max = 5)
-	public int getScore() {
+	public double getScore() {
 		return score;
 	}
-	public void setScore(int score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 	
