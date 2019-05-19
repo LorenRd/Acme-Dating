@@ -11,24 +11,25 @@
 
 <!-- Listing grid -->
 
-<display:table name="problems" id="row" requestURI="${requestURI }"
+<display:table name="features" id="row" requestURI="${requestURI }"
 	pagesize="5" class="displaytag">
 	
 	<!-- Display -->
 	<display:column>
-		<a href="problem/company/display.do?problemId=${row.id}"><spring:message code="problem.display"/></a>
+		<a href="feature/company/display.do?featureId=${row.id}"><spring:message code="feature.display"/></a>
 	</display:column>
 
 	<!-- Attributes -->
 
-	<spring:message code="problem.title" var="titleHeader" />
+	<spring:message code="feature.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"
 		sortable="true" />
 		
-	<spring:message code="problem.isDraft" var="isDraftHeader" />
-	<display:column property="isDraft" title="${isDraftHeader}"
+	<spring:message code="feature.price" var="priceHeader" />
+	<display:column property="price" title="${priceHeader}"
 		sortable="true" />
+
 		
 </display:table>
 <br />
-<acme:button url="problem/company/create.do" code="problem.create"/>
+<acme:button url="feature/company/create.do" code="feature.create"/>

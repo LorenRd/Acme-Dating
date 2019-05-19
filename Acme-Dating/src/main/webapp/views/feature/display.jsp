@@ -10,43 +10,30 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-		<b><spring:message code="problem.title" /></b>:
-		<jstl:out value="${problem.title}"/><br/>
+		<b><spring:message code="feature.title" /></b>:
+		<jstl:out value="${feature.title}"/><br/>
 	
-		<b><spring:message code="problem.statement" /></b>:
-		<jstl:out value="${problem.statement }"/><br/>	
+		<b><spring:message code="feature.description" /></b>:
+		<jstl:out value="${feature.description }"/><br/>	
 	
-		<b><spring:message code="problem.hint" /></b>:
-		<jstl:out value="${problem.hint }"/><br/>
-	
-		<b><spring:message code="problem.attachments" /></b>:
-		<br/>
-		<ul>
-		<jstl:forEach items="${problem.attachments}" var="attachment" >
-			<jstl:if test="${attachment != null}">
-	        	<li><jstl:out value="${attachment}"/></li>
-	        </jstl:if>
-		</jstl:forEach>
-		</ul>
-		<br/>
+		<b><spring:message code="feature.photo" /></b>:
+		<acme:image src="${feature.photo}" /><br/>
 		
-		<b><spring:message code="problem.isDraft" /></b>:
-		<jstl:out value="${problem.isDraft }"/><br/>
+		<b><spring:message code="feature.supplement" /></b>:
+		<jstl:out value="${feature.supplement }"/><br/>	
 				
 		<!-- Company -->
-		<b><spring:message code="problem.company" /></b>:
-		<a href="company/display.do?companyId=${problem.company.id}">
-			<jstl:out value="${problem.company.commercialName}"/>
+		<b><spring:message code="feature.company" /></b>:
+		<a href="company/display.do?companyId=${feature.company.id}">
+			<jstl:out value="${feature.company.commercialName}"/>
 		</a><br/>
 
 		
-<jstl:if test="${problem.company.userAccount.username == pageContext.request.userPrincipal.name}">
+<jstl:if test="${feature.company.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>
-	<jstl:if test="${problem.isDraft == true}">
-		<a href="problem/company/edit.do?problemId=${problem.id}"><spring:message code="problem.edit"/></a><br/>
-	</jstl:if>
+	<a href="feature/company/edit.do?featureId=${feature.id}"><spring:message code="feature.edit"/></a><br/>
 <br/>
-	<a href="problem/company/delete.do?problemId=${problem.id}"><spring:message code="problem.delete"/></a><br/>
+	<a href="feature/company/delete.do?featureId=${feature.id}"><spring:message code="feature.delete"/></a><br/>
 </jstl:if>
 
 	

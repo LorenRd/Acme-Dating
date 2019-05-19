@@ -18,24 +18,22 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="problem/company/create.do" modelAttribute="problem">
+<form:form action="feature/company/create.do" modelAttribute="feature">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
 		
-		<acme:textbox code="problem.title" path="title" placeholder="Problem title"/>
+		<acme:textbox code="feature.title" path="title" placeholder="feature.title"/>
 		<br />
-		<acme:textarea code="problem.statement" path="statement"/>
+		<acme:textarea code="feature.description" path="description"/>
 		<br />		
-		<acme:textbox code="problem.hint" path="hint" />
+		<acme:textbox code="feature.photo" path="photo" />
 		<br />
-		<acme:textarea code="problem.attachments" path="attachments"/>
+		<acme:textbox code="feature.supplement" path="supplement"/>
 		<br />
+			
+		<acme:submit name="saveFinal" code="feature.save"/>
 		
-		<acme:submit name="saveDraft" code="problem.saveDraft"/>
-		
-		<acme:submit name="saveFinal" code="problem.save"/>
-		
-		<acme:cancel url="welcome/index.do" code="problem.cancel"/>
+		<acme:cancel url="welcome/index.do" code="feature.cancel"/>
 		
 </form:form>
