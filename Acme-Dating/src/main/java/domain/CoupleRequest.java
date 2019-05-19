@@ -1,7 +1,5 @@
-
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -22,8 +20,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class CoupleRequest extends DomainEntity {
 
-	private Date				moment;
-	private String				status;
+	private Date moment;
+	private String status;
 
 	@NotNull
 	@Past
@@ -42,14 +40,15 @@ public class CoupleRequest extends DomainEntity {
 	public String getStatus() {
 		return this.status;
 	}
+
 	public void setStatus(final String status) {
 		this.status = status;
 	}
 
 	// Relationships----------------------------------------------
-	
-	private User				sender;
-	private Collection<User>	recipients;
+
+	private User sender;
+	private User recipient;
 
 	@NotNull
 	@Valid
@@ -63,13 +62,14 @@ public class CoupleRequest extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
 	@ManyToOne(optional = false)
-	public Collection<User> getRecipients() {
-		return this.recipients;
+	public User getRecipient() {
+		return this.recipient;
 	}
 
-	public void setRecipients(final Collection<User> recipients) {
-		this.recipients = recipients;
+	public void setRecipient(final User recipient) {
+		this.recipient = recipient;
 	}
 
 }

@@ -6,8 +6,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -17,8 +15,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class MessageBox extends DomainEntity {
 
 	private String name;
-	private Actor actor;
-	private Collection<Message> messages;
 
 	@NotBlank
 	public String getName() {
@@ -31,6 +27,8 @@ public class MessageBox extends DomainEntity {
 
 	// Relationships----------------------------------------------
 
+	private Collection<Message> messages;
+	
 	@NotNull
 	@ManyToMany
 	public Collection<Message> getMessages() {
@@ -39,16 +37,5 @@ public class MessageBox extends DomainEntity {
 
 	public void setMessages(final Collection<Message> messages) {
 		this.messages = messages;
-	}
-
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Actor getActor() {
-		return this.actor;
-	}
-
-	public void setActor(final Actor actor) {
-		this.actor = actor;
 	}
 }

@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -15,8 +14,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
-import cz.jirutka.validator.collection.constraints.EachNotBlank;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Experience extends DomainEntity{
@@ -24,10 +21,9 @@ public class Experience extends DomainEntity{
 	private String 	title;
 	private String 	body;
 	private String 	photo;
+	private Double  score;
 	private String 	ubication;
-	private int    	score;
-	private Collection<String> comments;
-	private double 	prize;
+	private double 	price;
 	private int 	coupleLimit;
 	
 
@@ -65,28 +61,19 @@ public class Experience extends DomainEntity{
 	}
 	
 	@Range(min = 0, max = 5)
-	public int getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(int score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	
-	@ElementCollection
-	@EachNotBlank
-	public Collection<String> getComments() {
-		return comments;
-	}
-	public void setComments(Collection<String> comments) {
-		this.comments = comments;
-	}
-	
 	@NotNull
-	public double getPrize() {
-		return prize;
+	public double getPrice() {
+		return price;
 	}
-	public void setPrize(double prize) {
-		this.prize = prize;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	
 	@NotNull
