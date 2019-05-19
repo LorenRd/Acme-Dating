@@ -11,17 +11,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Company extends Actor {
 
-	private String email;
-	private String commercialName;	
-
-	@Pattern(regexp = "^[a-zA-Z0-9 ]*[<]?\\w+[@][a-zA-Z0-9.]+[>]?$")
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(final String email) {
-		this.email = email;
-	}
+	private String commercialName;
+	private String email;	
 
 	@NotBlank
 	public String getCommercialName() {
@@ -30,6 +21,15 @@ public class Company extends Actor {
 
 	public void setCommercialName(final String commercialName) {
 		this.commercialName = commercialName;
+	}
+	
+	@Pattern(regexp = "^[a-zA-Z0-9 ]*[<]?\\w+[@][a-zA-Z0-9.]+[>]?$")
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(final String email) {
+		this.email = email;
 	}
 	
 }

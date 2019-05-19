@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * converters.xml
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * converters.xml * * Copyright (C) 2019 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
@@ -39,42 +33,48 @@
 
 		<bean class="converters.MessageBoxToStringConverter" />
 		<bean class="converters.StringToMessageBoxConverter" />
-				
+
 		<bean class="converters.BookToStringConverter" />
 		<bean class="converters.StringToBookConverter" />
-				
+
 		<bean class="converters.CategoryToStringConverter" />
 		<bean class="converters.StringToCategoryConverter" />
 
 		<bean class="converters.ChallengeToStringConverter" />
-		<bean class="converters.StringToChallengeConverter" />				
+		<bean class="converters.StringToChallengeConverter" />
 
 		<bean class="converters.CoupleToStringConverter" />
-		<bean class="converters.StringToCoupleConverter" />				
+		<bean class="converters.StringToCoupleConverter" />
 
 		<bean class="converters.CoupleRequestToStringConverter" />
-		<bean class="converters.StringToCoupleRequestConverter" />	
-		
+		<bean class="converters.StringToCoupleRequestConverter" />
+
 		<bean class="converters.DiaryToStringConverter" />
 		<bean class="converters.StringToDiaryConverter" />
 
+		<bean class="converters.ExperienceCommentToStringConverter" />
+		<bean class="converters.StringToExperienceCommentConverter" />
+
 		<bean class="converters.ExperienceToStringConverter" />
-		<bean class="converters.StringToExperienceConverter" />	
+		<bean class="converters.StringToExperienceConverter" />
 
 		<bean class="converters.FeatureToStringConverter" />
 		<bean class="converters.StringToFeatureConverter" />
-		
+
+		<bean class="converters.RecordCommentToStringConverter" />
+		<bean class="converters.StringToRecordCommentConverter" />
+
 		<bean class="converters.RecordToStringConverter" />
-		<bean class="converters.StringToRecordConverter" />	
-		
+		<bean class="converters.StringToRecordConverter" />
+
 		<bean class="converters.SocialNetworkToStringConverter" />
 		<bean class="converters.StringToSocialNetworkConverter" />
-		
+
 		<bean class="converters.TaskToStringConverter" />
 		<bean class="converters.StringToTaskConverter" />
-		
+
 		<bean class="converters.TrophyToStringConverter" />
-		<bean class="converters.StringToTrophyConverter" />			
+		<bean class="converters.StringToTrophyConverter" />
 	</util:list>
-	
+
 </beans>

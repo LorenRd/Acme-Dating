@@ -1,11 +1,9 @@
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -20,17 +18,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Record extends DomainEntity{
+public class Record extends DomainEntity {
 	private Date day;
 	private String title;
 	private String body;
 	private String photo;
-	private Collection<String> comments;
-	
+
 	@NotNull
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	public Date getDay() {
 		return this.day;
 	}
@@ -43,10 +40,11 @@ public class Record extends DomainEntity{
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	@NotBlank
 	public String getBody() {
 		return body;
@@ -55,7 +53,7 @@ public class Record extends DomainEntity{
 	public void setBody(String body) {
 		this.body = body;
 	}
-	
+
 	@URL
 	public String getPhoto() {
 		return this.photo;
@@ -64,22 +62,23 @@ public class Record extends DomainEntity{
 	public void setPhoto(final String photo) {
 		this.photo = photo;
 	}
-	
-	@NotNull
-	@ElementCollection
-	public Collection<String> getComments() {
-		return comments;
-	}
 
-	public void setComments(Collection<String> comments) {
-		this.comments = comments;
-	}		
-	
-	
 	// Relationships----------------------------------------------
 
+	private Diary diary;
 	private Category category;
-	
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Diary getDiary() {
+		return this.diary;
+	}
+
+	public void setDiary(final Diary diary) {
+		this.diary = diary;
+	}
+
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
@@ -90,5 +89,5 @@ public class Record extends DomainEntity{
 	public void setCategory(final Category category) {
 		this.category = category;
 	}
-	
+
 }
