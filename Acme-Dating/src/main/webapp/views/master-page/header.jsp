@@ -42,7 +42,12 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a>
+			<ul>
+				<li class="arrow"></li>
+				<li><a href="user/register.do"><spring:message 
+				code = "master.page.register.user" /></a></li>
+			</ul></li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
 				<ul>
 					<li class="arrow"></li>
