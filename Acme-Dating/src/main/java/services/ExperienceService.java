@@ -129,6 +129,11 @@ public class ExperienceService {
 		return result;
 	}
 	
+	public Collection<Experience> findByKeywordCompany(final String keyword, final int companyId) {
+		final Collection<Experience> result = this.experienceRepository.findByKeywordCompany(keyword, companyId);
+
+		return result;
+	}
 	
 	public Experience reconstruct(final Experience experience, final BindingResult binding) {
 		Experience original;

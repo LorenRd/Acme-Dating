@@ -25,8 +25,8 @@
 	<display:column property="title" title="${titleHeader}"
 		sortable="true" />
 		
-	<spring:message code="feature.price" var="priceHeader" />
-	<display:column property="price" title="${priceHeader}"
+	<spring:message code="feature.supplement" var="supplementHeader" />
+	<display:column property="supplement" title="${supplementHeader}"
 		sortable="true" />
 
 		

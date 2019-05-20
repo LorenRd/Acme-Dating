@@ -11,7 +11,7 @@
 
 <!-- Buscar rutas por palabra clave -->
 <form action="${requestURI }" method="get">
-	<spring:message code="position.keyword" var="searchHeader"/>
+	<spring:message code="experience.keyword" var="searchHeader"/>
 	<input type="text" name="keyword">
 	<input type="submit" value="${searchHeader}">
 	<input type="hidden" name="keywordBool" value="true">
@@ -19,7 +19,7 @@
 
 <!-- Listing grid -->
 
-<display:table name="experience" id="row" requestURI="experience/list.do"
+<display:table name="experiences" id="row" requestURI="${requestURI }"
 	pagesize="5" class="displaytag">
 	
 	<!-- Display -->

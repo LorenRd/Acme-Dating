@@ -23,15 +23,13 @@
 		<form:hidden path="version"/>
 		
 		
-		<acme:textbox code="experience.title" path="title" placeholder="experience.title"/>
+		<acme:textbox code="experience.title" path="title" placeholder="Title"/>
 		<br />
 		<acme:textarea code="experience.body" path="body"/>
 		<br />		
 		<acme:textbox code="experience.photo" path="photo" />
 		<br />
 		<acme:textarea code="experience.ubication" path="ubication"/>
-		<br />
-		<acme:textarea code="experience.comments" path="comments"/>
 		<br />
 		<acme:textbox code="experience.price" path="price" />
 		<br />
@@ -47,7 +45,7 @@
 		<br />	
 		<br />		
 		<br />
-		<acme:submit name="saveFinal" code="experience.saveFinal"/>
+		<acme:submit name="saveFinal" code="experience.save"/>
 		
 		<acme:cancel url="welcome/index.do" code="experience.cancel"/>
 		

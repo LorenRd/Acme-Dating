@@ -44,11 +44,13 @@ public class ExperienceCompanyController extends AbstractController {
 		final ModelAndView result;
 		Collection<Experience> experiences;
 		experiences = new ArrayList<Experience>();
+		Company principal;
+		principal = this.companyService.findByPrincipal();
 
 		if (keywordBool && keyword != null)
-			experiences = this.experienceService.findByKeywordAll(keyword);
+			experiences = this.experienceService.findByKeywordCompany(keyword, principal.getId());
 		else
-			experiences = this.experienceService.findAll();
+			experiences = this.experienceService.findByCompany(principal.getId());
 
 
 		result = new ModelAndView("experience/list");
