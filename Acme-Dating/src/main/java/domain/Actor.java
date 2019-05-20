@@ -89,7 +89,7 @@ public class Actor extends DomainEntity implements Cloneable {
 		this.creditCard = creditCard;
 	}
 	
-
+	@NotNull
 	@OneToMany
 	public List<MessageBox> getMessageBoxes() {
 		return this.messageBoxes;

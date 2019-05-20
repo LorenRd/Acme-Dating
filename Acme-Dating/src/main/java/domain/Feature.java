@@ -12,22 +12,22 @@ import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Feature extends DomainEntity{
+public class Feature extends DomainEntity {
 
-	
-	private String 		title;
-	private String		description;
-	private String 		photo;
-	private Double 		suplement;
-	
+	private String title;
+	private String description;
+	private String photo;
+	private Double supplement;
+
 	@NotBlank
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	@NotBlank
 	public String getDescription() {
 		return this.description;
@@ -36,7 +36,7 @@ public class Feature extends DomainEntity{
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-	
+
 	@URL
 	public String getPhoto() {
 		return this.photo;
@@ -45,18 +45,19 @@ public class Feature extends DomainEntity{
 	public void setPhoto(final String photo) {
 		this.photo = photo;
 	}
-	
+
 	@NotNull
-	public double getSuplement() {
-		return suplement;
+	public double getSupplement() {
+		return supplement;
 	}
-	public void setSuplement(double suplement) {
-		this.suplement = suplement;
+
+	public void setSupplement(double supplement) {
+		this.supplement = supplement;
 	}
-	
+
 	// Relationships----------------------------------------------
 	private Company company;
-	
+
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
@@ -67,5 +68,5 @@ public class Feature extends DomainEntity{
 	public void setCompany(final Company company) {
 		this.company = company;
 	}
-	
+
 }
