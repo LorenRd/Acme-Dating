@@ -25,11 +25,11 @@ public class Task extends DomainEntity {
 		this.title = title;
 	}
 
-	public boolean isCompleted() {
+	public boolean getIsCompleted() {
 		return isCompleted;
 	}
 
-	public void setCompleted(boolean isCompleted) {
+	public void setIsCompleted(boolean isCompleted) {
 		this.isCompleted = isCompleted;
 	}
 

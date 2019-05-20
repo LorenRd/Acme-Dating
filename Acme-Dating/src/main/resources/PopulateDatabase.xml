@@ -894,19 +894,19 @@
 
 	<!-- Tasks -->
 
-	<bean class="domain.Tasks" id="task1">
+	<bean class="domain.Task" id="task1">
 		<property name="title" value="title task1" />
 		<property name="isCompleted" value="true" />
 		<property name="couple" ref="couple1" />
 	</bean>
 
-	<bean class="domain.Tasks" id="task2">
+	<bean class="domain.Task" id="task2">
 		<property name="title" value="title task2" />
 		<property name="isCompleted" value="false" />
 		<property name="couple" ref="couple2" />
 	</bean>
 
-	<bean class="domain.Tasks" id="task3">
+	<bean class="domain.Task" id="task3">
 		<property name="title" value="title task3" />
 		<property name="isCompleted" value="false" />
 		<property name="couple" ref="couple3" />
@@ -920,7 +920,11 @@
 		<property name="scoreToReach" value="100" />
 		<property name="challengesToComplete" value="5" />
 		<property name="experiencesToShare" value="1" />
-		<property name="couple" ref="couple1" />
+		<property name="couples">
+			<list>
+				<ref bean="couple1" />
+			</list>
+		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy2">
@@ -929,7 +933,11 @@
 		<property name="scoreToReach" value="500" />
 		<property name="challengesToComplete" value="10" />
 		<property name="experiencesToShare" value="5" />
-		<property name="couple" ref="couple2" />
+		<property name="couples">
+			<list>
+				<ref bean="couple2" />
+			</list>
+		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy3">
@@ -938,7 +946,11 @@
 		<property name="scoreToReach" value="1000" />
 		<property name="challengesToComplete" value="100" />
 		<property name="experiencesToShare" value="10" />
-		<property name="couple" ref="couple3" />
+		<property name="couples">
+			<list>
+				<ref bean="couple3" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Books -->
@@ -1094,7 +1106,7 @@
 		<property name="title" value="title experience1" />
 		<property name="body" value="body experience1" />
 		<property name="photo" value="http://www.photolog1.com" />
-		<property name="score" value="6.5" />
+		<property name="score" value="3.5" />
 		<property name="ubication" value="Parque del Alamillo (Sevilla)" />
 		<property name="price" value="22" />
 		<property name="coupleLimit" value="10" />
@@ -1111,7 +1123,7 @@
 		<property name="title" value="title experience2" />
 		<property name="body" value="body experience2" />
 		<property name="photo" value="http://www.photolog2.com" />
-		<property name="score" value="8.5" />
+		<property name="score" value="5" />
 		<property name="ubication" value="Alhambra de Granada" />
 		<property name="price" value="50" />
 		<property name="coupleLimit" value="14" />
@@ -1129,7 +1141,7 @@
 		<property name="title" value="title experience3" />
 		<property name="body" value="body experience3" />
 		<property name="photo" value="http://www.photolog3.com" />
-		<property name="score" value="7.5" />
+		<property name="score" value="4" />
 		<property name="ubication" value="Mezquita de Córdoba" />
 		<property name="price" value="40" />
 		<property name="coupleLimit" value="15" />

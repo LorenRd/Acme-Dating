@@ -47,12 +47,12 @@ public class Feature extends DomainEntity {
 	}
 
 	@NotNull
-	public double getSuplement() {
+	public double getSupplement() {
 		return supplement;
 	}
 
-	public void setSuplement(double suplement) {
-		this.supplement = suplement;
+	public void setSupplement(double supplement) {
+		this.supplement = supplement;
 	}
 
 	// Relationships----------------------------------------------
