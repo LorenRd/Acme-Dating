@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+
 import repositories.ExperienceRepository;
 import domain.Book;
 import domain.Company;
@@ -31,7 +34,9 @@ public class ExperienceService {
 	@Autowired
 	private FeatureService		featureService;
 	
-
+	@Autowired
+	private Validator validator;
+	
 
 	// Simple CRUD Methods
 
@@ -64,6 +69,7 @@ public class ExperienceService {
 
 		result = new Experience();
 		result.setCompany(principal);
+		result.setScore(0.0);
 		return result;
 	}
 
@@ -122,6 +128,24 @@ public class ExperienceService {
 
 		return result;
 	}
+	
+	
+	public Experience reconstruct(final Experience experience, final BindingResult binding) {
+		Experience original;
+		if (experience.getId() == 0) {
+			original = experience;
+			original.setCompany(this.companyService.findByPrincipal());
+		} else{
+			original = this.experienceRepository.findOne(experience.getId());
+			experience.setCompany(this.companyService.findByPrincipal());
+
+		}
+
+		
+		this.validator.validate(experience, binding);
+
+		return experience;
+	}	
 	public void flush() {
 		this.experienceRepository.flush();
 	}

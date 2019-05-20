@@ -33,11 +33,16 @@
 </jstl:if>
 
 <%-- Definition --%>
-
-<div>
-	<form:label path="${path}">
+<div class="well">
+  <div id="datetimepicker2" class="input-append">
+  	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}" />	
+	<form:input data-format="dd/MM/yyyy HH:mm:ss PP" type="text" path="${path}" readonly="${readonly}" placeholder="${placeholder}"></form:input>	
 	<form:errors path="${path}" cssClass="error" />
-</div>	
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+  </div>
+</div>

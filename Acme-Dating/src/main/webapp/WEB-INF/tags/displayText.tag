@@ -1,5 +1,5 @@
 <%--
- * textbox.tag
+ * displayText.tag
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -22,22 +22,13 @@
 
 <%-- Attributes --%> 
  
-<%@ attribute name="path" required="true" %>
+<%@ attribute name="dataLabel" required="true" %>
 <%@ attribute name="code" required="true" %>
-
-<%@ attribute name="placeholder" required="false" %>
-<%@ attribute name="readonly" required="false" %>
-
-<jstl:if test="${readonly == null}">
-	<jstl:set var="readonly" value="false" />
-</jstl:if>
+<%@ attribute name="path" required="false" %>
 
 <%-- Definition --%>
 
-<div>
-	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
-	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}" />	
-	<form:errors path="${path}" cssClass="error" />
-</div>	
+
+	<td><spring:message code="${code}" />
+	<td data-label="${dataLabel}">${path}</td>
+

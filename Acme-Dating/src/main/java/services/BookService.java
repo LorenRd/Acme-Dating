@@ -3,13 +3,18 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+
 import repositories.BookRepository;
 import domain.Book;
 import domain.Couple;
+import forms.BookForm;
 
 @Service
 @Transactional
@@ -22,6 +27,10 @@ public class BookService {
 	@Autowired
 	private CoupleService			coupleService;
 
+	@Autowired
+	private Validator				validator;
+
+	
 	// Simple CRUD Methods
 	public void delete(final Book book) {
 		this.bookRepository.delete(book);
@@ -81,6 +90,30 @@ public class BookService {
 
 		result = new Book();
 		result.setCouple(principal);
+		return result;
+	}
+
+	public BookForm construct(final Book book) {
+		final BookForm bookForm = new BookForm();
+		bookForm.setId(book.getId());
+		bookForm.setExperience(book.getExperience());
+		return bookForm;
+	}
+	
+	public Book reconstruct(final BookForm bookForm, final BindingResult binding) {
+		Book result;
+		if (bookForm.getId() == 0) {
+			result = this.create();
+			result.setMoment(new Date(System.currentTimeMillis() - 1));
+			result.setCouple(this.coupleService.findByUser());
+			result.setExperience(bookForm.getExperience());
+
+		} else {
+			result = this.bookRepository.findOne(bookForm.getId());
+		}
+
+		this.validator.validate(result, binding);
+		this.bookRepository.flush();
 		return result;
 	}
 

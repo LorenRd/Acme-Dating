@@ -1,7 +1,7 @@
 <%--
- * textbox.tag
+ * textarea.tag
  *
- * Copyright (C) 2019 Universidad de Sevilla
+ * Copyright (C) 2017 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the 
  * TDG Licence, a copy of which you may download from 
@@ -21,11 +21,9 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <%-- Attributes --%> 
- 
+
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
-
-<%@ attribute name="placeholder" required="false" %>
 <%@ attribute name="readonly" required="false" %>
 
 <jstl:if test="${readonly == null}">
@@ -36,8 +34,8 @@
 
 <div>
 	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
-	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}" />	
+		<spring:message code="${code}" />:
+	</form:label>
+	<form:checkbox path="${path}" readonly="${readonly}" />
 	<form:errors path="${path}" cssClass="error" />
-</div>	
+</div>
