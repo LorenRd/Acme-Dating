@@ -136,40 +136,43 @@
 			value="https://image.flaticon.com/icons/svg/119/119598.svg" />
 	</bean>
 
-	<!-- Trophies -->
+<!-- Trophies -->
 
 	<bean class="domain.Trophy" id="trophy1">
-		<property name="title" value="title trophy1" />
+		<property name="title" value="100 points" />
 		<property name="picture" value="http://linktrophy1.com" />
 		<property name="scoreToReach" value="100" />
-		<property name="challengesToComplete" value="5" />
-		<property name="experiencesToShare" value="1" />
+		<property name="challengesToComplete" value="0" />
+		<property name="experiencesToShare" value="0" />
 		<property name="couples">
 			<list>
+				<ref bean="couple1" />
 			</list>
 		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy2">
-		<property name="title" value="title trophy2" />
+		<property name="title" value="10 challenges" />
 		<property name="picture" value="http://linktrophy2.com" />
-		<property name="scoreToReach" value="500" />
+		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="10" />
-		<property name="experiencesToShare" value="5" />
+		<property name="experiencesToShare" value="0" />
 		<property name="couples">
 			<list>
+				<ref bean="couple2" />
 			</list>
 		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy3">
-		<property name="title" value="title trophy3" />
+		<property name="title" value="10 experiences" />
 		<property name="picture" value="http://linktrophy3.com" />
-		<property name="scoreToReach" value="1000" />
-		<property name="challengesToComplete" value="100" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
 		<property name="couples">
 			<list>
+				<ref bean="couple3" />
 			</list>
 		</property>
 	</bean>
