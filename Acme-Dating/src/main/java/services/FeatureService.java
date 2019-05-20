@@ -99,7 +99,7 @@ public class FeatureService {
 		result.setTitle(feature.getTitle());
 		result.setDescription(feature.getDescription());
 		result.setPhoto(feature.getPhoto());
-		result.setSuplement(feature.getSuplement());
+		result.setSupplement(feature.getSupplement());
 		result.setCompany(this.companyService.findByPrincipal());
 
 		this.validator.validate(result, binding);
