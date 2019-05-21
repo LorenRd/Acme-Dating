@@ -60,7 +60,6 @@ public class Feature extends DomainEntity {
 
 	// Relationships----------------------------------------------
 	private Company company;
-	private Collection<Book> 	books;
 
 	@NotNull
 	@Valid
@@ -73,14 +72,5 @@ public class Feature extends DomainEntity {
 		this.company = company;
 	}
 
-	@Valid
-	@ManyToMany
-	public Collection<Book> getBooks() {
-		return this.books;
-	}
-
-	public void setBooks(final Collection<Book> books) {
-		this.books = books;
-	}
 
 }

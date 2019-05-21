@@ -1,10 +1,12 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,6 +51,7 @@ public class Book extends DomainEntity{
 	
 	private Couple couple;
 	private Experience experience;
+	private Collection<Feature> features;
 	
 	@NotNull
 	@Valid
@@ -70,5 +73,15 @@ public class Book extends DomainEntity{
 
 	public void setExperience(final Experience experience) {
 		this.experience = experience;
+	}
+	
+	@Valid
+	@ManyToMany
+	public Collection<Feature> getFeatures() {
+		return this.features;
+	}
+
+	public void setFeatures(final Collection<Feature> features) {
+		this.features = features;
 	}
 }

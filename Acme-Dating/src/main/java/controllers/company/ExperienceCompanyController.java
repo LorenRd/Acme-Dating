@@ -18,11 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CategoryService;
 import services.CompanyService;
+import services.CustomisationService;
 import services.ExperienceService;
 import services.FeatureService;
 import controllers.AbstractController;
 import domain.Category;
 import domain.Company;
+import domain.Customisation;
 import domain.Experience;
 import domain.Feature;
 
@@ -41,6 +43,9 @@ public class ExperienceCompanyController extends AbstractController {
 	
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private CustomisationService customisationService;
 	
 	//List
 	
@@ -72,6 +77,10 @@ public class ExperienceCompanyController extends AbstractController {
 			// Inicializa resultado
 			ModelAndView result;
 			Experience experience;
+			Customisation customisation;
+			Double vat;
+			customisation = this.customisationService.find();
+			vat = (customisation.getVatNumber())/100 + 1.0;
 
 			// Busca en el repositorio
 			experience = this.experienceService.findOne(experienceId);
@@ -80,6 +89,7 @@ public class ExperienceCompanyController extends AbstractController {
 			// Crea y añade objetos a la vista
 			result = new ModelAndView("experience/display");
 			result.addObject("requestURI", "experience/display.do");
+			result.addObject("vat", vat);
 			result.addObject("experience", experience);
 
 			// Envía la vista

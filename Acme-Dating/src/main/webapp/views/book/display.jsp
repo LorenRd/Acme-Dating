@@ -11,31 +11,17 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
-<table class="ui celled table">
-	<tbody>
-		<tr>
-			<td><spring:message code="book.moment" />
-			<td data-label="moment"><jstl:out value="${book.moment}" /></td>
-		</tr>
-		<tr>
-			<td><spring:message code="book.date" />
-			<td data-label="book.date"><jstl:out value="${book.date}" /></td>
-		</tr>
-		<tr>
-			<td><spring:message code="book.experience.title" />
-			<td data-label="book.experience.title"><jstl:out value="${book.experience.title}" /></td>
-		</tr>
-		<!-- Features -->
-		<tr>
-		<spring:message code="book.features" />
-		<jstl:forEach items="${features}" var="feature" >
-        	<li><jstl:out value="${title}"/></li>
-		</jstl:forEach>
-		</tr>
-		
-		<tr>
-			<td><spring:message code="book.totalPrice" />
-			<td data-label="book.totalPrice"><jstl:out value="${totalPrice}" /></td>
-		</tr>
-	</tbody>
-</table>
+<spring:message code="book.moment" />: <jstl:out value="${book.moment}" />
+<br/>
+<spring:message code="book.date" />: <jstl:out value="${book.date}" />
+<br/>
+<spring:message code="book.experience.title" />: <jstl:out value="${book.experience.title}" />
+<br/>
+<spring:message code="book.features" />
+<ul>
+<jstl:forEach items="${features}" var="feature" >
+	<li><jstl:out value="${feature.title}"/></li>
+</jstl:forEach>
+</ul>
+<br/>
+<spring:message code="book.totalPrice" /><jstl:out value="${totalPrice}" />

@@ -18,10 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 import controllers.AbstractController;
 import domain.Book;
 import domain.Couple;
+import domain.Customisation;
+import domain.Feature;
 import forms.BookForm;
 
 import services.BookService;
 import services.CoupleService;
+import services.CustomisationService;
 import services.ExperienceService;
 
 @Controller
@@ -37,9 +40,11 @@ public class BookCoupleController extends AbstractController {
 
 	@Autowired
 	private ExperienceService	experienceService;
+	
+	@Autowired
+	private CustomisationService customisationService;
 
 
-	//Repositories
 
 	//List
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -47,6 +52,7 @@ public class BookCoupleController extends AbstractController {
 		final ModelAndView result;
 		final Collection<Book> books;
 		Couple principal;
+		
 		principal = this.coupleService.findByUser();
 
 		books = this.bookService.findAllByCoupleId(principal.getId());
@@ -65,11 +71,27 @@ public class BookCoupleController extends AbstractController {
 	public ModelAndView show(@RequestParam final int bookId) {
 		final ModelAndView result;
 		Book book;
-
+		Collection<Feature> features;
+		Customisation customisation;
+		Double vat;
+		customisation = this.customisationService.find();
+		vat = (customisation.getVatNumber())/100 + 1.0;
+		
+		Double price = 0.0;
+		
 		book = this.bookService.findOne(bookId);
-
+		features = book.getFeatures();
+		
+		price += book.getExperience().getPrice();
+		for (Feature f : features) {
+			price += f.getSupplement();
+		}
+		
 		result = new ModelAndView("book/display");
 		result.addObject("book", book);
+		result.addObject("totalPrice", price*vat);
+		result.addObject("features", book.getFeatures());		
+		
 		return result;
 	}
 

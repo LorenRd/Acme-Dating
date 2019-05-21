@@ -23,7 +23,7 @@
 		<jstl:out value="${experience.ubication }"/><br/>
 		
 		<b><spring:message code="experience.price" /></b>:
-		<jstl:out value="${experience.price }"/><br/>
+		<jstl:out value="${experience.price * vat}"/><br/>
 		
 		<b><spring:message code="experience.coupleLimit" /></b>:
 		<jstl:out value="${experience.coupleLimit }"/><br/>
