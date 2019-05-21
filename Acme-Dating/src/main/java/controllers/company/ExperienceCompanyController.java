@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CategoryService;
 import services.CompanyService;
 import services.ExperienceService;
 import services.FeatureService;
 import controllers.AbstractController;
+import domain.Category;
 import domain.Company;
 import domain.Experience;
 import domain.Feature;
@@ -33,6 +35,9 @@ public class ExperienceCompanyController extends AbstractController {
 	
 	@Autowired
 	private FeatureService	featureService;
+
+	@Autowired
+	private CategoryService	categoryService;
 	
 	@Autowired
 	private CompanyService	companyService;
@@ -192,13 +197,16 @@ public class ExperienceCompanyController extends AbstractController {
 		protected ModelAndView createEditModelAndView(final Experience experience, final String messageCode) {
 			ModelAndView result;
 			Collection<Feature> features;
+			Collection<Category> categories;
 			Company company;
+			categories = this.categoryService.findAll();
 			company = this.companyService.findByPrincipal();
 			features = this.featureService.findAllByCompanyId(company.getId());
 			
 			result = new ModelAndView("experience/edit");
 			result.addObject("experience", experience);
 			result.addObject("features", features);
+			result.addObject("categories", categories);
 			result.addObject("message", messageCode);
 
 			return result;
@@ -214,13 +222,17 @@ public class ExperienceCompanyController extends AbstractController {
 		private ModelAndView createModelAndView(final Experience experience, final String messageCode) {
 			ModelAndView result;
 			Collection<Feature> features;
+			Collection<Category> categories;
 			Company company;
+			
+			categories = this.categoryService.findAll();
 			company = this.companyService.findByPrincipal();
 			features = this.featureService.findAllByCompanyId(company.getId());
 			
 			result = new ModelAndView("experience/create");
 			result.addObject("experience", experience);
 			result.addObject("features", features);
+			result.addObject("categories", categories);
 			result.addObject("message", messageCode);
 			return result;
 		}
