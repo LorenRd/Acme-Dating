@@ -6,23 +6,23 @@
 
 <tiles-definitions>
 	
-	<definition name="position/list" extends="master.page">
-		<put-attribute name="title" value="Lista de puestos de trabajo" />
-		<put-attribute name="body" value="/views/position/list.jsp" />
+	<definition name="experience/list" extends="master.page">
+		<put-attribute name="title" value="Lista de experiencias" />
+		<put-attribute name="body" value="/views/experience/list.jsp" />
 	</definition>
 	
-	<definition name="position/display" extends="master.page">
-		<put-attribute name="title" value="Mostrar puesto de trabajo" />
-		<put-attribute name="body" value="/views/position/display.jsp" />
+	<definition name="experience/display" extends="master.page">
+		<put-attribute name="title" value="Mostrar experiencia" />
+		<put-attribute name="body" value="/views/experience/display.jsp" />
 	</definition>
 	
-	<definition name="position/create" extends="master.page">
-		<put-attribute name="title" value="Crear puesto de trabajo" />
-		<put-attribute name="body" value="/views/position/create.jsp" />
+	<definition name="experience/create" extends="master.page">
+		<put-attribute name="title" value="Crear experiencia" />
+		<put-attribute name="body" value="/views/experience/create.jsp" />
 	</definition>
 
-	<definition name="position/edit" extends="master.page">
-		<put-attribute name="title" value="Edit position" />
-		<put-attribute name="body" value="/views/position/edit.jsp" />
+	<definition name="experience/edit" extends="master.page">
+		<put-attribute name="title" value="Edit experiencia" />
+		<put-attribute name="body" value="/views/experience/edit.jsp" />
 	</definition>
 </tiles-definitions>
