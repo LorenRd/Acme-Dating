@@ -65,6 +65,10 @@
 		<security:intercept-url pattern="/feature/company/edit.do" access="hasRole('COMPANY')"/>
 		<security:intercept-url pattern="/feature/company/delete.do" access="hasRole('COMPANY')"/>
 		<security:intercept-url pattern="/feature/company/display.do" access="hasRole('COMPANY')"/>	
+		
+		<security:intercept-url pattern="/book/couple/list.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/book/couple/create.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/book/couple/display.do" access="hasRole('USER')"/>	
 			
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

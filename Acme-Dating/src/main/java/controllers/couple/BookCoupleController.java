@@ -51,7 +51,7 @@ public class BookCoupleController extends AbstractController {
 
 		books = this.bookService.findAllByCoupleId(principal.getId());
 
-		result = new ModelAndView("books/list");
+		result = new ModelAndView("book/list");
 		result.addObject("books", books);
 		result.addObject("requestURI", "book/couple/list.do");
 
