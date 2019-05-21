@@ -26,7 +26,8 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
+					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>
+					<li><a href="administrator/register.do"><spring:message code="master.page.administrator.register" /></a></li>						
 				</ul>
 			</li>
 		</security:authorize>
@@ -45,9 +46,10 @@
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a>
 			<ul>
 				<li class="arrow"></li>
-				<li><a href="user/register.do"><spring:message 
-				code = "master.page.register.user" /></a></li>
-			</ul></li>
+				<li><a href="user/register.do"><spring:message code = "master.page.user.register" /></a></li>
+				<li><a href="company/register.do"><spring:message code = "master.page.company.register" /></a></li>
+			</ul>
+			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
 				<ul>
 					<li class="arrow"></li>
