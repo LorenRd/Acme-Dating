@@ -1,8 +1,11 @@
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -57,7 +60,7 @@ public class Feature extends DomainEntity {
 
 	// Relationships----------------------------------------------
 	private Company company;
-	private Book 	book;
+	private Collection<Book> 	books;
 
 	@NotNull
 	@Valid
@@ -71,13 +74,13 @@ public class Feature extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToOne(optional = true)
-	public Book getBook() {
-		return this.book;
+	@ManyToMany
+	public Collection<Book> getBooks() {
+		return this.books;
 	}
 
-	public void setBook(final Book book) {
-		this.book = book;
+	public void setBooks(final Collection<Book> books) {
+		this.books = books;
 	}
 
 }
