@@ -36,7 +36,7 @@
 		
 		<!-- Features -->
 		
-		<b><spring:message code="experience.problems" /></b>:
+		<b><spring:message code="experience.features" /></b>:
 		<br/><ul>
 		<jstl:forEach items="${experience.features}" var="feature" >
 			<jstl:if test="${feature != null}">
@@ -45,35 +45,32 @@
 		</jstl:forEach></ul>
 
 		<!-- TABLA DE COMENTARIOS -->
-<h3> <spring:message code="position.audits" /> </h3>
+<h3> <spring:message code="experience.comments" /> </h3>
 <jstl:choose>
-<jstl:when test="${not empty audits}">
-<display:table pagesize="5" class="displaytag" name="audits" requestURI="position/display.do" id="audits">
+<jstl:when test="${not empty comments}">
+<display:table pagesize="5" class="displaytag" name="comments" requestURI="experience/display.do" id="comments">
 		
 		<!-- Display -->
 		<display:column>
-			<a href="audit/display.do?auditId=${audits.id}"><spring:message code="audit.display"/></a>
+			<a href="experienceComment/display.do?experienceCommentId=${comments.id}"><spring:message code="comment.display"/></a>
 		</display:column>
 		
-		<spring:message code="audit.text" var="text" />
-		<display:column property="text" title="${text}" sortable="text"/>
-	
-		<spring:message code="audit.score" var="score" />
-		<display:column property="score" title="${score}" sortable="true"/>
+		<spring:message code="comment.body" var="body" />
+		<display:column property="body" title="${body}" sortable="body"/>
 			
 </display:table>
 </jstl:when>
 <jstl:otherwise>
-<spring:message code="position.audits.empty" /> 
+<spring:message code="experience.comments.empty" /> 
 </jstl:otherwise>
 </jstl:choose>
 
 
 <security:authorize access="hasRole('COMPANY')">
-<jstl:if test="${position.company.userAccount.username == pageContext.request.userPrincipal.name}">
+<jstl:if test="${experience.company.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>
-	<a href="experience/company/edit.do?positionId=${position.id}"><spring:message code="position.edit"/></a><br/>
+	<a href="experience/company/edit.do?experienceId=${experience.id}"><spring:message code="experience.edit"/></a><br/>
 <br/>
-	<a href="experience/company/delete.do?positionId=${position.id}"><spring:message code="position.delete"/></a><br/>
+	<a href="experience/company/delete.do?experienceId=${experience.id}"><spring:message code="experience.delete"/></a><br/>
 </jstl:if>
 </security:authorize>
