@@ -22,9 +22,11 @@
 		<value>/views/misc/messages</value>
 		<value>/views/security/messages</value>		
 		<value>/views/welcome/messages</value>
-		
+		<value>/views/company/messages</value>		
 		<value>/views/administrator/messages</value>
 		<value>/views/experience/messages</value>
+		<value>/views/experienceComment/messages</value>
+
 		<value>/views/experienceComment/messages</value>
 		<value>/views/feature/messages</value>
 		<value>/views/book/messages</value>

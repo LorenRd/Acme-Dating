@@ -31,9 +31,8 @@ public class ExperienceComment extends DomainEntity {
 	private ExperienceComment experienceComment;
 	private Actor actor;
 
-	@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Experience getExperience() {
 		return this.experience;
 	}
@@ -42,9 +41,8 @@ public class ExperienceComment extends DomainEntity {
 		this.experience = experience;
 	}
 
-	@NotNull
 	@Valid
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	public ExperienceComment getExperienceComment() {
 		return this.experienceComment;
 	}

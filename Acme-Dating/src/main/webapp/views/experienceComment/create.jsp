@@ -17,22 +17,23 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="feature/company/create.do" modelAttribute="feature">
+<jstl:choose>
+<jstl:when test="${not empty experienceComment.experienceComment}">
+<b><spring:message code="experienceComment.reply" /></b>: <jstl:out value="${experienceComment.experienceComment.body}"/>
+</jstl:when>
+</jstl:choose>
+
+<form:form action="experienceComment/create.do" modelAttribute="experienceComment">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
+		<form:hidden path="experience"/>
+		<form:hidden path="experienceComment"/>
 		
-		
-		<acme:textbox code="feature.title" path="title" placeholder="Title"/>
-		<br />
-		<acme:textarea code="feature.description" path="description"/>
+		<acme:textarea code="experienceComment.body" path="body"/>
 		<br />		
-		<acme:textbox code="feature.photo" path="photo" />
-		<br />
-		<acme:textbox code="feature.supplement" path="supplement"/>
-		<br />
-			
-		<acme:submit name="saveFinal" code="feature.save"/>
 		
-		<acme:cancel url="welcome/index.do" code="feature.cancel"/>
+		<acme:submit name="save" code="experienceComment.save"/>
+		
+		<acme:cancel url="welcome/index.do" code="experienceComment.cancel"/>
 		
 </form:form>

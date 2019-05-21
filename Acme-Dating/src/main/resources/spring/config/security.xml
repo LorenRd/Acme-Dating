@@ -53,6 +53,9 @@
 		
 		<security:intercept-url pattern="/experience/display.do" access="permitAll"/>
 		<security:intercept-url pattern="/experience/list.do" access="permitAll"/>
+		<security:intercept-url pattern="/experienceComment/create.do" access="hasAnyRole('COMPANY','USER')"/>
+		<security:intercept-url pattern="/experienceComment/createReply.do" access="hasAnyRole('COMPANY','USER')"/>
+		
 		<security:intercept-url pattern="/experience/listCompanyId.do" access="permitAll"/>		
 		<security:intercept-url pattern="/experience/company/list.do" access="hasRole('COMPANY')"/>
 		<security:intercept-url pattern="/experience/company/create.do" access="hasRole('COMPANY')"/>

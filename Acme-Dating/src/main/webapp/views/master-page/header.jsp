@@ -32,6 +32,13 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('COMPANY')">
+			<li><a class="fNiv"><spring:message code="master.page.experiences" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="experience/list.do"><spring:message
+								code="master.page.customer.list.experiences" /></a></li>
+				</ul>
+			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.company" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -54,6 +61,14 @@
 			</li>
 		</security:authorize>
 		<security:authorize access="hasRole('USER')">
+			<li><a class="fNiv"><spring:message
+						code="master.page.experiences" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="experience/list.do"><spring:message
+								code="master.page.customer.list.experiences" /></a></li>
+				</ul>
+			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.couple" /></a>
 				<ul>
 					<li class="arrow"></li>
