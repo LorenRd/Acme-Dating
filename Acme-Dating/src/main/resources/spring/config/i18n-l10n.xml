@@ -25,9 +25,12 @@
 		
 		<value>/views/administrator/messages</value>
 		<value>/views/experience/messages</value>
+		<value>/views/experienceComment/messages</value>
 		<value>/views/feature/messages</value>
 		<value>/views/book/messages</value>
 		<value>/views/profile/messages</value>
+		<value>/views/message/messages</value>
+		<value>/views/messageBox/messages</value>
 	</util:list>
 
 </beans>

@@ -51,7 +51,7 @@
 
 </display:table>
 
-<!-- Create position -->
+<!-- Create experience -->
 <security:authorize access="hasRole('COMPANY')">
 		<acme:button url="experience/company/create.do" code="experience.create"/>
 	

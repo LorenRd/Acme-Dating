@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.List;
@@ -20,10 +21,11 @@ import security.UserAccount;
 @Access(AccessType.PROPERTY)
 public class Actor extends DomainEntity implements Cloneable {
 
-	private String name;
-	private String surname;
-	private String photo;
-	private String phone;
+	private String	name;
+	private String	surname;
+	private String	photo;
+	private String	phone;
+
 
 	@NotBlank
 	public String getName() {
@@ -60,11 +62,12 @@ public class Actor extends DomainEntity implements Cloneable {
 		this.phone = phone;
 	}
 
+
 	// Relationships----------------------------------------------
 
-	private UserAccount userAccount;
-	private CreditCard creditCard;
-	private List<MessageBox>			messageBoxes;
+	private UserAccount			userAccount;
+	private CreditCard			creditCard;
+	private List<MessageBox>	messageBoxes;
 
 
 	@NotNull
@@ -88,9 +91,8 @@ public class Actor extends DomainEntity implements Cloneable {
 	public void setCreditCard(final CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
-	
-	@NotNull
-	@OneToMany
+
+	@OneToMany(mappedBy = "actor")
 	public List<MessageBox> getMessageBoxes() {
 		return this.messageBoxes;
 	}
