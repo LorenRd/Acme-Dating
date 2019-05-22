@@ -92,12 +92,15 @@ public class ExperienceCommentService {
 	
 	public ExperienceComment reconstruct(final ExperienceComment experienceComment, final BindingResult binding) {
 		ExperienceComment result;
+
 		if (experienceComment.getId() == 0){
 			result = experienceComment;
-			result.setActor(this.actorService.findByPrincipal());
-			result.setExperience(experienceComment.getExperience());
-			result.setExperienceComment(experienceComment.getExperienceComment());
+			result.setActor(experienceComment.getActor());
 			result.setBody(experienceComment.getBody());
+			if(experienceComment.getExperience()!=null)
+				result.setExperience(experienceComment.getExperience());
+			if(experienceComment.getExperienceComment()!=null)
+				result.setExperienceComment(experienceComment.getExperienceComment());
 
 		}
 		else{

@@ -19,13 +19,16 @@
 
 <jstl:choose>
 <jstl:when test="${not empty experienceComment.experienceComment}">
-<b><spring:message code="experienceComment.reply" /></b>: <jstl:out value="${experienceComment.experienceComment.body}"/>
+<b><spring:message code="experienceComment.reply" /></b>: <br /><br />
+<jstl:out value="${experienceComment.experienceComment.actor.name}"/>: <jstl:out value="${experienceComment.experienceComment.body}"/>
 </jstl:when>
 </jstl:choose>
 
 <form:form action="experienceComment/create.do" modelAttribute="experienceComment">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
+		
+		<form:hidden path="actor"/>
 		<form:hidden path="experience"/>
 		<form:hidden path="experienceComment"/>
 		

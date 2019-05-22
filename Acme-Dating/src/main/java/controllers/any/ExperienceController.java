@@ -14,9 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ExperienceCommentService;
 import services.ExperienceService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Experience;
 import domain.ExperienceComment;
+import domain.User;
 
 @Controller
 @RequestMapping("/experience")
@@ -28,6 +30,8 @@ public class ExperienceController extends AbstractController {
 	@Autowired
 	private ExperienceCommentService	experienceCommentService;
 
+	@Autowired
+	private UserService					userService;
 
 	//List
 
@@ -57,17 +61,28 @@ public class ExperienceController extends AbstractController {
 		final ModelAndView result;
 		Experience experience;
 		Collection<ExperienceComment> comments;
-
+		User user;
+		boolean hasCouple = false;
+		
 		// Busca en el repositorio
 		experience = this.experienceService.findOne(experienceId);
 		Assert.notNull(experience);
 
 		comments = this.experienceCommentService.findByExperienceId(experienceId);
+		
+		try{
+			user = this.userService.findByPrincipal();
+			if(user.getCouple() != null){
+				hasCouple = true;
+			}
+		}catch (Exception e) {
+		}
 
 		// Crea y añade objetos a la vista
 		result = new ModelAndView("experience/display");
 		result.addObject("requestURI", "experience/display.do");
 		result.addObject("experience", experience);
+		result.addObject("hasCouple", hasCouple);
 		result.addObject("comments", comments);
 
 		// Envía la vista

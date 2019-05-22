@@ -37,7 +37,7 @@
 	<display:column property="score" title="${scoreHeader}"
 		sortable="true" />
 		
-	<spring:message code="experience.price" var="priceHeader" />
+	<spring:message code="experience.price.list" var="priceHeader" />
 	<display:column property="price" title="${priceHeader}"
 		sortable="true" />
 		

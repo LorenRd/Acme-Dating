@@ -68,12 +68,13 @@
 </jstl:choose>
 <br/><br/>
 <security:authorize access="hasAnyRole('COMPANY','USER')">
-	<a href="experienceComment/create.do?experienceId=${experience.id}"><spring:message code="experience.comment"/></a><br/>
+		<a href="experienceComment/create.do?experienceId=${experience.id}"><spring:message code="experience.comment"/></a><br/>
 </security:authorize>
-<br/><br/>
-
+<br/>
 <security:authorize access="hasRole('USER')">
-	<a href="book/couple/create.do?experienceId=${experience.id}"><spring:message code="experience.book"/></a><br/>
+	<jstl:if test="${hasCouple}">
+		<a href="book/couple/create.do?experienceId=${experience.id}"><spring:message code="experience.book"/></a><br/>
+	</jstl:if>
 </security:authorize>
 <security:authorize access="hasRole('COMPANY')">
 <jstl:if test="${experience.company.userAccount.username == pageContext.request.userPrincipal.name}">
