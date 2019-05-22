@@ -11,4 +11,8 @@
 		<put-attribute name="body" value="/views/experienceComment/create.jsp" />
 	</definition>
 	
+	<definition name="experienceComment/createReply" extends="master.page">
+		<put-attribute name="title" value="Respuesta a comentario" />
+		<put-attribute name="body" value="/views/experienceComment/createReply.jsp" />
+	</definition>	
 </tiles-definitions>

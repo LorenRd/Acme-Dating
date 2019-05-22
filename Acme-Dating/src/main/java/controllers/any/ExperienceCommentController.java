@@ -87,7 +87,12 @@ public class ExperienceCommentController extends AbstractController {
 
 	private ModelAndView createModelAndView(final ExperienceComment experienceComment, final String messageCode) {
 		ModelAndView result;
-		result = new ModelAndView("experienceComment/create");
+		
+		if(experienceComment.getExperienceComment()!=null){
+			result = new ModelAndView("experienceComment/createReply");
+		}else{
+			result = new ModelAndView("experienceComment/create");
+		}
 		result.addObject("experienceComment", experienceComment);
 		result.addObject("message", messageCode);
 		return result;

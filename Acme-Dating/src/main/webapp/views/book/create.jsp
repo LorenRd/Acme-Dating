@@ -13,21 +13,29 @@
 	<form:form action ="book/couple/create.do" modelAttribute ="bookForm">
 		
 		<form:hidden path="id"/>
+		<h3><spring:message code="experience.title" /></h3>
+		<jstl:out value="${bookForm.experience.title}"/>: <jstl:out value="${bookForm.experience.price}"/>
+		<br /><br />
 		
+		<acme:datebox code="book.date" path="date" placeholder="dd/MM/yyyy HH:mm" />
+		<br />
+		<!-- Features -->
+		<b><spring:message code="experience.features" /></b>:
+		<br/><ul>
+		<jstl:forEach items="${features}" var="feature" >
+			<jstl:if test="${feature != null}">
+	        	<li><jstl:out value="${feature.title}"/>: <jstl:out value="${feature.supplement}"/></li>
+	        </jstl:if>
+		</jstl:forEach></ul>
+		<!-- Seleccionable features -->
 		<div>
-			<form:label path="experience">
-		<spring:message code="book.experience.title" />
-	</form:label>	
-	<form:select id="experience" path="experience">
-		<form:options items="${experiences}" itemLabel="title" />
-	</form:select>
-	<form:errors path="experience" cssClass="error" />
+			<form:select multiple="true" path="features" >
+				<form:options items="${features}" itemValue="id" itemLabel="title" />
+			</form:select>
+			<form:errors cssClass="error" path="features" />	
 		</div>
-		
-		
-		<input type="submit" name="save" id="save"
-		value="<spring:message code="book.save" />" >&nbsp; 
-		
+		<br /><br />
+		<input type="submit" name="save" id="save" value="<spring:message code="book.save" />" >&nbsp; 
 		<acme:cancel url="welcome/index.do" code="book.cancel"/>
 	</form:form>
 

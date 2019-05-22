@@ -1,8 +1,10 @@
 
 package forms;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -13,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import domain.Couple;
 import domain.Experience;
+import domain.Feature;
 
 public class BookForm {
 
@@ -44,6 +47,7 @@ public class BookForm {
 	private Couple		couple;
 	private Experience	experience;
 	private int			id;
+	private Collection<Feature> features;
 
 
 	public int getId() {
@@ -72,6 +76,16 @@ public class BookForm {
 
 	public void setExperience(final Experience experience) {
 		this.experience = experience;
+	}
+	
+	@Valid
+	@ManyToMany
+	public Collection<Feature> getFeatures() {
+		return this.features;
+	}
+
+	public void setFeatures(final Collection<Feature> features) {
+		this.features = features;
 	}
 
 }

@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.validation.Validator;
 import repositories.BookRepository;
 import domain.Book;
 import domain.Couple;
+import domain.Feature;
 import forms.BookForm;
 
 @Service
@@ -107,13 +109,18 @@ public class BookService {
 			result.setMoment(new Date(System.currentTimeMillis() - 1));
 			result.setCouple(this.coupleService.findByUser());
 			result.setExperience(bookForm.getExperience());
+			result.setFeatures(new ArrayList<Feature>());
 
 		} else {
 			result = this.bookRepository.findOne(bookForm.getId());
+			result.setCouple(bookForm.getCouple());
+			result.setMoment(bookForm.getMoment());
+			
 		}
-
+		if(bookForm.getDate().before(Calendar.getInstance().getTime()))
+			binding.rejectValue("date", "book.validation.date", "Date must be future");
+		
 		this.validator.validate(result, binding);
-		this.bookRepository.flush();
 		return result;
 	}
 
