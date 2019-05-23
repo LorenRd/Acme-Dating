@@ -38,9 +38,6 @@ public class BookCoupleController extends AbstractController {
 	@Autowired
 	private ExperienceService	experienceService;
 
-
-	//Repositories
-
 	//List
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {

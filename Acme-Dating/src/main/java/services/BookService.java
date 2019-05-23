@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -22,15 +21,14 @@ public class BookService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private BookRepository			bookRepository;
+	private BookRepository bookRepository;
 
 	@Autowired
-	private CoupleService			coupleService;
+	private CoupleService coupleService;
 
 	@Autowired
-	private Validator				validator;
+	private Validator validator;
 
-	
 	// Simple CRUD Methods
 	public void delete(final Book book) {
 		this.bookRepository.delete(book);
@@ -80,7 +78,6 @@ public class BookService {
 		return result;
 	}
 
-
 	public Book create() {
 		Book result;
 		final Couple principal;
@@ -99,7 +96,7 @@ public class BookService {
 		bookForm.setExperience(book.getExperience());
 		return bookForm;
 	}
-	
+
 	public Book reconstruct(final BookForm bookForm, final BindingResult binding) {
 		Book result;
 		if (bookForm.getId() == 0) {

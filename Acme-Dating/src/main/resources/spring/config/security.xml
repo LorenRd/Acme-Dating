@@ -54,6 +54,12 @@
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 	
+		<security:intercept-url pattern="/task/couple/list.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/task/couple/create.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/task/couple/edit.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/task/couple/delete.do" access="hasRole('USER')"/>		
+		<security:intercept-url pattern="/task/couple/cancel.do" access="hasRole('USER')"/>	
+	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 
