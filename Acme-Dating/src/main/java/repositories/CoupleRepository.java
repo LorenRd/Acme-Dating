@@ -8,5 +8,4 @@ import domain.Couple;
 @Repository
 public interface CoupleRepository extends JpaRepository<Couple, Integer> {
 
-
 }

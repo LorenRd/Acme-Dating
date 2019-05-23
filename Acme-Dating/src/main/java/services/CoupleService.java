@@ -12,22 +12,19 @@ import domain.User;
 @Transactional
 public class CoupleService {
 
-
 	// Managed repository -----------------------------------------------------
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private UserService				userService;
-	
-	
+	private UserService userService;
+
 	public Couple findByUser() {
 		User principal;
-		
+
 		principal = this.userService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		return principal.getCouple();
 
+		return principal.getCouple();
 	}
 
 }

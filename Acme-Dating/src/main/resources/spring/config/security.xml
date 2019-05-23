@@ -62,6 +62,12 @@
 		<security:intercept-url pattern="/messageBox/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/administrator/create.do" access="hasRole('ADMIN')" /> 
 	
+		<security:intercept-url pattern="/task/couple/list.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/task/couple/create.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/task/couple/edit.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/task/couple/delete.do" access="hasRole('USER')"/>		
+		<security:intercept-url pattern="/task/couple/cancel.do" access="hasRole('USER')"/>	
+	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 
