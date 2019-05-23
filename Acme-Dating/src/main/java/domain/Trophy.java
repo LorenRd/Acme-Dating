@@ -1,13 +1,8 @@
 package domain;
 
-import java.util.Collection;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -61,20 +56,6 @@ public class Trophy extends DomainEntity {
 
 	public void setExperiencesToShare(int experiencesToShare) {
 		this.experiencesToShare = experiencesToShare;
-	}
-
-	// Relationships---------------------------------
-
-	private Collection<Couple> couples;
-
-	@NotNull
-	@ManyToMany
-	public Collection<Couple> getCouples() {
-		return this.couples;
-	}
-
-	public void setCouples(final Collection<Couple> couples) {
-		this.couples = couples;
 	}
 
 }

@@ -1,14 +1,14 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -43,17 +43,16 @@ public class Couple extends DomainEntity {
 
 	// Relationships----------------------------------------------
 
-	private Diary diary;
+	private Collection<Trophy> trophies;
 
 	@NotNull
-	@Valid
-	@OneToOne(optional = false)
-	public Diary getDiary() {
-		return diary;
+	@ManyToMany
+	public Collection<Trophy> getTrophies() {
+		return trophies;
 	}
 
-	public void setDiary(Diary diary) {
-		this.diary = diary;
+	public void setTrophies(Collection<Trophy> trophies) {
+		this.trophies = trophies;
 	}
 
 }
