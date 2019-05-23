@@ -115,12 +115,13 @@ public class ExperienceCommentService {
 		Collection<ExperienceComment> result;
 
 		result = this.experienceCommentRepository.findByExperienceId(experienceId);
+		Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
+
 		for (ExperienceComment eC : result) {
-			Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
-			childs = this.experienceCommentRepository.findChilds(eC.getId());
-			result.addAll(childs);
+			childs = new ArrayList<ExperienceComment>();
+			childs.addAll(this.experienceCommentRepository.findChilds(eC.getId()));
 		}
-		
+		result.addAll(childs);
 		return result;
 	}
 

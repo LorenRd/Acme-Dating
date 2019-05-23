@@ -9,6 +9,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 
 		<b><spring:message code="experience.title" /></b>:
 		<jstl:out value="${experience.title}"/><br/>
@@ -48,19 +50,22 @@
 <h3> <spring:message code="experience.comments" /> </h3>
 <jstl:choose>
 <jstl:when test="${not empty comments}">
-<display:table pagesize="5" class="displaytag" name="comments" requestURI="experience/display.do" id="comments">
-		
-		<!-- Display -->
-		<display:column>
-			<a href="experienceComment/createReply.do?experienceCommentId=${comments.id}"><spring:message code="experience.comment.reply"/></a>
-		</display:column>
-		
-		<spring:message code="experience.comment.name" var="name" />
-		<display:column property="actor.name" title="${name}" sortable="false"/>
-		<spring:message code="experience.comment.body" var="body" />
-		<display:column property="body" title="${body}" sortable="false"/>
-			
-</display:table>
+<ul>
+<c:forEach items="${comments}" var="comment">
+    <!-- Padres: Tienen referencia a experience pero no a experience comment, opcion de reply -->
+  	<jstl:if test="${empty comment.experienceComment}">
+  		<li><jstl:if test="${comment.actor.id == experience.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${comment.actor.name}"/>:</b> <jstl:out value="${comment.body}"/> <a href="experienceComment/createReply.do?experienceCommentId=${comment.id}"><spring:message code="experience.comment.reply"/></a></li>
+  	    	<!-- Hijos, habrá que volver a recorrer todos los comments buscando cuales son los hijos y poniendolos -->
+			<ul>
+			<c:forEach items="${comments}" var="commentChild">
+			  	<jstl:if test="${comment.id == commentChild.experienceComment.id}">
+			  		<li><jstl:if test="${commentChild.actor.id == experience.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${commentChild.actor.name}"/>:</b> <jstl:out value="${commentChild.body}"/></li>
+				</jstl:if>
+			</c:forEach>
+			</ul>
+  	</jstl:if>
+</c:forEach>
+</ul>
 </jstl:when>
 <jstl:otherwise>
 <spring:message code="experience.comments.empty" /> 
