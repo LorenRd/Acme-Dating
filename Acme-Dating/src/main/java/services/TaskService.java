@@ -98,7 +98,9 @@ public class TaskService {
 		} else {
 			result = this.taskRepository.findOne(task.getId());
 
-			result.setTitle(task.getTitle());
+			if (!task.getTitle().equals("")) {
+				result.setTitle(task.getTitle());
+			}
 			result.setIsCompleted(task.getIsCompleted());
 		}
 

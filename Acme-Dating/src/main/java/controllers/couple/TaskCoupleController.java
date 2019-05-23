@@ -69,10 +69,17 @@ public class TaskCoupleController extends AbstractController {
 		ModelAndView result;
 		Task task;
 
-		task = this.taskService.create();
-		result = this.createModelAndView(task);
+		final User principal = this.userService.findByPrincipal();
 
-		return result;
+		if (principal.getCouple() == null) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+			return result;
+		} else {
+			task = this.taskService.create();
+			result = this.createModelAndView(task);
+
+			return result;
+		}
 	}
 
 	// Edit
@@ -168,12 +175,22 @@ public class TaskCoupleController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Task task,
 			final String messageCode) {
 		ModelAndView result;
-
 		result = new ModelAndView("task/edit");
-		result.addObject("task", task);
-		result.addObject("message", messageCode);
 
-		return result;
+		final User principal = this.userService.findByPrincipal();
+
+		if (principal.getCouple() == null) {
+			result.addObject("couple", null);
+			return result;
+		} else {
+
+			final Couple couple = this.coupleService.findByUser();
+
+			result.addObject("task", task);
+			result.addObject("couple", couple);
+			result.addObject("message", messageCode);
+			return result;
+		}
 	}
 
 	private ModelAndView createModelAndView(final Task task) {
@@ -186,11 +203,22 @@ public class TaskCoupleController extends AbstractController {
 	private ModelAndView createModelAndView(final Task task,
 			final String messageCode) {
 		ModelAndView result;
-
 		result = new ModelAndView("task/create");
-		result.addObject("task", task);
-		result.addObject("message", messageCode);
-		return result;
+
+		final User principal = this.userService.findByPrincipal();
+
+		if (principal.getCouple() == null) {
+			result.addObject("couple", null);
+			return result;
+		} else {
+
+			final Couple couple = this.coupleService.findByUser();
+
+			result.addObject("task", task);
+			result.addObject("couple", couple);
+			result.addObject("message", messageCode);
+			return result;
+		}
 	}
 
 }
