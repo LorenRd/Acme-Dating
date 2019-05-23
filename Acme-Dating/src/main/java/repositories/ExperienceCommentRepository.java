@@ -14,5 +14,8 @@ public interface ExperienceCommentRepository extends JpaRepository<ExperienceCom
 
 	@Query("select eC from ExperienceComment eC where eC.experience.id = ?1")
 	Collection<ExperienceComment> findByExperienceId(int experienceId);
+	
+	@Query("select eC from ExperienceComment eC where eC.experienceComment.id = ?1")
+	Collection<ExperienceComment> findChilds(int experienceCommentFatherId);
 
 }

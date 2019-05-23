@@ -28,8 +28,13 @@
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
+		<form:hidden path="experienceComment.experienceComment" />
+		<form:hidden path="experienceComment.id" />
+		<form:hidden path="experienceComment.actor" />
+		<form:hidden path="experienceComment.body" />
+		<form:hidden path="experienceComment.version" />
+		
 		<form:hidden path="actor"/>
-		<form:hidden path="experienceComment"/>
 		
 		<acme:textarea code="experienceComment.body" path="body"/>
 		<br />		

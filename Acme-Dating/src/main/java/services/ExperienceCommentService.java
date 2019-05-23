@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,12 +96,7 @@ public class ExperienceCommentService {
 
 		if (experienceComment.getId() == 0){
 			result = experienceComment;
-			result.setActor(experienceComment.getActor());
 			result.setBody(experienceComment.getBody());
-			if(experienceComment.getExperience()!=null)
-				result.setExperience(experienceComment.getExperience());
-			if(experienceComment.getExperienceComment()!=null)
-				result.setExperienceComment(experienceComment.getExperienceComment());
 
 		}
 		else{
@@ -119,6 +115,12 @@ public class ExperienceCommentService {
 		Collection<ExperienceComment> result;
 
 		result = this.experienceCommentRepository.findByExperienceId(experienceId);
+		for (ExperienceComment eC : result) {
+			Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
+			childs = this.experienceCommentRepository.findChilds(eC.getId());
+			result.addAll(childs);
+		}
+		
 		return result;
 	}
 
