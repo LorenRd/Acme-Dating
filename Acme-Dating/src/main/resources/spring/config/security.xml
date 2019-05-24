@@ -73,6 +73,7 @@
 		<security:intercept-url pattern="/book/couple/list.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/book/couple/create.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/book/couple/display.do" access="hasRole('USER')"/>	
+		<security:intercept-url pattern="/book/couple/edit.do" access="hasRole('USER')"/>	
 			
 		<security:intercept-url pattern="/messageBox/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/messageBox/**" access="isAuthenticated()" />

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CompanyService;
 import services.ExperienceCommentService;
 import services.ExperienceService;
 import services.UserService;
@@ -32,7 +33,9 @@ public class ExperienceController extends AbstractController {
 
 	@Autowired
 	private UserService					userService;
-
+	
+	@Autowired
+	private CompanyService	companyService;
 	//List
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -88,4 +91,16 @@ public class ExperienceController extends AbstractController {
 		// Envía la vista
 		return result;
 	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET, params ="computeScore")
+	public ModelAndView computeScore(){
+		final ModelAndView result;
+		
+		this.companyService.computeScore();
+		
+		result = new ModelAndView("redirect:list.do");
+		
+		return result;
+	}
+
 }

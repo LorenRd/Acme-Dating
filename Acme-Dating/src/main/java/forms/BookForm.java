@@ -11,6 +11,8 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import domain.Couple;
@@ -21,6 +23,7 @@ public class BookForm {
 
 	private Date	moment;
 	private Date	date;
+	private Double  score;
 
 
 	@Past
@@ -43,6 +46,17 @@ public class BookForm {
 	public void setDate(final Date date) {
 		this.date = date;
 	}
+	
+	@Range(min = 0, max = 5)
+	public Double getScore() {
+		return score;
+	}
+
+	public void setScore(Double score) {
+		this.score = score;
+	}
+	
+	//---------------
 
 	private Couple		couple;
 	private Experience	experience;

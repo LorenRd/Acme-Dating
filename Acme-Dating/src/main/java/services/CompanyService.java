@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -10,8 +11,10 @@ import repositories.CompanyRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Book;
 import domain.Company;
 import domain.CreditCard;
+import domain.Experience;
 
 @Service
 @Transactional
@@ -28,8 +31,11 @@ public class CompanyService {
 	@Autowired
 	private CreditCardService creditCardService;
 
+	@Autowired
+	private ExperienceService experienceService;
 	 
-
+	@Autowired
+	private BookService bookService;
 	 // Simple CRUD Methods
 
 	 public boolean exists(final Integer arg0) {
@@ -143,5 +149,28 @@ public class CompanyService {
 
 	public void flush() {
 		this.companyRepository.flush();
+	}
+
+	public void computeScore(){
+		Collection<Experience> experiences;
+		
+		experiences = this.experienceService.findAll();
+		for (Experience e : experiences) {
+			Collection<Book> books = new ArrayList<Book>();
+			Double score = 0.0;
+			int i = 0;
+			books = this.bookService.findAllByCompanyId(e.getCompany().getId());
+			for (Book b : books) {
+				if (b.getScore() != null)
+				{
+					i++;
+					score += b.getScore();
+				}
+			}
+			if(i>0){
+				score = score/i;
+			}
+			e.setScore(score);
+		}
 	}
 }

@@ -69,7 +69,6 @@ public class ExperienceService {
 
 		result = new Experience();
 		result.setCompany(principal);
-		result.setScore(0.0);
 		return result;
 	}
 

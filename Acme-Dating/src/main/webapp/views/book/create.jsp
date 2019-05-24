@@ -13,6 +13,11 @@
 	<form:form action ="book/couple/create.do" modelAttribute ="bookForm">
 		
 		<form:hidden path="id"/>
+		<form:hidden path="moment"/>
+		<form:hidden path="couple"/>
+		<form:hidden path="experience"/>
+		
+		
 		<h3><spring:message code="experience.title" /></h3>
 		<jstl:out value="${bookForm.experience.title}"/>: <jstl:out value="${bookForm.experience.price}"/>
 		<br /><br />

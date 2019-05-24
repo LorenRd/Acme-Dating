@@ -1164,21 +1164,18 @@
 	<bean class="domain.ExperienceComment" id="experienceComment1">
 		<property name="body" value="body experienceComment1" />
 		<property name="experience" ref="experience1" />
-		<property name="experienceComment" ref="" />
 		<property name="actor" ref="company1" />
 	</bean>
 
 	<bean class="domain.ExperienceComment" id="experienceComment2">
 		<property name="body" value="body experienceComment2" />
 		<property name="experience" ref="experience2" />
-		<property name="experienceComment" ref="" />
 		<property name="actor" ref="company1" />
 	</bean>
 
 	<bean class="domain.ExperienceComment" id="experienceComment3">
 		<property name="body" value="body experienceComment3" />
 		<property name="experience" ref="experience3" />
-		<property name="experienceComment" ref="" />
 		<property name="actor" ref="company1" />
 	</bean>
 

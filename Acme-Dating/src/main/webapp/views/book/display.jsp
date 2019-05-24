@@ -11,17 +11,32 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
-<spring:message code="book.moment" />: <jstl:out value="${book.moment}" />
+<b><spring:message code="book.moment" />:</b> <jstl:out value="${book.moment}" />
 <br/>
-<spring:message code="book.date" />: <jstl:out value="${book.date}" />
+<b><spring:message code="book.date" />:</b><jstl:out value="${book.date}" />
 <br/>
-<spring:message code="book.experience.title" />: <jstl:out value="${book.experience.title}" />
+<b><spring:message code="book.experience.title" />:</b> <jstl:out value="${book.experience.title}" />
 <br/>
-<spring:message code="book.features" />
+<b><spring:message code="book.features" />:</b> <br/>
+<jstl:choose>
+<jstl:when test="${not empty features}">
 <ul>
 <jstl:forEach items="${features}" var="feature" >
 	<li><jstl:out value="${feature.title}"/></li>
 </jstl:forEach>
 </ul>
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="book.features.empty" /> 
+</jstl:otherwise>
+</jstl:choose>
+
 <br/>
-<spring:message code="book.totalPrice" /><jstl:out value="${totalPrice}" />
+<b><spring:message code="book.totalPrice" /></b><jstl:out value="${totalPrice}" />
+<br/><br/>
+<jstl:if test="${scored}">
+<b><spring:message code="book.score" />:</b> <jstl:out value="${book.score}"/>
+</jstl:if>
+<jstl:if test="${!scored}">
+	<a href="book/couple/edit.do?bookId=${book.id}"><spring:message code="book.score.experience"/></a><br/>
+</jstl:if>

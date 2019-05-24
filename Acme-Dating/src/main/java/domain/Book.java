@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -22,7 +23,8 @@ public class Book extends DomainEntity{
 	
 	private Date	moment;	
 	private Date 	date;
-	
+	private Double  score;
+
 	@NotNull
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -46,9 +48,18 @@ public class Book extends DomainEntity{
 		this.date = date;
 	}
 	
+	@Range(min = 0, max = 5)
+	public Double getScore() {
+		return score;
+	}
+
+	public void setScore(Double score) {
+		this.score = score;
+	}
+	
 	// Relationships----------------------------------------------
 
-	
+
 	private Couple couple;
 	private Experience experience;
 	private Collection<Feature> features;

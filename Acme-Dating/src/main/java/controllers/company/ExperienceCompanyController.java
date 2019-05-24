@@ -247,4 +247,16 @@ public class ExperienceCompanyController extends AbstractController {
 			return result;
 		}
 
+		
+		@RequestMapping(value = "/list", method = RequestMethod.GET, params ="computeScore")
+		public ModelAndView computeScore(){
+			final ModelAndView result;
+			
+			this.companyService.computeScore();
+			
+			result = new ModelAndView("redirect:list.do");
+			
+			return result;
+		}
+
 }

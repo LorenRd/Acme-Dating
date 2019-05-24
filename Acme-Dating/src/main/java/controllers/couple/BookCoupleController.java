@@ -2,11 +2,13 @@
 package controllers.couple;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +21,7 @@ import controllers.AbstractController;
 import domain.Book;
 import domain.Couple;
 import domain.Customisation;
+import domain.Experience;
 import domain.Feature;
 import forms.BookForm;
 
@@ -74,6 +77,8 @@ public class BookCoupleController extends AbstractController {
 		Collection<Feature> features;
 		Customisation customisation;
 		Double vat;
+		boolean scored = false;
+		
 		customisation = this.customisationService.find();
 		vat = (customisation.getVatNumber())/100 + 1.0;
 		
@@ -87,22 +92,48 @@ public class BookCoupleController extends AbstractController {
 			price += f.getSupplement();
 		}
 		
+		if(book.getScore() != null){
+			scored = true;
+		}
+		
 		result = new ModelAndView("book/display");
 		result.addObject("book", book);
+		result.addObject("scored", scored);
 		result.addObject("totalPrice", price*vat);
 		result.addObject("features", book.getFeatures());		
 		
 		return result;
 	}
-
-	//Create
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	
+	//Edit
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int bookId) {
 		ModelAndView result;
 		Book book;
 		BookForm bookForm;
 
+		book = this.bookService.findOne(bookId);
+		bookForm = this.bookService.construct(book);
+		Assert.notNull(book);
+		result = this.createEditModelAndView(bookForm);
+
+		return result;
+	}
+
+
+	//Create
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create(@RequestParam final int experienceId) {
+		ModelAndView result;
+		Experience experience;
+		Book book;
+		BookForm bookForm;
+		
+		experience = this.experienceService.findOne(experienceId);
+
 		book = this.bookService.create();
+		book.setExperience(experience);
+		
 		bookForm = this.bookService.construct(book);
 		result = this.createEditModelAndView(bookForm);
 
@@ -131,7 +162,30 @@ public class BookCoupleController extends AbstractController {
 		}
 		return result;
 	}
+	//Save de score
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "score")
+	public ModelAndView edit(@ModelAttribute("bookForm") @Valid final BookForm bookForm, final BindingResult binding) {
+		ModelAndView result;
+		Book book;
 
+		try {
+			Assert.isTrue(bookForm.getDate().before(Calendar.getInstance().getTime()));
+
+			book = this.bookService.reconstruct(bookForm, binding);
+
+			if (binding.hasErrors()) {
+				for (final ObjectError e : binding.getAllErrors())
+					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+				result = this.createEditModelAndView(bookForm);
+			} else {
+				book = this.bookService.save(book);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(bookForm, "book.score.before");
+		}
+		return result;
+	}
 
 	protected ModelAndView createEditModelAndView(final BookForm bookForm) {
 		ModelAndView result;
@@ -148,7 +202,7 @@ public class BookCoupleController extends AbstractController {
 			result = new ModelAndView("book/create");
 
 		result.addObject("bookForm", bookForm);
-		result.addObject("experiences", this.experienceService.findAll());
+		result.addObject("features", bookForm.getExperience().getFeatures());
 		result.addObject("message", messageCode);
 		return result;
 	}

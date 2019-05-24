@@ -89,6 +89,7 @@ public class FeatureService {
 		return result;
 	}
 	
+	
 	public Feature reconstruct(final Feature feature, final BindingResult binding) {
 		Feature result;
 		if (feature.getId() == 0)

@@ -15,7 +15,6 @@ import org.springframework.validation.Validator;
 import repositories.BookRepository;
 import domain.Book;
 import domain.Couple;
-import domain.Feature;
 import forms.BookForm;
 
 @Service
@@ -92,6 +91,8 @@ public class BookService {
 
 		result = new Book();
 		result.setCouple(principal);
+		result.setMoment(new Date(System.currentTimeMillis() - 1));
+		
 		return result;
 	}
 
@@ -99,6 +100,10 @@ public class BookService {
 		final BookForm bookForm = new BookForm();
 		bookForm.setId(book.getId());
 		bookForm.setExperience(book.getExperience());
+		bookForm.setCouple(book.getCouple());
+		bookForm.setMoment(book.getMoment());
+		bookForm.setDate(book.getDate());
+		bookForm.setScore(book.getScore());
 		return bookForm;
 	}
 	
@@ -109,17 +114,20 @@ public class BookService {
 			result.setMoment(new Date(System.currentTimeMillis() - 1));
 			result.setCouple(this.coupleService.findByUser());
 			result.setExperience(bookForm.getExperience());
-			result.setFeatures(new ArrayList<Feature>());
+			result.setDate(bookForm.getDate());
+			result.setFeatures(bookForm.getFeatures());
+			
+			if(result.getDate().before(Calendar.getInstance().getTime()))
+				binding.rejectValue("date", "book.validation.date", "Date must be future");
 
 		} else {
 			result = this.bookRepository.findOne(bookForm.getId());
-			result.setCouple(bookForm.getCouple());
-			result.setMoment(bookForm.getMoment());
+			result.setScore(bookForm.getScore());
+			
 			
 		}
-		if(bookForm.getDate().before(Calendar.getInstance().getTime()))
-			binding.rejectValue("date", "book.validation.date", "Date must be future");
-		
+
+
 		this.validator.validate(result, binding);
 		return result;
 	}

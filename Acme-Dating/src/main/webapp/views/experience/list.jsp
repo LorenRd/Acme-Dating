@@ -54,5 +54,6 @@
 <!-- Create experience -->
 <security:authorize access="hasRole('COMPANY')">
 		<acme:button url="experience/company/create.do" code="experience.create"/>
+		<input type="button" name="computeScore" value="<spring:message code="experience.computeScore" />" onclick="redirect: location.href = 'experience/list.do?computeScore';" />		
 	
 </security:authorize> 
