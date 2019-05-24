@@ -541,6 +541,11 @@
 
 	<!-- Couples -->
 
+	<bean class="domain.Diary" id="diary1">
+	</bean>
+
+	<!-- Couple -->
+
 	<bean class="domain.Couple" id="couple1">
 		<property name="startDate" value="2018/03/01 13:00" />
 		<property name="score" value="110" />
@@ -548,25 +553,6 @@
 			<list>
 				<ref bean="trophy1" />
 				<ref bean="trophy5" />
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Couple" id="couple2">
-		<property name="startDate" value="2018/08/01 11:00" />
-		<property name="score" value="4" />
-		<property name="trophies">
-			<list>
-				<ref bean="trophy5" />
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Couple" id="couple3">
-		<property name="startDate" value="2019/03/01 21:00" />
-		<property name="score" value="8" />
-		<property name="trophies">
-			<list>
 			</list>
 		</property>
 	</bean>
@@ -944,18 +930,6 @@
 		<property name="couple" ref="couple1" />
 	</bean>
 
-	<bean class="domain.Task" id="task2">
-		<property name="title" value="title task2" />
-		<property name="isCompleted" value="false" />
-		<property name="couple" ref="couple2" />
-	</bean>
-
-	<bean class="domain.Task" id="task3">
-		<property name="title" value="title task3" />
-		<property name="isCompleted" value="false" />
-		<property name="couple" ref="couple3" />
-	</bean>
-
 	<!-- Trophies -->
 
 	<bean class="domain.Trophy" id="trophy1">
@@ -996,6 +970,10 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="10" />
 		<property name="experiencesToShare" value="0" />
+		<property name="couples">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy6">
@@ -1028,6 +1006,10 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
+		<property name="couples">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Books -->
@@ -1044,27 +1026,7 @@
 		</property>
 	</bean>
 
-	<bean class="domain.Book" id="book2">
-		<property name="moment" value="2018/04/01 11:00" />
-		<property name="date" value="2019/08/20 20:00" />
-		<property name="couple" ref="couple2" />
-		<property name="experience" ref="experience2" />
-		<property name="features">
-			<list>
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Book" id="book3">
-		<property name="moment" value="2017/05/01 19:30" />
-		<property name="date" value="2010/01/14 22:20" />
-		<property name="couple" ref="couple3" />
-		<property name="experience" ref="experience3" />
-		<property name="features">
-			<list>
-			</list>
-		</property>
-	</bean>
+	
 
 	<!-- Challenges -->
 
@@ -1103,22 +1065,22 @@
 	<bean class="domain.CoupleRequest" id="coupleRequest1">
 		<property name="moment" value="2018/12/01 22:30" />
 		<property name="status" value="PENDING" />
-		<property name="sender" ref="user3" />
-		<property name="recipient" ref="user4" />
+		<property name="sender" ref="user4" />
+		<property name="recipient" ref="user3" />
 	</bean>
 
 	<bean class="domain.CoupleRequest" id="coupleRequest2">
 		<property name="moment" value="2018/11/11 11:11" />
 		<property name="status" value="PENDING" />
 		<property name="sender" ref="user5" />
-		<property name="recipient" ref="user4" />
+		<property name="recipient" ref="user3" />
 	</bean>
 
 	<bean class="domain.CoupleRequest" id="coupleRequest3">
 		<property name="moment" value="2019/02/11 12:10" />
 		<property name="status" value="ACCEPTED" />
-		<property name="sender" ref="user6" />
-		<property name="recipient" ref="user4" />
+		<property name="sender" ref="user1" />
+		<property name="recipient" ref="user2" />
 	</bean>
 
 	<!-- ExperienceComments -->
@@ -1152,41 +1114,12 @@
 		<property name="category" ref="category1" />
 	</bean>
 
-	<bean class="domain.Record" id="record2">
-		<property name="day" value="2019/01/21" />
-		<property name="title" value="title record2" />
-		<property name="body" value="body record2" />
-		<property name="photo" value="http://www.photo2.com" />
-		<property name="couple" ref="couple2" />
-		<property name="category" ref="category2" />
-	</bean>
-
-	<bean class="domain.Record" id="record3">
-		<property name="day" value="2019/02/09" />
-		<property name="title" value="title record3" />
-		<property name="body" value="body record3" />
-		<property name="photo" value="http://www.photo3.com" />
-		<property name="couple" ref="couple3" />
-		<property name="category" ref="category3" />
-	</bean>
-
 	<!-- RecordComments -->
 
 	<bean class="domain.RecordComment" id="recordComment1">
 		<property name="body" value="body recordComment1" />
 		<property name="record" ref="record1" />
 		<property name="recordComment" ref="recordComment1" />
-	</bean>
-
-	<bean class="domain.RecordComment" id="recordComment2">
-		<property name="body" value="body recordComment2" />
-		<property name="record" ref="record2" />
-		<property name="recordComment" ref="recordComment2" />
-	</bean>
-
-	<bean class="domain.RecordComment" id="recordComment3">
-		<property name="body" value="body recordComment3" />
-		<property name="record" ref="record3" />
 	</bean>
 
 	<!-- Experiences -->

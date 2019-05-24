@@ -27,6 +27,7 @@
 		<value>/views/terms/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>
 		<value>/views/messageBox/tiles.xml</value>
+		<value>/views/coupleRequest/tiles.xml</value>
 	</util:list>
 
 </beans>

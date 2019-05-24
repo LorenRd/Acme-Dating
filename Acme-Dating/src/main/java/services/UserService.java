@@ -1,10 +1,13 @@
+
 package services;
 
 import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
 import repositories.UserRepository;
 import security.LoginService;
 import security.UserAccount;
@@ -16,16 +19,22 @@ public class UserService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository	userRepository;
 
 
 	// Supporting services ----------------------------------------------------
-
 
 	// Additional functions
 
 	// Simple CRUD Methods
 
+	public User save(final User user) {
+		User result;
+
+		result = this.userRepository.save(user);
+
+		return result;
+	}
 
 	public User findOne(final int userId) {
 		User result;
@@ -64,10 +73,13 @@ public class UserService {
 		return result;
 	}
 
+	public Collection<User> findByCoupleId(final int coupleId) {
+		Collection<User> result;
+		result = this.userRepository.findByCoupleId(coupleId);
+		return result;
+	}
+
 	public boolean exists(final Integer arg0) {
 		return this.userRepository.exists(arg0);
 	}
-
-
-
 }
