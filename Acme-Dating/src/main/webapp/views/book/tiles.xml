@@ -32,7 +32,7 @@
 	</definition>
 	
 	<definition name="book/edit" extends="master.page">
-		<put-attribute name="title" value="Score a the experience" />
+		<put-attribute name="title" value="Score the experience" />
 		<put-attribute name="body" value="/views/book/edit.jsp" />
 	</definition>	
 </tiles-definitions>

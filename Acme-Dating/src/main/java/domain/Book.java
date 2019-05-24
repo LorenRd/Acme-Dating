@@ -85,7 +85,7 @@ public class Book extends DomainEntity{
 		this.experience = experience;
 	}
 	
-	@Valid
+	@NotNull
 	@ManyToMany
 	public Collection<Feature> getFeatures() {
 		return this.features;
