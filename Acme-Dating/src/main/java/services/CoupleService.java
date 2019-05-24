@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Date;
@@ -10,7 +9,6 @@ import org.springframework.util.Assert;
 
 import repositories.CoupleRepository;
 import domain.Couple;
-import domain.Diary;
 import domain.User;
 
 @Service
@@ -19,30 +17,23 @@ public class CoupleService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CoupleRepository	coupleRepository;
+	private CoupleRepository coupleRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private UserService			userService;
-
-	@Autowired
-	private DiaryService		diaryService;
-
+	private UserService userService;
 
 	public Couple create(final User sender, final User recipient) {
 		Couple result;
 		Date startDate;
-		Diary diary;
 
 		Assert.notNull(sender);
 		Assert.notNull(recipient);
 
 		result = new Couple();
-		diary = this.diaryService.create();
 		startDate = new Date(System.currentTimeMillis() - 1);
 
 		result.setScore(0);
-		result.setDiary(diary);
 		result.setStartDate(startDate);
 
 		sender.setCouple(result);
@@ -51,20 +42,15 @@ public class CoupleService {
 		return result;
 	}
 
-	public Couple save(final Couple couple, final User sender, final User recipient) {
+	public Couple save(final Couple couple, final User sender,
+			final User recipient) {
 		Couple result;
 		Date startDate;
-		Diary diary;
-		Diary savedDiary;
 
 		Assert.notNull(couple);
 
 		startDate = new Date(System.currentTimeMillis() - 1);
 		couple.setStartDate(startDate);
-
-		diary = couple.getDiary();
-		savedDiary = this.diaryService.save(diary);
-		couple.setDiary(savedDiary);
 
 		result = this.coupleRepository.save(couple);
 
@@ -84,8 +70,6 @@ public class CoupleService {
 
 		principal = this.userService.findByPrincipal();
 		Assert.notNull(principal);
-
-		return principal.getCouple();
 
 		return principal.getCouple();
 	}
