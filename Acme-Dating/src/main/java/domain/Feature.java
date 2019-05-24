@@ -17,7 +17,7 @@ public class Feature extends DomainEntity {
 	private String title;
 	private String description;
 	private String photo;
-	private Double supplement;
+	private double supplement;
 
 	@NotBlank
 	public String getTitle() {
@@ -48,7 +48,7 @@ public class Feature extends DomainEntity {
 
 	@NotNull
 	public double getSupplement() {
-		return supplement;
+		return this.supplement;
 	}
 
 	public void setSupplement(double supplement) {
@@ -68,5 +68,6 @@ public class Feature extends DomainEntity {
 	public void setCompany(final Company company) {
 		this.company = company;
 	}
+
 
 }

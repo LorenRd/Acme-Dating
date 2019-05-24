@@ -20,7 +20,7 @@
 		<acme:image src="${feature.photo}" /><br/>
 		
 		<b><spring:message code="feature.supplement" /></b>:
-		<jstl:out value="${feature.supplement }"/><br/>	
+		<fmt:formatNumber type="number" maxFractionDigits="2" value="${feature.supplement * vat}"/> <spring:message code="feature.vat" /><br/>	
 				
 		<!-- Company -->
 		<b><spring:message code="feature.company" /></b>:

@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
@@ -115,7 +116,7 @@ public class Experience extends DomainEntity{
 	}
 	
 	@Valid
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	public Collection<Feature> getFeatures() {
 		return features;
 	}

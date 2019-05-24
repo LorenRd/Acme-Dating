@@ -17,4 +17,6 @@ public interface ExperienceRepository extends JpaRepository<Experience, Integer>
 	@Query("select distinct e from Experience e where (e.title like %?1% or e.body like %?1% or e.ubication like %?1%)")
 	Collection<Experience> findByKeyword(String keyword);
 
+	@Query("select distinct e from Experience e join e.company c where c.id = ?2 and (e.title like %?1% or e.body like %?1% or e.ubication like %?1%)")
+	Collection<Experience> findByKeywordCompany(String keyword, int companyId);
 }

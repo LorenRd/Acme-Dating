@@ -69,7 +69,6 @@ public class ExperienceService {
 
 		result = new Experience();
 		result.setCompany(principal);
-		result.setScore(0.0);
 		return result;
 	}
 
@@ -129,6 +128,11 @@ public class ExperienceService {
 		return result;
 	}
 	
+	public Collection<Experience> findByKeywordCompany(final String keyword, final int companyId) {
+		final Collection<Experience> result = this.experienceRepository.findByKeywordCompany(keyword, companyId);
+
+		return result;
+	}
 	
 	public Experience reconstruct(final Experience experience, final BindingResult binding) {
 		Experience original;
@@ -148,6 +152,15 @@ public class ExperienceService {
 	}	
 	public void flush() {
 		this.experienceRepository.flush();
+	}
+
+	public void subtractPlaces(int experienceId) {
+		Experience experience;
+		int places;
+		experience = this.findOne(experienceId);
+		places = experience.getCoupleLimit();
+		places = places -1;
+		experience.setCoupleLimit(places);
 	}
 
 }

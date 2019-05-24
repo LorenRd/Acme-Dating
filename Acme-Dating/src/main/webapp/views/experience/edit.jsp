@@ -42,10 +42,19 @@
 			<form:options items="${features}" itemValue="id" itemLabel="title" />
 		</form:select>
 		<form:errors cssClass="error" path="features" />	
+		<br />
+		<br />
+		<form:label path="category">
+		<spring:message code="experience.category" />:
+		</form:label>
+		<form:select multiple="true" path="category" >
+			<form:options items="${categories}" itemValue="id" itemLabel="title" />
+		</form:select>
+		<form:errors cssClass="error" path="category" />	
 		<br />	
 		<br />		
 		<br />
-		<acme:submit name="saveFinal" code="experience.saveFinal"/>
+		<acme:submit name="saveFinal" code="experience.save"/>
 
 		
 		<acme:cancel url="welcome/index.do" code="experience.cancel"/>

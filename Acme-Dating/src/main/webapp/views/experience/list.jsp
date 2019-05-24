@@ -37,7 +37,7 @@
 	<display:column property="score" title="${scoreHeader}"
 		sortable="true" />
 		
-	<spring:message code="experience.price" var="priceHeader" />
+	<spring:message code="experience.price.list" var="priceHeader" />
 	<display:column property="price" title="${priceHeader}"
 		sortable="true" />
 		
@@ -54,5 +54,6 @@
 <!-- Create experience -->
 <security:authorize access="hasRole('COMPANY')">
 		<acme:button url="experience/company/create.do" code="experience.create"/>
+		<input type="button" name="computeScore" value="<spring:message code="experience.computeScore" />" onclick="redirect: location.href = 'experience/list.do?computeScore';" />		
 	
 </security:authorize> 

@@ -9,6 +9,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 
 		<b><spring:message code="experience.title" /></b>:
 		<jstl:out value="${experience.title}"/><br/>
@@ -23,7 +25,7 @@
 		<jstl:out value="${experience.ubication }"/><br/>
 		
 		<b><spring:message code="experience.price" /></b>:
-		<jstl:out value="${experience.price }"/><br/>
+		<jstl:out value="${experience.price * vat}"/><br/>
 		
 		<b><spring:message code="experience.coupleLimit" /></b>:
 		<jstl:out value="${experience.coupleLimit }"/><br/>
@@ -48,24 +50,37 @@
 <h3> <spring:message code="experience.comments" /> </h3>
 <jstl:choose>
 <jstl:when test="${not empty comments}">
-<display:table pagesize="5" class="displaytag" name="comments" requestURI="experience/display.do" id="comments">
-		
-		<!-- Display -->
-		<display:column>
-			<a href="experienceComment/display.do?experienceCommentId=${comments.id}"><spring:message code="comment.display"/></a>
-		</display:column>
-		
-		<spring:message code="comment.body" var="body" />
-		<display:column property="body" title="${body}" sortable="body"/>
-			
-</display:table>
+<ul>
+<c:forEach items="${comments}" var="comment">
+    <!-- Padres: Tienen referencia a experience pero no a experience comment, opcion de reply -->
+  	<jstl:if test="${empty comment.experienceComment}">
+  		<li><jstl:if test="${comment.actor.id == experience.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${comment.actor.name}"/>:</b> <jstl:out value="${comment.body}"/> <a href="experienceComment/createReply.do?experienceCommentId=${comment.id}"><spring:message code="experience.comment.reply"/></a></li>
+  	    	<!-- Hijos, habrá que volver a recorrer todos los comments buscando cuales son los hijos y poniendolos -->
+			<ul>
+			<c:forEach items="${comments}" var="commentChild">
+			  	<jstl:if test="${comment.id == commentChild.experienceComment.id}">
+			  		<li><jstl:if test="${commentChild.actor.id == experience.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${commentChild.actor.name}"/>:</b> <jstl:out value="${commentChild.body}"/></li>
+				</jstl:if>
+			</c:forEach>
+			</ul>
+  	</jstl:if>
+</c:forEach>
+</ul>
 </jstl:when>
 <jstl:otherwise>
 <spring:message code="experience.comments.empty" /> 
 </jstl:otherwise>
 </jstl:choose>
-
-
+<br/><br/>
+<security:authorize access="hasAnyRole('COMPANY','USER')">
+		<a href="experienceComment/create.do?experienceId=${experience.id}"><spring:message code="experience.comment"/></a><br/>
+</security:authorize>
+<br/>
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${hasCouple}">
+		<a href="book/couple/create.do?experienceId=${experience.id}"><spring:message code="experience.book"/></a><br/>
+	</jstl:if>
+</security:authorize>
 <security:authorize access="hasRole('COMPANY')">
 <jstl:if test="${experience.company.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>

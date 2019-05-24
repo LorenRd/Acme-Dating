@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="styles/common.css" type="text/css">
 <link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
+<link rel="stylesheet" href="styles/font-awesome.min.css">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 

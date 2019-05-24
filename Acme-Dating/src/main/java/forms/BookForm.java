@@ -1,25 +1,32 @@
 
 package forms;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import domain.Couple;
 import domain.Experience;
+import domain.Feature;
 
 public class BookForm {
 
 	private Date	moment;
 	private Date	date;
+	private Double  score;
 
 
+	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -40,10 +47,22 @@ public class BookForm {
 	public void setDate(final Date date) {
 		this.date = date;
 	}
+	
+	@Range(min = 0, max = 5)
+	public Double getScore() {
+		return score;
+	}
+
+	public void setScore(Double score) {
+		this.score = score;
+	}
+	
+	//---------------
 
 	private Couple		couple;
 	private Experience	experience;
 	private int			id;
+	private Collection<Feature> features;
 
 
 	public int getId() {
@@ -54,6 +73,7 @@ public class BookForm {
 		this.id = id;
 	}
 	
+	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public Couple getCouple() {
@@ -72,6 +92,16 @@ public class BookForm {
 
 	public void setExperience(final Experience experience) {
 		this.experience = experience;
+	}
+	
+	@Valid
+	@ManyToMany
+	public Collection<Feature> getFeatures() {
+		return this.features;
+	}
+
+	public void setFeatures(final Collection<Feature> features) {
+		this.features = features;
 	}
 
 }

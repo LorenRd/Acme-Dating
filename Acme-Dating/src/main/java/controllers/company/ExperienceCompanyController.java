@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CategoryService;
 import services.CompanyService;
+import services.CustomisationService;
 import services.ExperienceService;
 import services.FeatureService;
 import controllers.AbstractController;
+import domain.Category;
 import domain.Company;
+import domain.Customisation;
 import domain.Experience;
 import domain.Feature;
 
@@ -33,9 +37,15 @@ public class ExperienceCompanyController extends AbstractController {
 	
 	@Autowired
 	private FeatureService	featureService;
+
+	@Autowired
+	private CategoryService	categoryService;
 	
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private CustomisationService customisationService;
 	
 	//List
 	
@@ -44,11 +54,13 @@ public class ExperienceCompanyController extends AbstractController {
 		final ModelAndView result;
 		Collection<Experience> experiences;
 		experiences = new ArrayList<Experience>();
+		Company principal;
+		principal = this.companyService.findByPrincipal();
 
 		if (keywordBool && keyword != null)
-			experiences = this.experienceService.findByKeywordAll(keyword);
+			experiences = this.experienceService.findByKeywordCompany(keyword, principal.getId());
 		else
-			experiences = this.experienceService.findAll();
+			experiences = this.experienceService.findByCompany(principal.getId());
 
 
 		result = new ModelAndView("experience/list");
@@ -65,6 +77,10 @@ public class ExperienceCompanyController extends AbstractController {
 			// Inicializa resultado
 			ModelAndView result;
 			Experience experience;
+			Customisation customisation;
+			Double vat;
+			customisation = this.customisationService.find();
+			vat = (customisation.getVatNumber())/100 + 1.0;
 
 			// Busca en el repositorio
 			experience = this.experienceService.findOne(experienceId);
@@ -73,6 +89,7 @@ public class ExperienceCompanyController extends AbstractController {
 			// Crea y añade objetos a la vista
 			result = new ModelAndView("experience/display");
 			result.addObject("requestURI", "experience/display.do");
+			result.addObject("vat", vat);
 			result.addObject("experience", experience);
 
 			// Envía la vista
@@ -190,13 +207,16 @@ public class ExperienceCompanyController extends AbstractController {
 		protected ModelAndView createEditModelAndView(final Experience experience, final String messageCode) {
 			ModelAndView result;
 			Collection<Feature> features;
+			Collection<Category> categories;
 			Company company;
+			categories = this.categoryService.findAll();
 			company = this.companyService.findByPrincipal();
 			features = this.featureService.findAllByCompanyId(company.getId());
 			
 			result = new ModelAndView("experience/edit");
 			result.addObject("experience", experience);
 			result.addObject("features", features);
+			result.addObject("categories", categories);
 			result.addObject("message", messageCode);
 
 			return result;
@@ -212,14 +232,30 @@ public class ExperienceCompanyController extends AbstractController {
 		private ModelAndView createModelAndView(final Experience experience, final String messageCode) {
 			ModelAndView result;
 			Collection<Feature> features;
+			Collection<Category> categories;
 			Company company;
+			
+			categories = this.categoryService.findAll();
 			company = this.companyService.findByPrincipal();
 			features = this.featureService.findAllByCompanyId(company.getId());
 			
 			result = new ModelAndView("experience/create");
 			result.addObject("experience", experience);
 			result.addObject("features", features);
+			result.addObject("categories", categories);
 			result.addObject("message", messageCode);
+			return result;
+		}
+
+		
+		@RequestMapping(value = "/list", method = RequestMethod.GET, params ="computeScore")
+		public ModelAndView computeScore(){
+			final ModelAndView result;
+			
+			this.companyService.computeScore();
+			
+			result = new ModelAndView("redirect:list.do");
+			
 			return result;
 		}
 
