@@ -32,6 +32,9 @@
 	        	<li><jstl:out value="${feature.title}"/>: <jstl:out value="${feature.supplement}"/></li>
 	        </jstl:if>
 		</jstl:forEach></ul>
+		
+		<jstl:choose>
+		<jstl:when test="${not empty features}">
 		<!-- Seleccionable features -->
 		<div>
 			<form:select multiple="true" path="features" >
@@ -39,6 +42,13 @@
 			</form:select>
 			<form:errors cssClass="error" path="features" />	
 		</div>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="book.no.features" />
+				<form:hidden path="features"/>
+		</jstl:otherwise>
+		</jstl:choose>
+		
 		<br /><br />
 		<input type="submit" name="save" id="save" value="<spring:message code="book.save" />" >&nbsp; 
 		<acme:cancel url="welcome/index.do" code="book.cancel"/>

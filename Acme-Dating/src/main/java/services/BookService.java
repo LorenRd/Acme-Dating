@@ -15,6 +15,7 @@ import org.springframework.validation.Validator;
 import repositories.BookRepository;
 import domain.Book;
 import domain.Couple;
+import domain.Feature;
 import forms.BookForm;
 
 @Service
@@ -27,6 +28,9 @@ public class BookService {
 
 	@Autowired
 	private CoupleService			coupleService;
+	
+	@Autowired
+	private ExperienceService			experienceService;
 
 	@Autowired
 	private Validator				validator;
@@ -49,6 +53,16 @@ public class BookService {
 
 	public Book save(final Book book) {
 		Book result;
+		this.experienceService.subtractPlaces(book.getExperience().getId());
+		
+		result = this.bookRepository.save(book);
+		Assert.notNull(result);
+		return result;
+	}
+	
+	public Book saveScore(final Book book) {
+		Book result;
+		
 		result = this.bookRepository.save(book);
 		Assert.notNull(result);
 		return result;
@@ -91,6 +105,7 @@ public class BookService {
 
 		result = new Book();
 		result.setCouple(principal);
+		result.setFeatures(new ArrayList<Feature>());
 		result.setMoment(new Date(System.currentTimeMillis() - 1));
 		
 		return result;
@@ -104,6 +119,8 @@ public class BookService {
 		bookForm.setMoment(book.getMoment());
 		bookForm.setDate(book.getDate());
 		bookForm.setScore(book.getScore());
+		bookForm.setFeatures(book.getFeatures());
+
 		return bookForm;
 	}
 	

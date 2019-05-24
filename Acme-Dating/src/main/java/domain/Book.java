@@ -75,7 +75,6 @@ public class Book extends DomainEntity{
 		this.couple = couple;
 	}
 	
-	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public Experience getExperience() {

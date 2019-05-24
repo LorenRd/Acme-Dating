@@ -34,51 +34,32 @@
 			<td><spring:message code="company.phone" />
 			<td data-label="phone"><jstl:out value="${company.phone}" /></td>
 		</tr>
-		<tr>
-			<td><spring:message code="company.address" />
-			<td data-label="address"><jstl:out value="${company.address}" /></td>
-		</tr>
-		<tr>
-			<td><spring:message code="company.vatNumber" />
-			<td data-label="vatNumber"><jstl:out value="${company.vatNumber}" /></td>
-		</tr>
-		<tr>
-			<td><spring:message code="company.score" />
-			<td data-label="score">
-			<jstl:if test="${hasAudits == true}">
-				<jstl:out value="${company.score}" />
-			</jstl:if>
-			<jstl:if test="${hasAudits == false}">
-					<spring:message code="company.score.nil" />
-			</jstl:if>
-			</td>
-		</tr>
 	</tbody>
 </table>
 
 
 
-<!-- Positions -->
-<h3> <spring:message code="company.positions" /> </h3>
+<!-- Experiences -->
+<h3> <spring:message code="company.experiences" /> </h3>
 <jstl:choose>
-<jstl:when test="${not empty positions}">
-<display:table pagesize="5" class="displaytag" name="positions" requestURI="company/display.do" id="positions">
+<jstl:when test="${not empty experiences}">
+<display:table pagesize="5" class="displaytag" name="experiences" requestURI="company/display.do" id="experiences">
 		
 		<!-- Display -->
 		<display:column>
-			<a href="position/display.do?positionId=${positions.id}"><spring:message code="company.display"/></a>
+			<a href="experience/display.do?experienceId=${experiences.id}"><spring:message code="company.display"/></a>
 		</display:column>
 		
-		<spring:message code="company.positions.title" var="title" />
+		<spring:message code="company.experience.title" var="title" />
 		<display:column property="title" title="${title}" sortable="title"/>
 	
-		<spring:message code="company.positions.description" var="description" />
-		<display:column property="description" title="${description}" sortable="true"/>
+		<spring:message code="company.experience.description" var="description" />
+		<display:column property="body" title="${body}" sortable="true"/>
 			
 </display:table>
 </jstl:when>
 <jstl:otherwise>
-<spring:message code="company.positions.empty" /> 
+<spring:message code="company.experience.empty" /> 
 </jstl:otherwise>
 </jstl:choose>
 

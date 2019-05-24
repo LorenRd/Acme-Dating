@@ -22,13 +22,17 @@ import domain.Book;
 import domain.Couple;
 import domain.Customisation;
 import domain.Experience;
+import domain.ExperienceComment;
 import domain.Feature;
+import domain.User;
 import forms.BookForm;
 
 import services.BookService;
 import services.CoupleService;
 import services.CustomisationService;
+import services.ExperienceCommentService;
 import services.ExperienceService;
+import services.UserService;
 
 @Controller
 @RequestMapping("/book/couple")
@@ -47,7 +51,11 @@ public class BookCoupleController extends AbstractController {
 	@Autowired
 	private CustomisationService customisationService;
 
-
+	@Autowired
+	private ExperienceCommentService	experienceCommentService;
+	
+	@Autowired
+	private UserService					userService;
 
 	//List
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -130,7 +138,13 @@ public class BookCoupleController extends AbstractController {
 		BookForm bookForm;
 		
 		experience = this.experienceService.findOne(experienceId);
-
+		try{
+			Assert.isTrue(experience.getCoupleLimit()>0);
+		}catch (final Throwable oops) {
+			result = this.createModelAndView(experience, "book.no.places");
+			return result;
+		}
+		
 		book = this.bookService.create();
 		book.setExperience(experience);
 		
@@ -178,7 +192,7 @@ public class BookCoupleController extends AbstractController {
 					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 				result = this.createEditModelAndView(bookForm);
 			} else {
-				book = this.bookService.save(book);
+				book = this.bookService.saveScore(book);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 		} catch (final Throwable oops) {
@@ -204,6 +218,38 @@ public class BookCoupleController extends AbstractController {
 		result.addObject("bookForm", bookForm);
 		result.addObject("features", bookForm.getExperience().getFeatures());
 		result.addObject("message", messageCode);
+		return result;
+	}
+	
+	protected ModelAndView createModelAndView(final Experience experience) {
+		ModelAndView result;
+		result = this.createModelAndView(experience, null);
+		return result;
+	}
+
+	private ModelAndView createModelAndView(final Experience experience, final String messageCode) {
+		ModelAndView result;
+		Collection<ExperienceComment> comments;
+		User user;
+		boolean hasCouple = false;
+
+		comments = this.experienceCommentService.findByExperienceId(experience.getId());
+
+		try{
+			user = this.userService.findByPrincipal();
+			if(user.getCouple() != null){
+				hasCouple = true;
+			}
+		}catch (Exception e) {
+		}
+		
+		result = new ModelAndView("experience/display");
+
+		result.addObject("experience", experience);
+		result.addObject("features", experience.getFeatures());
+		result.addObject("message", messageCode);
+		result.addObject("hasCouple", hasCouple);
+		result.addObject("comments", comments);
 		return result;
 	}
 }

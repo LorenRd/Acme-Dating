@@ -26,6 +26,7 @@ public class BookForm {
 	private Double  score;
 
 
+	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -72,6 +73,7 @@ public class BookForm {
 		this.id = id;
 	}
 	
+	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public Couple getCouple() {

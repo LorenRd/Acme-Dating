@@ -154,4 +154,13 @@ public class ExperienceService {
 		this.experienceRepository.flush();
 	}
 
+	public void subtractPlaces(int experienceId) {
+		Experience experience;
+		int places;
+		experience = this.findOne(experienceId);
+		places = experience.getCoupleLimit();
+		places = places -1;
+		experience.setCoupleLimit(places);
+	}
+
 }

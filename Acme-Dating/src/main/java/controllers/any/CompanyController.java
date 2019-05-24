@@ -36,7 +36,7 @@ public class CompanyController extends AbstractController {
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(required = false) final Integer companyId) {
 		final ModelAndView result;
-		Company company = new Company();
+		Company company;
 		if (companyId == null)
 			company = this.companyService.findByPrincipal();
 		else
@@ -44,10 +44,7 @@ public class CompanyController extends AbstractController {
 
 		Collection<Experience> experiences;
 		
-
-		Company principal;
-		principal = this.companyService.findByPrincipal();
-		experiences = this.experienceService.findByCompany(principal.getId());
+		experiences = this.experienceService.findByCompany(company.getId());
 	
 		result = new ModelAndView("company/display");
 		result.addObject("company", company);
