@@ -1039,6 +1039,11 @@
 		<property name="date" value="2019/06/20 12:00" />
 		<property name="couple" ref="couple1" />
 		<property name="experience" ref="experience1" />
+		<property name="features">
+			<list>
+				<ref bean="feature1" />
+			</list>
+		</property>
 	</bean>
 
 	<bean class="domain.Book" id="book2">
@@ -1046,6 +1051,12 @@
 		<property name="date" value="2019/08/20 20:00" />
 		<property name="couple" ref="couple2" />
 		<property name="experience" ref="experience2" />
+		<property name="features">
+			<list>
+				<ref bean="feature2" />
+				<ref bean="feature3" />
+			</list>
+		</property>
 	</bean>
 
 	<bean class="domain.Book" id="book3">
@@ -1053,6 +1064,10 @@
 		<property name="date" value="2010/01/14 22:20" />
 		<property name="couple" ref="couple3" />
 		<property name="experience" ref="experience3" />
+		<property name="features">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Challenges -->

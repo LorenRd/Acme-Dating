@@ -12,6 +12,8 @@ import org.springframework.validation.Validator;
 import domain.Category;
 import domain.Couple;
 import domain.Record;
+import domain.RecordComment;
+import repositories.RecordCommentRepository;
 import repositories.RecordRepository;
 
 @Service
@@ -22,7 +24,13 @@ public class RecordService {
 	@Autowired
 	private RecordRepository recordRepository;
 
+	@Autowired
+	private RecordCommentRepository recordCommentRepository;
+
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private RecordCommentService recordCommentService;
 
 	@Autowired
 	private CoupleService coupleService;
@@ -72,6 +80,8 @@ public class RecordService {
 
 	public void delete(final Record record) {
 		Couple principal;
+		Collection<RecordComment> recordComments = this.recordCommentRepository
+				.findByRecordId(record.getId());
 
 		Assert.notNull(record);
 
@@ -80,6 +90,9 @@ public class RecordService {
 
 		Assert.isTrue(record.getCouple().getId() == principal.getId());
 
+		for (final RecordComment rC : recordComments) {
+			this.recordCommentService.delete(rC);
+		}
 		this.recordRepository.delete(record);
 	}
 
@@ -101,6 +114,10 @@ public class RecordService {
 		} else {
 			result = this.recordRepository.findOne(record.getId());
 
+			if (!(record.getDay() == null)) {
+				result.setDay(record.getDay());
+			}
+
 			if (!record.getTitle().equals("")) {
 				result.setTitle(record.getTitle());
 			}
@@ -109,13 +126,11 @@ public class RecordService {
 				result.setBody(record.getBody());
 			}
 
-			if (!record.getPhoto().equals("")) {
-				result.setPhoto(record.getPhoto());
+			result.setPhoto(record.getPhoto());
+
+			if (!(record.getCategory() == null)) {
+				result.setCategory(record.getCategory());
 			}
-			if (!record.getDay().equals("")) {
-				result.setDay(record.getDay());
-			}
-			result.setCategory(record.getCategory());
 		}
 
 		this.validator.validate(result, binding);

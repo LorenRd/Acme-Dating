@@ -25,7 +25,7 @@
 <c:if test="${not empty couple}">
 
 	<display:table name="records" id="row" requestURI="${requestURI}"
-		pagesize="5" class="displaytag">
+		pagesize="5" class="displaytag" defaultsort="1">
 
 		<!-- Attributes -->
 

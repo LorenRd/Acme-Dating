@@ -1,5 +1,5 @@
 <%--
- * edit.jsp
+ * create.jsp
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 

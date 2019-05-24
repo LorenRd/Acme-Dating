@@ -200,8 +200,9 @@ public class RecordCoupleController extends AbstractController {
 				return result;
 			} else {
 
-				Collection<Category> categories = this.categoryService.findAll();
-				
+				Collection<Category> categories = this.categoryService
+						.findAll();
+
 				result.addObject("record", record);
 				result.addObject("couple", couple);
 				result.addObject("categories", categories);

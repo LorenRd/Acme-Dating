@@ -18,14 +18,11 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-
 	// Supporting services ----------------------------------------------------
-
 
 	// Additional functions
 
 	// Simple CRUD Methods
-
 
 	public User findOne(final int userId) {
 		User result;
@@ -67,7 +64,5 @@ public class UserService {
 	public boolean exists(final Integer arg0) {
 		return this.userRepository.exists(arg0);
 	}
-
-
 
 }
