@@ -20,6 +20,7 @@
 		<value>/views/administrator/messages</value>
 		<value>/views/couple/messages</value>
 		<value>/views/task/messages</value>
+		<value>/views/record/messages</value>
 		<value>/views/experience/messages</value>
 		<value>/views/experienceComment/messages</value>
 		<value>/views/feature/messages</value>

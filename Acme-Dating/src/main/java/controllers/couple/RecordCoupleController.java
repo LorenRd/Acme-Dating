@@ -15,20 +15,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CategoryService;
 import services.CoupleService;
-import services.TaskService;
+import services.RecordService;
 import services.UserService;
+
 import controllers.AbstractController;
+import domain.Category;
 import domain.Couple;
-import domain.Task;
+import domain.Record;
 import domain.User;
 
 @Controller
-@RequestMapping("/task/couple")
-public class TaskCoupleController extends AbstractController {
+@RequestMapping("/record/couple")
+public class RecordCoupleController extends AbstractController {
 
 	@Autowired
-	private TaskService taskService;
+	private RecordService recordService;
 
 	@Autowired
 	private CoupleService coupleService;
@@ -36,15 +39,18 @@ public class TaskCoupleController extends AbstractController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private CategoryService categoryService;
+
 	// List
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
-		Collection<Task> tasks;
-		tasks = new ArrayList<Task>();
-		result = new ModelAndView("task/list");
-		result.addObject("requestURI", "task/couple/list.do");
+		Collection<Record> records;
+		records = new ArrayList<Record>();
+		result = new ModelAndView("record/list");
+		result.addObject("requestURI", "record/couple/list.do");
 
 		final User principal = this.userService.findByPrincipal();
 
@@ -54,9 +60,9 @@ public class TaskCoupleController extends AbstractController {
 		} else {
 
 			final Couple couple = this.coupleService.findByUser();
-			tasks = this.taskService.findByCoupleId(couple.getId());
+			records = this.recordService.findByCoupleId(couple.getId());
 
-			result.addObject("tasks", tasks);
+			result.addObject("records", records);
 			result.addObject("couple", couple);
 			return result;
 		}
@@ -67,7 +73,7 @@ public class TaskCoupleController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		Task task;
+		Record record;
 
 		final User principal = this.userService.findByPrincipal();
 
@@ -75,8 +81,8 @@ public class TaskCoupleController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 			return result;
 		} else {
-			task = this.taskService.create();
-			result = this.createModelAndView(task);
+			record = this.recordService.create();
+			result = this.createModelAndView(record);
 
 			return result;
 		}
@@ -85,61 +91,61 @@ public class TaskCoupleController extends AbstractController {
 	// Edit
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int taskId) {
+	public ModelAndView edit(@RequestParam final int recordId) {
 		ModelAndView result;
-		Task task;
+		Record record;
 
-		task = this.taskService.findOne(taskId);
-		Assert.notNull(task);
-		result = this.createEditModelAndView(task);
+		record = this.recordService.findOne(recordId);
+		Assert.notNull(record);
+		result = this.createEditModelAndView(record);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("task") Task task,
+	public ModelAndView save(@ModelAttribute("record") Record record,
 			final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			task = this.taskService.reconstruct(task, binding);
+			record = this.recordService.reconstruct(record, binding);
 			if (binding.hasErrors()) {
-				result = this.createModelAndView(task);
+				result = this.createModelAndView(record);
 				for (final ObjectError e : binding.getAllErrors())
 					System.out.println(e.getObjectName() + " error ["
 							+ e.getDefaultMessage() + "] "
 							+ Arrays.toString(e.getCodes()));
 			} else {
-				task = this.taskService.save(task);
+				record = this.recordService.save(record);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createModelAndView(task, "task.commit.error");
+			result = this.createModelAndView(record, "record.commit.error");
 		}
 		return result;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView create(@ModelAttribute("task") Task task,
+	public ModelAndView create(@ModelAttribute("record") Record record,
 			final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			task = this.taskService.reconstruct(task, binding);
+			record = this.recordService.reconstruct(record, binding);
 			if (binding.hasErrors()) {
-				result = this.createModelAndView(task);
+				result = this.createModelAndView(record);
 				for (final ObjectError e : binding.getAllErrors())
 					System.out.println(e.getObjectName() + " error ["
 							+ e.getDefaultMessage() + "] "
 							+ Arrays.toString(e.getCodes()));
 			} else {
-				task = this.taskService.save(task);
+				record = this.recordService.save(record);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(task, "task.commit.error");
+			result = this.createEditModelAndView(record, "record.commit.error");
 		}
 		return result;
 	}
@@ -147,35 +153,35 @@ public class TaskCoupleController extends AbstractController {
 	// Delete
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(final int taskId) {
+	public ModelAndView delete(final int recordId) {
 		ModelAndView result;
-		Task task;
+		Record record;
 
-		task = this.taskService.findOne(taskId);
+		record = this.recordService.findOne(recordId);
 
 		try {
-			this.taskService.delete(task);
+			this.recordService.delete(record);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(task, "task.commit.error");
+			result = this.createEditModelAndView(record, "record.commit.error");
 		}
 		return result;
 	}
 
 	// ------------------- Ancillary Methods
 
-	protected ModelAndView createEditModelAndView(final Task task) {
+	protected ModelAndView createEditModelAndView(final Record record) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(task, null);
+		result = this.createEditModelAndView(record, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Task task,
+	protected ModelAndView createEditModelAndView(final Record record,
 			final String messageCode) {
 		ModelAndView result;
-		result = new ModelAndView("task/edit");
+		result = new ModelAndView("record/edit");
 
 		final User principal = this.userService.findByPrincipal();
 
@@ -183,36 +189,39 @@ public class TaskCoupleController extends AbstractController {
 			result.addObject("couple", null);
 			return result;
 		} else {
-			Collection<Task> tasks;
-			tasks = new ArrayList<Task>();
+			Collection<Record> records;
+			records = new ArrayList<Record>();
 
 			final Couple couple = this.coupleService.findByUser();
-			tasks = this.taskService.findByCoupleId(couple.getId());
+			records = this.recordService.findByCoupleId(couple.getId());
 
-			if (!tasks.contains(task)) {
+			if (!records.contains(record)) {
 				result = new ModelAndView("redirect:/welcome/index.do");
 				return result;
 			} else {
 
-				result.addObject("task", task);
+				Collection<Category> categories = this.categoryService.findAll();
+				
+				result.addObject("record", record);
 				result.addObject("couple", couple);
+				result.addObject("categories", categories);
 				result.addObject("message", messageCode);
 				return result;
 			}
 		}
 	}
 
-	private ModelAndView createModelAndView(final Task task) {
+	private ModelAndView createModelAndView(final Record record) {
 		ModelAndView result;
 
-		result = this.createModelAndView(task, null);
+		result = this.createModelAndView(record, null);
 		return result;
 	}
 
-	private ModelAndView createModelAndView(final Task task,
+	private ModelAndView createModelAndView(final Record record,
 			final String messageCode) {
 		ModelAndView result;
-		result = new ModelAndView("task/create");
+		result = new ModelAndView("record/create");
 
 		final User principal = this.userService.findByPrincipal();
 
@@ -222,12 +231,13 @@ public class TaskCoupleController extends AbstractController {
 		} else {
 
 			final Couple couple = this.coupleService.findByUser();
+			Collection<Category> categories = this.categoryService.findAll();
 
-			result.addObject("task", task);
+			result.addObject("record", record);
 			result.addObject("couple", couple);
+			result.addObject("categories", categories);
 			result.addObject("message", messageCode);
 			return result;
 		}
 	}
-
 }

@@ -35,7 +35,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.couple" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="task/couple/list.do"><spring:message code="master.page.couple.tasks" /></a></li>										
+					<li><a href="task/couple/list.do"><spring:message code="master.page.couple.tasks" /></a></li>	
+					<li><a href="record/couple/list.do"><spring:message code="master.page.couple.records" /></a></li>									
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>

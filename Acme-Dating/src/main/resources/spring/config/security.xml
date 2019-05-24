@@ -67,6 +67,12 @@
 		<security:intercept-url pattern="/task/couple/edit.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/task/couple/delete.do" access="hasRole('USER')"/>		
 		<security:intercept-url pattern="/task/couple/cancel.do" access="hasRole('USER')"/>	
+		
+		<security:intercept-url pattern="/record/couple/list.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/record/couple/create.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/record/couple/edit.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/record/couple/delete.do" access="hasRole('USER')"/>		
+		<security:intercept-url pattern="/record/couple/cancel.do" access="hasRole('USER')"/>	
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

@@ -144,10 +144,6 @@
 		<property name="scoreToReach" value="100" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy2">
@@ -156,10 +152,6 @@
 		<property name="scoreToReach" value="500" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy3">
@@ -168,10 +160,6 @@
 		<property name="scoreToReach" value="1000" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy4">
@@ -180,10 +168,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="5" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy5">
@@ -192,10 +176,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="10" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy6">
@@ -204,10 +184,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="100" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy7">
@@ -216,10 +192,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="1" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy8">
@@ -228,10 +200,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="5" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy9">
@@ -240,10 +208,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<!-- Customisation -->
