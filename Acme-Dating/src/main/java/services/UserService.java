@@ -21,7 +21,6 @@ public class UserService {
 	@Autowired
 	private UserRepository	userRepository;
 
-
 	// Supporting services ----------------------------------------------------
 
 	// Additional functions
@@ -82,4 +81,5 @@ public class UserService {
 	public boolean exists(final Integer arg0) {
 		return this.userRepository.exists(arg0);
 	}
+
 }

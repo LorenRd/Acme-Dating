@@ -7,18 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Category;
 import repositories.CategoryRepository;
+
+import domain.Category;
 
 @Service
 @Transactional
 public class CategoryService {
 
-	// Managed Repository
+	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CategoryRepository	categoryRepository;
+	private CategoryRepository categoryRepository;
 
-	
 	public Collection<Category> findAll() {
 		Collection<Category> result;
 
@@ -26,5 +26,4 @@ public class CategoryService {
 		Assert.notNull(result);
 		return result;
 	}
-
 }

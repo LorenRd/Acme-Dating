@@ -36,7 +36,7 @@ public class Book extends DomainEntity{
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-	
+
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -57,13 +57,13 @@ public class Book extends DomainEntity{
 		this.score = score;
 	}
 	
-	// Relationships----------------------------------------------
 
+	// Relationships----------------------------------------------
 
 	private Couple couple;
 	private Experience experience;
 	private Collection<Feature> features;
-	
+
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
@@ -74,7 +74,8 @@ public class Book extends DomainEntity{
 	public void setCouple(final Couple couple) {
 		this.couple = couple;
 	}
-	
+
+	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public Experience getExperience() {
@@ -84,7 +85,7 @@ public class Book extends DomainEntity{
 	public void setExperience(final Experience experience) {
 		this.experience = experience;
 	}
-	
+
 	@NotNull
 	@ManyToMany
 	public Collection<Feature> getFeatures() {
@@ -94,4 +95,5 @@ public class Book extends DomainEntity{
 	public void setFeatures(final Collection<Feature> features) {
 		this.features = features;
 	}
+
 }
