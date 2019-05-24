@@ -89,6 +89,29 @@
 				</ul>
 			</li>
 		</security:authorize>		
+		
+		<security:authorize access="hasRole('USER')">
+			<li><a class="fNiv"><spring:message	code="master.page.user" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="coupleRequest/user/list.do"><spring:message code="master.page.coupleRequest.list" /></a></li>
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<jstl:if test="${cookie['language'].getValue()=='en'}">
+					<li><a href="terms/englishTerms.do"><spring:message
+								code="master.page.terms" /></a></li>
+					</jstl:if>
+					<jstl:if test="${cookie['language'].getValue()=='es'}">
+					<li><a href="terms/terms.do"><spring:message
+								code="master.page.terms" /></a></li>
+					</jstl:if>
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv"><spring:message
 						code="master.page.experiences" /></a>
