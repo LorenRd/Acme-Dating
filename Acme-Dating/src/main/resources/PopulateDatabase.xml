@@ -543,11 +543,6 @@
 
 	<!-- Couples -->
 
-	<bean class="domain.Diary" id="diary1">
-	</bean>
-
-	<!-- Couple -->
-
 	<bean class="domain.Couple" id="couple1">
 		<property name="startDate" value="2018/03/01 13:00" />
 		<property name="score" value="110" />
@@ -565,15 +560,6 @@
 		<property name="trophies">
 			<list>
 				<ref bean="trophy5" />
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Couple" id="couple3">
-		<property name="startDate" value="2019/03/01 21:00" />
-		<property name="score" value="8" />
-		<property name="trophies">
-			<list>
 			</list>
 		</property>
 	</bean>
@@ -991,10 +977,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="10" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy6">
@@ -1027,10 +1009,6 @@
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
-		<property name="couples">
-			<list>
-			</list>
-		</property>
 	</bean>
 
 	<!-- Books -->
@@ -1056,17 +1034,6 @@
 			<list>
 				<ref bean="feature2" />
 				<ref bean="feature3" />
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Book" id="book3">
-		<property name="moment" value="2017/05/01 19:30" />
-		<property name="date" value="2010/01/14 22:20" />
-		<property name="couple" ref="couple3" />
-		<property name="experience" ref="experience3" />
-		<property name="features">
-			<list>
 			</list>
 		</property>
 	</bean>
