@@ -15,7 +15,7 @@ import domain.User;
 public class StringToUserConverter implements Converter<String, User> {
 
 	@Autowired
-	UserRepository	userrepository;
+	UserRepository	userRepository;
 
 
 	@Override
@@ -28,12 +28,11 @@ public class StringToUserConverter implements Converter<String, User> {
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.userrepository.findOne(id);
+				result = this.userRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 		return result;
 	}
-
 }

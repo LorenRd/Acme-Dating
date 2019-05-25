@@ -41,9 +41,8 @@ public class RecordComment extends DomainEntity {
 		this.record = record;
 	}
 
-	@NotNull
 	@Valid
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	public RecordComment getRecordComment() {
 		return this.recordComment;
 	}

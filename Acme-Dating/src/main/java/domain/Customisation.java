@@ -1,13 +1,18 @@
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
+
+import cz.jirutka.validator.collection.constraints.EachNotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -18,6 +23,7 @@ public class Customisation extends DomainEntity {
 	private String welcomeMessageEs;
 	private String countryCode;
 	private Double vatNumber;
+	private Collection<String> scoreWords;
 
 	@NotBlank
 	@URL
@@ -64,5 +70,14 @@ public class Customisation extends DomainEntity {
 	public void setVatNumber(Double vatNumber) {
 		this.vatNumber = vatNumber;
 	}
+	
+	@ElementCollection
+	@EachNotBlank
+	public Collection<String> getScoreWords() {
+		return scoreWords;
+	}
 
+	public void setScoreWords(Collection<String> scoreWords) {
+		this.scoreWords = scoreWords;
+	}
 }

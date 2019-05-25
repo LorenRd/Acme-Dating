@@ -2,6 +2,7 @@
 package domain;
 
 import java.util.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,13 +22,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Challenge extends DomainEntity {
 
-	private Date				moment;
-	private String				title;
-	private String				description;
-	private int 				score;
-	private Date				endDate;
-	private boolean 			isAccepted;
-	
+	private Date	moment;
+	private String	title;
+	private String	description;
+	private int		score;
+	private Date	endDate;
+	private String	status;
+
+
 	@NotNull
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -37,7 +41,7 @@ public class Challenge extends DomainEntity {
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-	
+
 	@NotBlank
 	public String getTitle() {
 		return this.title;
@@ -55,16 +59,16 @@ public class Challenge extends DomainEntity {
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-	
+
 	@Range(min = 1, max = 100)
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(final int score) {
 		this.score = score;
 	}
-	
+
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -76,18 +80,20 @@ public class Challenge extends DomainEntity {
 		this.endDate = endDate;
 	}
 
-	public boolean isAccepted() {
-		return isAccepted;
+	@NotBlank
+	@Pattern(regexp = "^PENDING|ACCEPTED|COMPLETED$")
+	public String getStatus() {
+		return this.status;
+	}
+	public void setStatus(final String status) {
+		this.status = status;
 	}
 
-	public void setAccepted(boolean isAccepted) {
-		this.isAccepted = isAccepted;
-	}
 
 	// Relationships----------------------------------------------
 
-	private User				sender;
-	private User				recipient;
+	private User	sender;
+	private User	recipient;
 
 
 	@NotNull
@@ -110,6 +116,6 @@ public class Challenge extends DomainEntity {
 
 	public void setRecipient(final User recipient) {
 		this.recipient = recipient;
-	}	
+	}
 
 }

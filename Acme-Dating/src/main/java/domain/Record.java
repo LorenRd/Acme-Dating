@@ -65,18 +65,18 @@ public class Record extends DomainEntity {
 
 	// Relationships----------------------------------------------
 
-	private Diary diary;
+	private Couple couple;
 	private Category category;
 
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
-	public Diary getDiary() {
-		return this.diary;
+	public Couple getCouple() {
+		return this.couple;
 	}
 
-	public void setDiary(final Diary diary) {
-		this.diary = diary;
+	public void setCouple(final Couple couple) {
+		this.couple = couple;
 	}
 
 	@NotNull

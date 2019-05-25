@@ -539,35 +539,17 @@
 		<property name="CVV" value="543" />
 	</bean>
 
-	<!-- Diaries -->
-
-	<bean class="domain.Diary" id="diary1">
-	</bean>
-
-	<bean class="domain.Diary" id="diary2">
-	</bean>
-
-	<bean class="domain.Diary" id="diary3">
-	</bean>
-
 	<!-- Couple -->
 
 	<bean class="domain.Couple" id="couple1">
 		<property name="startDate" value="2018/03/01 13:00" />
 		<property name="score" value="110" />
-		<property name="diary" ref="diary1" />
-	</bean>
-
-	<bean class="domain.Couple" id="couple2">
-		<property name="startDate" value="2018/08/01 11:00" />
-		<property name="score" value="4" />
-		<property name="diary" ref="diary2" />
-	</bean>
-
-	<bean class="domain.Couple" id="couple3">
-		<property name="startDate" value="2019/03/01 21:00" />
-		<property name="score" value="8" />
-		<property name="diary" ref="diary3" />
+		<property name="trophies">
+			<list>
+				<ref bean="trophy1" />
+				<ref bean="trophy5" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Feature -->
@@ -605,6 +587,7 @@
 				<ref bean="message1" />
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox2">
 		<property name="name" value="out box" />
@@ -614,6 +597,7 @@
 				<ref bean="message3" />
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox3">
 		<property name="name" value="notification box" />
@@ -621,6 +605,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox4">
@@ -631,6 +616,7 @@
 				<ref bean="message3" />
 			</list>
 		</property>
+		<property name="actor" ref="administrator2" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox5">
 		<property name="name" value="out box" />
@@ -639,6 +625,7 @@
 				<ref bean="message1" />
 			</list>
 		</property>
+		<property name="actor" ref="administrator2" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox6">
 		<property name="name" value="notification box" />
@@ -646,6 +633,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator2" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox7">
@@ -654,6 +642,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator3" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox8">
 		<property name="name" value="out box" />
@@ -661,6 +650,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator3" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox9">
 		<property name="name" value="notification box" />
@@ -668,6 +658,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator3" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox10">
@@ -678,6 +669,7 @@
 				<ref bean="message3" />
 			</list>
 		</property>
+		<property name="actor" ref="company1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox11">
 		<property name="name" value="out box" />
@@ -685,6 +677,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox12">
 		<property name="name" value="notification box" />
@@ -692,6 +685,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company1" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox13">
@@ -700,6 +694,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company2" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox14">
 		<property name="name" value="out box" />
@@ -707,6 +702,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company2" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox15">
 		<property name="name" value="notification box" />
@@ -714,6 +710,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company2" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox16">
@@ -722,6 +719,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company3" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox17">
 		<property name="name" value="out box" />
@@ -729,6 +727,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company3" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox18">
 		<property name="name" value="notification box" />
@@ -736,6 +735,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="company3" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox19">
@@ -744,6 +744,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox20">
 		<property name="name" value="out box" />
@@ -751,6 +752,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox21">
 		<property name="name" value="notification box" />
@@ -758,6 +760,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox22">
@@ -766,6 +769,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox23">
 		<property name="name" value="out box" />
@@ -773,6 +777,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox24">
 		<property name="name" value="notification box" />
@@ -780,6 +785,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox25">
@@ -788,20 +794,25 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
+
 	<bean class="domain.MessageBox" id="messageBox26">
 		<property name="name" value="out box" />
 		<property name="messages">
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
+
 	<bean class="domain.MessageBox" id="messageBox27">
 		<property name="name" value="notification box" />
 		<property name="messages">
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox28">
@@ -812,13 +823,16 @@
 				<ref bean="message3" />
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
+
 	<bean class="domain.MessageBox" id="messageBox29">
 		<property name="name" value="out box" />
 		<property name="messages">
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox30">
 		<property name="name" value="notification box" />
@@ -826,6 +840,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox31">
@@ -834,20 +849,25 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user5" />
 	</bean>
+
 	<bean class="domain.MessageBox" id="messageBox32">
 		<property name="name" value="out box" />
 		<property name="messages">
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user5" />
 	</bean>
+
 	<bean class="domain.MessageBox" id="messageBox33">
 		<property name="name" value="notification box" />
 		<property name="messages">
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user5" />
 	</bean>
 
 	<bean class="domain.MessageBox" id="messageBox34">
@@ -856,20 +876,25 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user6" />
 	</bean>
+
 	<bean class="domain.MessageBox" id="messageBox35">
 		<property name="name" value="out box" />
 		<property name="messages">
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user6" />
 	</bean>
+
 	<bean class="domain.MessageBox" id="messageBox36">
 		<property name="name" value="notification box" />
 		<property name="messages">
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="user6" />
 	</bean>
 
 	<!-- SocialNetworks -->
@@ -900,57 +925,78 @@
 		<property name="couple" ref="couple1" />
 	</bean>
 
-	<bean class="domain.Task" id="task2">
-		<property name="title" value="title task2" />
-		<property name="isCompleted" value="false" />
-		<property name="couple" ref="couple2" />
-	</bean>
-
-	<bean class="domain.Task" id="task3">
-		<property name="title" value="title task3" />
-		<property name="isCompleted" value="false" />
-		<property name="couple" ref="couple3" />
-	</bean>
-
 	<!-- Trophies -->
 
 	<bean class="domain.Trophy" id="trophy1">
 		<property name="title" value="100 points" />
-		<property name="picture" value="http://linktrophy1.com" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
 		<property name="scoreToReach" value="100" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-				<ref bean="couple1" />
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy2">
-		<property name="title" value="10 challenges" />
-		<property name="picture" value="http://linktrophy2.com" />
-		<property name="scoreToReach" value="0" />
-		<property name="challengesToComplete" value="10" />
+		<property name="title" value="500 points" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.png" />
+		<property name="scoreToReach" value="500" />
+		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-				<ref bean="couple2" />
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy3">
+		<property name="title" value="1000 points" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
+		<property name="scoreToReach" value="1000" />
+		<property name="challengesToComplete" value="0" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy4">
+		<property name="title" value="5 challenges" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="5" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy5">
+		<property name="title" value="10 challenges" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.png" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="10" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy6">
+		<property name="title" value="100 challenges" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="100" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy7">
+		<property name="title" value="1 experience" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="0" />
+		<property name="experiencesToShare" value="1" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy8">
+		<property name="title" value="5 experiences" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.pngm" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="0" />
+		<property name="experiencesToShare" value="5" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy9">
 		<property name="title" value="10 experiences" />
-		<property name="picture" value="http://linktrophy3.com" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
-		<property name="couples">
-			<list>
-				<ref bean="couple3" />
-			</list>
-		</property>
 	</bean>
 
 	<!-- Books -->
@@ -960,20 +1006,11 @@
 		<property name="date" value="2019/06/20 12:00" />
 		<property name="couple" ref="couple1" />
 		<property name="experience" ref="experience1" />
-	</bean>
-
-	<bean class="domain.Book" id="book2">
-		<property name="moment" value="2018/04/01 11:00" />
-		<property name="date" value="2019/08/20 20:00" />
-		<property name="couple" ref="couple2" />
-		<property name="experience" ref="experience2" />
-	</bean>
-
-	<bean class="domain.Book" id="book3">
-		<property name="moment" value="2017/05/01 19:30" />
-		<property name="date" value="2010/01/14 22:20" />
-		<property name="couple" ref="couple3" />
-		<property name="experience" ref="experience3" />
+		<property name="features">
+			<list>
+				<ref bean="feature1" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Challenges -->
@@ -984,6 +1021,7 @@
 		<property name="description" value="description challenge1" />
 		<property name="score" value="52" />
 		<property name="endDate" value="2019/06/20 11:00" />
+		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -994,6 +1032,7 @@
 		<property name="description" value="description challenge2" />
 		<property name="score" value="78" />
 		<property name="endDate" value="2019/02/20 23:00" />
+		<property name="status" value="COMPLETED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -1004,6 +1043,7 @@
 		<property name="description" value="description challenge3" />
 		<property name="score" value="90" />
 		<property name="endDate" value="2018/12/20 10:00" />
+		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -1013,22 +1053,22 @@
 	<bean class="domain.CoupleRequest" id="coupleRequest1">
 		<property name="moment" value="2018/12/01 22:30" />
 		<property name="status" value="PENDING" />
-		<property name="sender" ref="user3" />
-		<property name="recipient" ref="user4" />
+		<property name="sender" ref="user4" />
+		<property name="recipient" ref="user3" />
 	</bean>
 
 	<bean class="domain.CoupleRequest" id="coupleRequest2">
 		<property name="moment" value="2018/11/11 11:11" />
 		<property name="status" value="PENDING" />
 		<property name="sender" ref="user5" />
-		<property name="recipient" ref="user4" />
+		<property name="recipient" ref="user3" />
 	</bean>
 
 	<bean class="domain.CoupleRequest" id="coupleRequest3">
 		<property name="moment" value="2019/02/11 12:10" />
 		<property name="status" value="ACCEPTED" />
-		<property name="sender" ref="user6" />
-		<property name="recipient" ref="user4" />
+		<property name="sender" ref="user1" />
+		<property name="recipient" ref="user2" />
 	</bean>
 
 	<!-- ExperienceComments -->
@@ -1036,19 +1076,19 @@
 	<bean class="domain.ExperienceComment" id="experienceComment1">
 		<property name="body" value="body experienceComment1" />
 		<property name="experience" ref="experience1" />
-		<property name="experienceComment" ref="experienceComment1" />
+		<property name="actor" ref="company1" />
 	</bean>
 
 	<bean class="domain.ExperienceComment" id="experienceComment2">
 		<property name="body" value="body experienceComment2" />
 		<property name="experience" ref="experience2" />
-		<property name="experienceComment" ref="experienceComment2" />
+		<property name="actor" ref="company1" />
 	</bean>
 
 	<bean class="domain.ExperienceComment" id="experienceComment3">
 		<property name="body" value="body experienceComment3" />
 		<property name="experience" ref="experience3" />
-		<property name="experienceComment" ref="experienceComment3" />
+		<property name="actor" ref="company1" />
 	</bean>
 
 	<!-- Records -->
@@ -1058,26 +1098,8 @@
 		<property name="title" value="title record1" />
 		<property name="body" value="body record1" />
 		<property name="photo" value="http://www.photo1.com" />
-		<property name="diary" ref="diary1" />
+		<property name="couple" ref="couple1" />
 		<property name="category" ref="category1" />
-	</bean>
-
-	<bean class="domain.Record" id="record2">
-		<property name="day" value="2019/01/21" />
-		<property name="title" value="title record2" />
-		<property name="body" value="body record2" />
-		<property name="photo" value="http://www.photo2.com" />
-		<property name="diary" ref="diary2" />
-		<property name="category" ref="category2" />
-	</bean>
-
-	<bean class="domain.Record" id="record3">
-		<property name="day" value="2019/02/09" />
-		<property name="title" value="title record3" />
-		<property name="body" value="body record3" />
-		<property name="photo" value="http://www.photo3.com" />
-		<property name="diary" ref="diary3" />
-		<property name="category" ref="category3" />
 	</bean>
 
 	<!-- RecordComments -->
@@ -1086,18 +1108,6 @@
 		<property name="body" value="body recordComment1" />
 		<property name="record" ref="record1" />
 		<property name="recordComment" ref="recordComment1" />
-	</bean>
-
-	<bean class="domain.RecordComment" id="recordComment2">
-		<property name="body" value="body recordComment2" />
-		<property name="record" ref="record2" />
-		<property name="recordComment" ref="recordComment2" />
-	</bean>
-
-	<bean class="domain.RecordComment" id="recordComment3">
-		<property name="body" value="body recordComment3" />
-		<property name="record" ref="record3" />
-		<property name="recordComment" ref="recordComment3" />
 	</bean>
 
 	<!-- Experiences -->
@@ -1228,13 +1238,25 @@
 	<!-- Customisation -->
 
 	<bean id="customisation" class="domain.Customisation">
-		<property name="welcomeBanner" value="https://i.imgur.com/k7l9HV9.png" />
+		<property name="welcomeBanner" value="https://i.imgur.com/guZclfd.png" />
 		<property name="welcomeMessageEn"
 			value="Welcome to Acme Dating, your social network for couples!" />
 		<property name="welcomeMessageEs"
 			value="¡Bienvenidos a Acme Dating, tu red social de parejas!" />
 		<property name="countryCode" value="+34" />
 		<property name="vatNumber" value="21" />
+		<property name="scoreWords">
+			<list>
+				<value>Compra</value>
+				<value>Trae</value>
+				<value>Regala</value>
+				<value>Prepara</value>
+				<value>Improvisa</value>
+				<value>Sorprende</value>
+				<value>Lleva</value>
+				<value>Ponte</value>
+			</list>
+		</property>
 	</bean>
 
 </beans>

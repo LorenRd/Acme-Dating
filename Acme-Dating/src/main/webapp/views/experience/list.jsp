@@ -11,7 +11,7 @@
 
 <!-- Buscar rutas por palabra clave -->
 <form action="${requestURI }" method="get">
-	<spring:message code="position.keyword" var="searchHeader"/>
+	<spring:message code="experience.keyword" var="searchHeader"/>
 	<input type="text" name="keyword">
 	<input type="submit" value="${searchHeader}">
 	<input type="hidden" name="keywordBool" value="true">
@@ -19,7 +19,7 @@
 
 <!-- Listing grid -->
 
-<display:table name="experience" id="row" requestURI="experience/list.do"
+<display:table name="experiences" id="row" requestURI="${requestURI }"
 	pagesize="5" class="displaytag">
 	
 	<!-- Display -->
@@ -37,7 +37,7 @@
 	<display:column property="score" title="${scoreHeader}"
 		sortable="true" />
 		
-	<spring:message code="experience.price" var="priceHeader" />
+	<spring:message code="experience.price.list" var="priceHeader" />
 	<display:column property="price" title="${priceHeader}"
 		sortable="true" />
 		
@@ -51,8 +51,9 @@
 
 </display:table>
 
-<!-- Create position -->
+<!-- Create experience -->
 <security:authorize access="hasRole('COMPANY')">
 		<acme:button url="experience/company/create.do" code="experience.create"/>
+		<input type="button" name="computeScore" value="<spring:message code="experience.computeScore" />" onclick="redirect: location.href = 'experience/list.do?computeScore';" />		
 	
 </security:authorize> 

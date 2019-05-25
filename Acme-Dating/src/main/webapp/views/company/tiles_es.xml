@@ -5,19 +5,24 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-
-	<definition name="company/edit" extends="master.page">
-		<put-attribute name="title" value="Editar compañía" />
-		<put-attribute name="body" value="/views/company/edit.jsp" />
+	
+	<definition name="company/list" extends="master.page">
+		<put-attribute name="title" value="Lista de empresas" />
+		<put-attribute name="body" value="/views/company/list.jsp" />
 	</definition>
 	
 	<definition name="company/display" extends="master.page">
-		<put-attribute name="title" value="Mi perfil" />
+		<put-attribute name="title" value="Perfil" />
 		<put-attribute name="body" value="/views/company/display.jsp" />
 	</definition>
 	
+	<definition name="company/edit" extends="master.page">
+		<put-attribute name="title" value="Editar empresa" />
+		<put-attribute name="body" value="/views/company/edit.jsp" />
+	</definition>
+	
 	<definition name="company/register" extends="master.page">
-		<put-attribute name="title" value="Registrar compañía nueva" />
+		<put-attribute name="title" value="Registrar empresa nueva" />
 		<put-attribute name="body" value="/views/company/register.jsp" />
 	</definition>
 	

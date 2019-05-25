@@ -1,7 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +13,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -19,9 +23,12 @@ import repositories.CustomisationRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Book;
 import security.UserAccountRepository;
 import domain.Company;
 import domain.CreditCard;
+import domain.Experience;
+import domain.MessageBox;
 import forms.CompanyForm;
 
 @Service
@@ -30,7 +37,7 @@ public class CompanyService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CompanyRepository		companyRepository;
+	private CompanyRepository	companyRepository;
 
 	@Autowired
 	private CustomisationRepository	customisationRepository;
@@ -40,13 +47,22 @@ public class CompanyService {
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private ActorService			actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private CreditCardService		creditCardService;
+	private CreditCardService	creditCardService;
 
+	@Autowired
+	private ExperienceService experienceService;
+	 
+	@Autowired
+	private BookService bookService;
+	 // Simple CRUD Methods
+	@Autowired
+	private MessageBoxService	messageBoxService;
 	@Autowired
 	private Validator				validator;
+
 
 
 	// Simple CRUD Methods
@@ -60,11 +76,13 @@ public class CompanyService {
 		UserAccount userAccount;
 		Authority authority;
 		CreditCard creditCard;
+		List<MessageBox> boxes;
 
 		result = new Company();
 		userAccount = new UserAccount();
 		authority = new Authority();
 		creditCard = new CreditCard();
+		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		authority.setAuthority("COMPANY");
 		userAccount.addAuthority(authority);
@@ -74,6 +92,7 @@ public class CompanyService {
 
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
+		result.setMessageBoxes(boxes);
 
 		return result;
 	}
@@ -149,6 +168,29 @@ public class CompanyService {
 
 	public void flush() {
 		this.companyRepository.flush();
+	}
+
+	public void computeScore(){
+		Collection<Experience> experiences;
+		
+		experiences = this.experienceService.findAll();
+		for (Experience e : experiences) {
+			Collection<Book> books = new ArrayList<Book>();
+			Double score = 0.0;
+			int i = 0;
+			books = this.bookService.findAllByCompanyId(e.getCompany().getId());
+			for (Book b : books) {
+				if (b.getScore() != null)
+				{
+					i++;
+					score += b.getScore();
+				}
+			}
+			if(i>0){
+				score = score/i;
+			}
+			e.setScore(score);
+		}
 	}
 
 	public CompanyForm construct(final Company company) {

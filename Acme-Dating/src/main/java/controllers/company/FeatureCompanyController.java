@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.CustomisationService;
 import services.FeatureService;
 import domain.Actor;
+import domain.Customisation;
 import domain.Feature;
 
 @Controller
@@ -31,6 +33,8 @@ public class FeatureCompanyController {
 	@Autowired
 	private FeatureService	featureService;
 
+	@Autowired
+	private CustomisationService customisationService;
 
 	//List
 
@@ -44,9 +48,9 @@ public class FeatureCompanyController {
 
 		features = this.featureService.findAllByCompanyId(principal.getId());
 
-		result = new ModelAndView("feauture/list");
+		result = new ModelAndView("feature/list");
 		result.addObject("features", features);
-		result.addObject("requestURI", "feauture/company/list.do");
+		result.addObject("requestURI", "feature/company/list.do");
 
 		return result;
 	}
@@ -58,7 +62,10 @@ public class FeatureCompanyController {
 		// Inicializa resultado
 		ModelAndView result;
 		Feature feature;
-
+		Customisation customisation;
+		Double vat;
+		customisation = this.customisationService.find();
+		vat = (customisation.getVatNumber())/100 + 1.0;
 		// Busca en el repositorio
 		feature = this.featureService.findOne(featureId);
 		Assert.notNull(feature);
@@ -66,6 +73,7 @@ public class FeatureCompanyController {
 		// Crea y anade objetos a la vista
 		result = new ModelAndView("feature/display");
 		result.addObject("requestURI", "feature/display.do");
+		result.addObject("vat", vat);
 		result.addObject("feature", feature);
 
 		// Envia la vista

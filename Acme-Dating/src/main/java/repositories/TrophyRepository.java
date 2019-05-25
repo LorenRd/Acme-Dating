@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import domain.Trophy;
 
 @Repository
-public interface TrophyRepository extends
-		JpaRepository<Trophy, Integer> {
+public interface TrophyRepository extends JpaRepository<Trophy, Integer> {
 
 }

@@ -136,7 +136,7 @@
 			value="https://image.flaticon.com/icons/svg/119/119598.svg" />
 	</bean>
 
-<!-- Trophies -->
+	<!-- Trophies -->
 
 	<bean class="domain.Trophy" id="trophy1">
 		<property name="title" value="100 points" />
@@ -144,49 +144,93 @@
 		<property name="scoreToReach" value="100" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-				<ref bean="couple1" />
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy2">
-		<property name="title" value="10 challenges" />
+		<property name="title" value="500 points" />
 		<property name="picture" value="http://linktrophy2.com" />
-		<property name="scoreToReach" value="0" />
-		<property name="challengesToComplete" value="10" />
+		<property name="scoreToReach" value="500" />
+		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
-		<property name="couples">
-			<list>
-				<ref bean="couple2" />
-			</list>
-		</property>
 	</bean>
 
 	<bean class="domain.Trophy" id="trophy3">
-		<property name="title" value="10 experiences" />
+		<property name="title" value="1000 points" />
 		<property name="picture" value="http://linktrophy3.com" />
+		<property name="scoreToReach" value="1000" />
+		<property name="challengesToComplete" value="0" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy4">
+		<property name="title" value="5 challenges" />
+		<property name="picture" value="http://linktrophy4.com" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="5" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy5">
+		<property name="title" value="10 challenges" />
+		<property name="picture" value="http://linktrophy5.com" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="10" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy6">
+		<property name="title" value="100 challenges" />
+		<property name="picture" value="http://linktrophy6.com" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="100" />
+		<property name="experiencesToShare" value="0" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy7">
+		<property name="title" value="1 experience" />
+		<property name="picture" value="http://linktrophy7.com" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="0" />
+		<property name="experiencesToShare" value="1" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy8">
+		<property name="title" value="5 experiences" />
+		<property name="picture" value="http://linktrophy8.com" />
+		<property name="scoreToReach" value="0" />
+		<property name="challengesToComplete" value="0" />
+		<property name="experiencesToShare" value="5" />
+	</bean>
+
+	<bean class="domain.Trophy" id="trophy9">
+		<property name="title" value="10 experiences" />
+		<property name="picture" value="http://linktrophy9.com" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
-		<property name="couples">
-			<list>
-				<ref bean="couple3" />
-			</list>
-		</property>
 	</bean>
 
 	<!-- Customisation -->
 
 	<bean id="customisation" class="domain.Customisation">
-		<property name="welcomeBanner" value="https://i.imgur.com/k7l9HV9.png" />
+		<property name="welcomeBanner" value="https://i.imgur.com/guZclfd.png" />
 		<property name="welcomeMessageEn"
 			value="Welcome to Acme Dating, your social network for couples!" />
 		<property name="welcomeMessageEs"
 			value="¡Bienvenidos a Acme Dating, tu red social de parejas!" />
 		<property name="countryCode" value="+34" />
 		<property name="vatNumber" value="21" />
+		<property name="scoreWords">
+			<list>
+				<value>Compra</value>
+				<value>Trae</value>
+				<value>Regala</value>
+				<value>Prepara</value>
+				<value>Improvisa</value>
+				<value>Sorprende</value>
+				<value>Lleva</value>
+				<value>Ponte</value>
+			</list>
+		</property>
 	</bean>
-
 </beans>

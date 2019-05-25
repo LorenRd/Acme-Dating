@@ -13,33 +13,50 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
+import services.CustomisationService;
+import domain.Customisation;
+
 @Controller
 @RequestMapping("/welcome")
 public class WelcomeController extends AbstractController {
 
-	// Constructors -----------------------------------------------------------
+	// Services
 
-	public WelcomeController() {
-		super();
-	}
+	@Autowired
+	private CustomisationService	customisationService;
+
+	@Autowired
+	private ActorService	actorService;
+
+
 
 	// Index ------------------------------------------------------------------		
 
 	@RequestMapping(value = "/index")
-	public ModelAndView index(@RequestParam(required = false, defaultValue = "John Doe") final String name) {
+	public ModelAndView index(@RequestParam(required = false, defaultValue = "John Doe") String name) {
 		ModelAndView result;
 		SimpleDateFormat formatter;
 		String moment;
+		Customisation customisation;
+		customisation = this.customisationService.find();
 
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
-
+		
+		try{
+			name= this.actorService.findByPrincipal().getName();
+		}catch (Exception e) {
+		}
 		result = new ModelAndView("welcome/index");
+		result.addObject("welcomeMessageEs", customisation.getWelcomeMessageEs());
+		result.addObject("welcomeMessageEn", customisation.getWelcomeMessageEn());
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 

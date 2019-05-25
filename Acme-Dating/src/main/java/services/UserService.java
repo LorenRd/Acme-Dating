@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -31,7 +33,7 @@ public class UserService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private UserRepository			userRepository;
+	private UserRepository	userRepository;
 
 	@Autowired
 	private UserAccountRepository	useraccountRepository;
@@ -41,6 +43,8 @@ public class UserService {
 
 	// Supporting services ----------------------------------------------------
 
+	@Autowired
+	private CoupleService coupleService;
 	@Autowired
 	private ActorService			actorService;
 
@@ -55,9 +59,13 @@ public class UserService {
 
 	// Simple CRUD Methods
 
-	public User create() {
+	public User save(final User user) {
 		User result;
-		CreditCard creditCard;
+
+		result = this.userRepository.save(user);
+
+		return result;
+	}
 
 		result = new User();
 		creditCard = new CreditCard();
@@ -136,10 +144,32 @@ public class UserService {
 		return result;
 	}
 
+	public Collection<User> findByCoupleId(final int coupleId) {
+		Collection<User> result;
+		result = this.userRepository.findByCoupleId(coupleId);
+		return result;
+	}
+
 	public boolean exists(final Integer arg0) {
 		return this.userRepository.exists(arg0);
 	}
 
+	public User findDarling(final int coupleId) {
+		User darling = null;
+		User principal;
+		Collection <User> users;
+		
+		principal = this.findByPrincipal();
+		
+		users = this.coupleService.findUsersOfACouple(coupleId);
+		
+		for (User u : users) {
+			if(u.getId() != principal.getId())
+				darling = u;
+		}
+		
+		return darling;
+	}
 	public UserForm construct(final User user) {
 		final UserForm userForm = new UserForm();
 		userForm.setBrandName(user.getCreditCard().getBrandName());

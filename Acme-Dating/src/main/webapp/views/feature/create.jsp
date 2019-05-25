@@ -1,5 +1,4 @@
 <%--
- * edit.jsp
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -23,7 +22,7 @@
 		<form:hidden path="version"/>
 		
 		
-		<acme:textbox code="feature.title" path="title" placeholder="feature.title"/>
+		<acme:textbox code="feature.title" path="title" placeholder="Title"/>
 		<br />
 		<acme:textarea code="feature.description" path="description"/>
 		<br />		
