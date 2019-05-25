@@ -194,4 +194,27 @@ public class AdministratorService {
 		return result;
 	}
 
+	public Administrator reconstructPruned(final Administrator administrator, final BindingResult binding) {
+		Administrator result;
+		if (administrator.getId() == 0)
+			result = administrator;
+		else
+			result = this.administratorRepository.findOne(administrator.getId());
+		result.setEmail(administrator.getEmail());
+		result.setName(administrator.getName());
+		result.setPhoto(administrator.getPhoto());
+		result.setSurname(administrator.getSurname());
+
+		if (!StringUtils.isEmpty(administrator.getPhone())) {
+			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
+			final Matcher matcher = pattern.matcher(administrator.getPhone());
+			if (matcher.matches())
+				administrator.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + administrator.getPhone());
+		}
+		result.setPhone(administrator.getPhone());
+		this.validator.validate(result, binding);
+		this.administratorRepository.flush();
+		return result;
+	}
+
 }

@@ -210,4 +210,28 @@ public class CompanyService {
 		return result;
 	}
 
+	public Company reconstructPruned(final Company company, final BindingResult binding) {
+		Company result;
+		if (company.getId() == 0)
+			result = company;
+		else
+			result = this.companyRepository.findOne(company.getId());
+		result.setCommercialName(company.getCommercialName());
+		result.setEmail(company.getEmail());
+		result.setName(company.getName());
+		result.setPhoto(company.getPhoto());
+		result.setSurname(company.getSurname());
+
+		if (!StringUtils.isEmpty(company.getPhone())) {
+			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
+			final Matcher matcher = pattern.matcher(company.getPhone());
+			if (matcher.matches())
+				company.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + company.getPhone());
+		}
+		result.setPhone(company.getPhone());
+		this.validator.validate(result, binding);
+		this.companyRepository.flush();
+		return result;
+	}
+
 }

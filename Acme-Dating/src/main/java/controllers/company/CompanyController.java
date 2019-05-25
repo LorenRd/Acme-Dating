@@ -7,11 +7,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CompanyService;
@@ -33,6 +35,33 @@ public class CompanyController extends AbstractController {
 	private CustomisationService	customisationService;
 
 
+	//Display
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(required = false) final Integer companyId) {
+		final ModelAndView result;
+		Company company = new Company();
+
+		if (companyId == null)
+			company = this.companyService.findByPrincipal();
+		else
+			company = this.companyService.findOne(companyId);
+		result = new ModelAndView("company/display");
+		result.addObject("company", company);
+		return result;
+	}
+
+	//Edit
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		ModelAndView result;
+		Company company;
+		company = this.companyService.findByPrincipal();
+		Assert.notNull(company);
+		result = this.editModelAndView(company);
+
+		return result;
+	}
+
 	// Create
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -44,6 +73,27 @@ public class CompanyController extends AbstractController {
 		companyForm = this.companyService.construct(company);
 		result = this.createEditModelAndView(companyForm);
 
+		return result;
+	}
+
+	//Save de edit
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@ModelAttribute("company") Company company, final BindingResult binding) {
+		ModelAndView result;
+
+		try {
+			company = this.companyService.reconstructPruned(company, binding);
+			if (binding.hasErrors()) {
+				result = this.editModelAndView(company);
+				for (final ObjectError e : binding.getAllErrors())
+					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			} else {
+				company = this.companyService.save(company);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(company, "company.commit.error");
+		}
 		return result;
 	}
 
@@ -92,6 +142,25 @@ public class CompanyController extends AbstractController {
 
 		result.addObject("message", message);
 
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Company company) {
+		ModelAndView result;
+		result = this.editModelAndView(company, null);
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Company company, final String messageCode) {
+		ModelAndView result;
+		String countryCode;
+
+		countryCode = this.customisationService.find().getCountryCode();
+
+		result = new ModelAndView("company/edit");
+		result.addObject("company", company);
+		result.addObject("countryCode", countryCode);
+		result.addObject("message", messageCode);
 		return result;
 	}
 }

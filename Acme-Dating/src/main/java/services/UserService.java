@@ -198,4 +198,28 @@ public class UserService {
 
 	}
 
+	public User reconstructPruned(final User user, final BindingResult binding) {
+		User result;
+		if (user.getId() == 0)
+			result = user;
+		else
+			result = this.userRepository.findOne(user.getId());
+		result.setEmail(user.getEmail());
+		result.setName(user.getName());
+		result.setPhoto(user.getPhoto());
+		result.setSurname(user.getSurname());
+
+		if (!StringUtils.isEmpty(user.getPhone())) {
+			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
+			final Matcher matcher = pattern.matcher(user.getPhone());
+			if (matcher.matches())
+				user.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + user.getPhone());
+		}
+		result.setPhone(user.getPhone());
+
+		this.validator.validate(result, binding);
+		this.userRepository.flush();
+		return result;
+	}
+
 }

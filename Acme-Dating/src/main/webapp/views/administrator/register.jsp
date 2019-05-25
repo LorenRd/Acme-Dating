@@ -74,5 +74,5 @@
 	</form:form>
 	
 	<script type="text/javascript">
-	$("#register").on("click",function(){validatePhone("<spring:message code='admin.confirmationPhone'/>","${countryCode}");}); 
+	$("#register").on("click",function(){validatePhone("<spring:message code='administrator.confirmationPhone'/>","${countryCode}");}); 
 </script>
