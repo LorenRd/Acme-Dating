@@ -1242,6 +1242,18 @@
 			value="¡Bienvenidos a Acme Dating, tu red social de parejas!" />
 		<property name="countryCode" value="+34" />
 		<property name="vatNumber" value="21" />
+		<property name="scoreWords">
+			<list>
+				<value>Compra</value>
+				<value>Trae</value>
+				<value>Regala</value>
+				<value>Prepara</value>
+				<value>Improvisa</value>
+				<value>Sorprende</value>
+				<value>Lleva</value>
+				<value>Ponte</value>
+			</list>
+		</property>
 	</bean>
 
 </beans>
