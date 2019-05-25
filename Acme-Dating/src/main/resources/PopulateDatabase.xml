@@ -1021,6 +1021,7 @@
 		<property name="description" value="description challenge1" />
 		<property name="score" value="52" />
 		<property name="endDate" value="2019/06/20 11:00" />
+		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -1031,6 +1032,7 @@
 		<property name="description" value="description challenge2" />
 		<property name="score" value="78" />
 		<property name="endDate" value="2019/02/20 23:00" />
+		<property name="status" value="REJECTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -1041,6 +1043,7 @@
 		<property name="description" value="description challenge3" />
 		<property name="score" value="90" />
 		<property name="endDate" value="2018/12/20 10:00" />
+		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
