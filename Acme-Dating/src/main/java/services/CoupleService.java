@@ -1,5 +1,6 @@
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,14 @@ public class CoupleService {
 		Assert.notNull(principal);
 
 		return principal.getCouple();
+	}
+
+	public Collection<User> findUsersOfACouple(final int coupleId) {
+		Collection<User> users;
+		
+		users = this.coupleRepository.findUsersOfACouple(coupleId);
+		
+		return users;
 	}
 
 }
