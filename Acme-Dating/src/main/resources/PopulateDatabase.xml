@@ -337,7 +337,6 @@
 				<ref bean="messageBox30" />
 			</list>
 		</property>
-		<property name="couple" ref="couple2" />
 	</bean>
 
 	<bean class="domain.User" id="user5">
@@ -372,7 +371,6 @@
 				<ref bean="messageBox36" />
 			</list>
 		</property>
-		<property name="couple" ref="couple2" />
 	</bean>
 
 	<!-- Categories -->
@@ -541,7 +539,7 @@
 		<property name="CVV" value="543" />
 	</bean>
 
-	<!-- Couples -->
+	<!-- Couple -->
 
 	<bean class="domain.Couple" id="couple1">
 		<property name="startDate" value="2018/03/01 13:00" />
@@ -549,16 +547,6 @@
 		<property name="trophies">
 			<list>
 				<ref bean="trophy1" />
-				<ref bean="trophy5" />
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Couple" id="couple2">
-		<property name="startDate" value="2019/02/11 12:10" />
-		<property name="score" value="4" />
-		<property name="trophies">
-			<list>
 				<ref bean="trophy5" />
 			</list>
 		</property>
@@ -1021,19 +1009,6 @@
 		<property name="features">
 			<list>
 				<ref bean="feature1" />
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Book" id="book2">
-		<property name="moment" value="2018/04/01 11:00" />
-		<property name="date" value="2019/08/20 20:00" />
-		<property name="couple" ref="couple2" />
-		<property name="experience" ref="experience2" />
-		<property name="features">
-			<list>
-				<ref bean="feature2" />
-				<ref bean="feature3" />
 			</list>
 		</property>
 	</bean>

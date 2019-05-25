@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -10,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.CoupleRepository;
 import domain.Couple;
+import domain.Trophy;
 import domain.User;
 
 @Service
@@ -18,11 +20,12 @@ public class CoupleService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CoupleRepository coupleRepository;
+	private CoupleRepository	coupleRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private UserService userService;
+	private UserService			userService;
+
 
 	public Couple create(final User sender, final User recipient) {
 		Couple result;
@@ -36,6 +39,7 @@ public class CoupleService {
 
 		result.setScore(0);
 		result.setStartDate(startDate);
+		result.setTrophies(new ArrayList<Trophy>());
 
 		sender.setCouple(result);
 		recipient.setCouple(result);
@@ -43,8 +47,7 @@ public class CoupleService {
 		return result;
 	}
 
-	public Couple save(final Couple couple, final User sender,
-			final User recipient) {
+	public Couple save(final Couple couple, final User sender, final User recipient) {
 		Couple result;
 		Date startDate;
 
