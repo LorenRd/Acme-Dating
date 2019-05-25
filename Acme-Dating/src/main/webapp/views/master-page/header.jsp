@@ -72,22 +72,10 @@
 			<li><a class="fNiv"><spring:message	code="master.page.couple" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="couple/display.do"><spring:message code="master.page.couple.display" /></a></li>					
 					<li><a href="book/couple/list.do"><spring:message code="master.page.couple.book" /></a></li>
 					<li><a href="task/couple/list.do"><spring:message code="master.page.couple.tasks" /></a></li>	
 					<li><a href="record/couple/list.do"><spring:message code="master.page.couple.records" /></a></li>									
-				</ul>
-			</li>
-			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<jstl:if test="${cookie['language'].getValue()=='en'}">
-					<li><a href="terms/englishTerms.do"><spring:message
-								code="master.page.terms" /></a></li>
-					</jstl:if>
-					<jstl:if test="${cookie['language'].getValue()=='es'}">
-					<li><a href="terms/terms.do"><spring:message
-								code="master.page.terms" /></a></li>
-					</jstl:if>
 				</ul>
 			</li>
 		</security:authorize>		

@@ -337,7 +337,6 @@
 				<ref bean="messageBox30" />
 			</list>
 		</property>
-		<property name="couple" ref="couple2" />
 	</bean>
 
 	<bean class="domain.User" id="user5">
@@ -372,7 +371,6 @@
 				<ref bean="messageBox36" />
 			</list>
 		</property>
-		<property name="couple" ref="couple2" />
 	</bean>
 
 	<!-- Categories -->
@@ -541,7 +539,7 @@
 		<property name="CVV" value="543" />
 	</bean>
 
-	<!-- Couples -->
+	<!-- Couple -->
 
 	<bean class="domain.Couple" id="couple1">
 		<property name="startDate" value="2018/03/01 13:00" />
@@ -549,16 +547,6 @@
 		<property name="trophies">
 			<list>
 				<ref bean="trophy1" />
-				<ref bean="trophy5" />
-			</list>
-		</property>
-	</bean>
-
-	<bean class="domain.Couple" id="couple2">
-		<property name="startDate" value="2019/02/11 12:10" />
-		<property name="score" value="4" />
-		<property name="trophies">
-			<list>
 				<ref bean="trophy5" />
 			</list>
 		</property>
@@ -941,7 +929,7 @@
 
 	<bean class="domain.Trophy" id="trophy1">
 		<property name="title" value="100 points" />
-		<property name="picture" value="http://linktrophy1.com" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
 		<property name="scoreToReach" value="100" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
@@ -949,7 +937,7 @@
 
 	<bean class="domain.Trophy" id="trophy2">
 		<property name="title" value="500 points" />
-		<property name="picture" value="http://linktrophy2.com" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.png" />
 		<property name="scoreToReach" value="500" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
@@ -957,7 +945,7 @@
 
 	<bean class="domain.Trophy" id="trophy3">
 		<property name="title" value="1000 points" />
-		<property name="picture" value="http://linktrophy3.com" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
 		<property name="scoreToReach" value="1000" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
@@ -965,7 +953,7 @@
 
 	<bean class="domain.Trophy" id="trophy4">
 		<property name="title" value="5 challenges" />
-		<property name="picture" value="http://linktrophy4.com" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="5" />
 		<property name="experiencesToShare" value="0" />
@@ -973,7 +961,7 @@
 
 	<bean class="domain.Trophy" id="trophy5">
 		<property name="title" value="10 challenges" />
-		<property name="picture" value="http://linktrophy5.com" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="10" />
 		<property name="experiencesToShare" value="0" />
@@ -981,7 +969,7 @@
 
 	<bean class="domain.Trophy" id="trophy6">
 		<property name="title" value="100 challenges" />
-		<property name="picture" value="http://linktrophy6.com" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="100" />
 		<property name="experiencesToShare" value="0" />
@@ -989,7 +977,7 @@
 
 	<bean class="domain.Trophy" id="trophy7">
 		<property name="title" value="1 experience" />
-		<property name="picture" value="http://linktrophy7.com" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="1" />
@@ -997,7 +985,7 @@
 
 	<bean class="domain.Trophy" id="trophy8">
 		<property name="title" value="5 experiences" />
-		<property name="picture" value="http://linktrophy8.com" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.pngm" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="5" />
@@ -1005,7 +993,7 @@
 
 	<bean class="domain.Trophy" id="trophy9">
 		<property name="title" value="10 experiences" />
-		<property name="picture" value="http://linktrophy9.com" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
@@ -1025,19 +1013,6 @@
 		</property>
 	</bean>
 
-	<bean class="domain.Book" id="book2">
-		<property name="moment" value="2018/04/01 11:00" />
-		<property name="date" value="2019/08/20 20:00" />
-		<property name="couple" ref="couple2" />
-		<property name="experience" ref="experience2" />
-		<property name="features">
-			<list>
-				<ref bean="feature2" />
-				<ref bean="feature3" />
-			</list>
-		</property>
-	</bean>
-
 	<!-- Challenges -->
 
 	<bean class="domain.Challenge" id="challenge1">
@@ -1046,6 +1021,7 @@
 		<property name="description" value="description challenge1" />
 		<property name="score" value="52" />
 		<property name="endDate" value="2019/06/20 11:00" />
+		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -1056,6 +1032,7 @@
 		<property name="description" value="description challenge2" />
 		<property name="score" value="78" />
 		<property name="endDate" value="2019/02/20 23:00" />
+		<property name="status" value="COMPLETED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -1066,6 +1043,7 @@
 		<property name="description" value="description challenge3" />
 		<property name="score" value="90" />
 		<property name="endDate" value="2018/12/20 10:00" />
+		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
@@ -1267,6 +1245,18 @@
 			value="¡Bienvenidos a Acme Dating, tu red social de parejas!" />
 		<property name="countryCode" value="+34" />
 		<property name="vatNumber" value="21" />
+		<property name="scoreWords">
+			<list>
+				<value>Compra</value>
+				<value>Trae</value>
+				<value>Regala</value>
+				<value>Prepara</value>
+				<value>Improvisa</value>
+				<value>Sorprende</value>
+				<value>Lleva</value>
+				<value>Ponte</value>
+			</list>
+		</property>
 	</bean>
 
 </beans>

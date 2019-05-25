@@ -23,6 +23,8 @@ public class UserService {
 
 	// Supporting services ----------------------------------------------------
 
+	@Autowired
+	private CoupleService coupleService;
 	// Additional functions
 
 	// Simple CRUD Methods
@@ -82,4 +84,20 @@ public class UserService {
 		return this.userRepository.exists(arg0);
 	}
 
+	public User findDarling(final int coupleId) {
+		User darling = null;
+		User principal;
+		Collection <User> users;
+		
+		principal = this.findByPrincipal();
+		
+		users = this.coupleService.findUsersOfACouple(coupleId);
+		
+		for (User u : users) {
+			if(u.getId() != principal.getId())
+				darling = u;
+		}
+		
+		return darling;
+	}
 }
