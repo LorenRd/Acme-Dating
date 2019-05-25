@@ -91,19 +91,20 @@ public class ExperienceCommentService {
 		return result;
 	}
 	
-	public ExperienceComment reconstruct(final ExperienceComment experienceComment, final BindingResult binding) {
+	public ExperienceComment reconstruct(final ExperienceComment experienceComment,boolean isFather, final int id, final BindingResult binding) {
 		ExperienceComment result;
+		Experience experience;
 
-		if (experienceComment.getId() == 0){
-			result = experienceComment;
-			result.setBody(experienceComment.getBody());
+		result = experienceComment;
+		result.setActor(this.actorService.findByPrincipal());
+		if(isFather){
+			experience = this.experienceService.findOne(id);
+			result.setExperience(experience);
+		}else{
+			result.setExperienceComment(this.findOne(id));
 
 		}
-		else{
-			result = this.experienceCommentRepository.findOne(experienceComment.getId());
-			result.setBody(experienceComment.getBody());
-
-		}
+		result.setBody(experienceComment.getBody());
 
 		this.validator.validate(result, binding);
 		return result;

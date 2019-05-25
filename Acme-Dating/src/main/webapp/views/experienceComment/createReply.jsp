@@ -24,17 +24,9 @@
 </jstl:when>
 </jstl:choose>
 
-<form:form action="experienceComment/create.do" modelAttribute="experienceComment">
+<form:form action="experienceComment/createReply.do?experienceCommentId=${param['experienceCommentId']}" modelAttribute="experienceComment">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
-		
-		<form:hidden path="experienceComment.experienceComment" />
-		<form:hidden path="experienceComment.id" />
-		<form:hidden path="experienceComment.actor" />
-		<form:hidden path="experienceComment.body" />
-		<form:hidden path="experienceComment.version" />
-		
-		<form:hidden path="actor"/>
 		
 		<acme:textarea code="experienceComment.body" path="body"/>
 		<br />		

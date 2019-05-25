@@ -53,14 +53,36 @@ public class ExperienceCommentController extends AbstractController {
 	}
 	
 	
-	// SAVE DE CREATE
+	// SAVE DE COMENTARIO RAIZ
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView createFinal(@ModelAttribute("experienceComment") ExperienceComment experienceComment, final BindingResult binding) {
+	public ModelAndView createFinal(@ModelAttribute("experienceComment") ExperienceComment experienceComment,@RequestParam final int experienceId, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			experienceComment = this.experienceCommentService.reconstruct(experienceComment, binding);
+			experienceComment = this.experienceCommentService.reconstruct(experienceComment, true, experienceId, binding);
+			if (binding.hasErrors()) {
+				result = this.createModelAndView(experienceComment);
+				for (final ObjectError e : binding.getAllErrors())
+					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			} else {
+				experienceComment = this.experienceCommentService.save(experienceComment);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+
+		} catch (final Throwable oops) {
+			result = this.createModelAndView(experienceComment, "experienceComment.commit.error");
+		}
+		return result;
+	}
+	
+	// SAVE DE COMENTARIO HIJO
+	@RequestMapping(value = "/createReply", method = RequestMethod.POST, params = "save")
+	public ModelAndView createHijo(@ModelAttribute("experienceComment") ExperienceComment experienceComment,@RequestParam final int experienceCommentId, final BindingResult binding) {
+		ModelAndView result;
+
+		try {
+			experienceComment = this.experienceCommentService.reconstruct(experienceComment, false,experienceCommentId, binding);
 			if (binding.hasErrors()) {
 				result = this.createModelAndView(experienceComment);
 				for (final ObjectError e : binding.getAllErrors())
