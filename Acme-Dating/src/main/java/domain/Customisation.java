@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 
@@ -70,6 +71,7 @@ public class Customisation extends DomainEntity {
 		this.vatNumber = vatNumber;
 	}
 	
+	@ElementCollection
 	@EachNotBlank
 	public Collection<String> getScoreWords() {
 		return scoreWords;

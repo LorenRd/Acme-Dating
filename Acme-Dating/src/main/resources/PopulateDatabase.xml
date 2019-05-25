@@ -1032,7 +1032,7 @@
 		<property name="description" value="description challenge2" />
 		<property name="score" value="78" />
 		<property name="endDate" value="2019/02/20 23:00" />
-		<property name="status" value="REJECTED" />
+		<property name="status" value="COMPLETED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
 	</bean>
