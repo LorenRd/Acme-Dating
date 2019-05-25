@@ -98,7 +98,7 @@ public class CoupleRequestService {
 	public void accept(final CoupleRequest cR) {
 		User principal;
 		Couple couple;
-		Collection<CoupleRequest> NoAcceptedRequests;
+		Collection<CoupleRequest> noAcceptedRequests;
 		CoupleRequest savedCR;
 
 		Assert.notNull(cR);
@@ -117,10 +117,10 @@ public class CoupleRequestService {
 
 		savedCR = this.coupleRequestRepository.save(cR);
 
-		NoAcceptedRequests = this.findCoupleRequestsByRecipientId(savedCR.getRecipient().getId());
-		NoAcceptedRequests.addAll(this.findCoupleRequestsByRecipientId(savedCR.getSender().getId()));
-		NoAcceptedRequests.remove(savedCR);
-		for (final CoupleRequest nAR : NoAcceptedRequests)
+		noAcceptedRequests = this.findCoupleRequestsByRecipientId(savedCR.getRecipient().getId());
+		noAcceptedRequests.addAll(this.findCoupleRequestsByRecipientId(savedCR.getSender().getId()));
+		noAcceptedRequests.remove(savedCR);
+		for (final CoupleRequest nAR : noAcceptedRequests)
 			this.coupleRequestRepository.delete(nAR);
 	}
 
