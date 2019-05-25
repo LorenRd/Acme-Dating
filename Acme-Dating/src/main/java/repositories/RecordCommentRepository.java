@@ -15,4 +15,7 @@ public interface RecordCommentRepository extends
 	@Query("select rC from RecordComment rC where rC.record.id = ?1")
 	Collection<RecordComment> findByRecordId(int recordId);
 
+	@Query("select rC from RecordComment rC where rC.recordComment.id = ?1")
+	Collection<RecordComment> findChilds(int recordCommentFatherId);
+
 }

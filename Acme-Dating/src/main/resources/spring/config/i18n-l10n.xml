@@ -21,11 +21,11 @@
 		<value>/views/couple/messages</value>
 		<value>/views/task/messages</value>
 		<value>/views/record/messages</value>
+		<value>/views/recordComment/messages</value>
 		<value>/views/experience/messages</value>
 		<value>/views/experienceComment/messages</value>
 		<value>/views/customisation/messages</value>
 
-		<value>/views/experienceComment/messages</value>
 		<value>/views/feature/messages</value>
 		<value>/views/book/messages</value>
 		<value>/views/profile/messages</value>

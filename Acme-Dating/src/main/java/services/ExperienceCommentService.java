@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -22,23 +21,21 @@ public class ExperienceCommentService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ExperienceCommentRepository	experienceCommentRepository;
-
+	private ExperienceCommentRepository experienceCommentRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
 	private ActorService actorService;
-	
+
 	@Autowired
 	private Validator validator;
-	
+
 	@Autowired
-	private ExperienceService			experienceService;
-	
-	
+	private ExperienceService experienceService;
+
 	// Simple CRUD Methods
-	
+
 	public ExperienceComment create(final boolean isFather, final int id) {
 		ExperienceComment result;
 		final Actor principal;
@@ -48,16 +45,16 @@ public class ExperienceCommentService {
 
 		result = new ExperienceComment();
 		result.setActor(principal);
-		if(isFather){
+		if (isFather) {
 			Experience experience;
 			experience = this.experienceService.findOne(id);
 			result.setExperience(experience);
-		}else{
+		} else {
 			ExperienceComment experienceComment;
 			experienceComment = this.findOne(id);
 			result.setExperienceComment(experienceComment);
 		}
-		
+
 		return result;
 	}
 
@@ -80,8 +77,6 @@ public class ExperienceCommentService {
 		Assert.notNull(result);
 		return result;
 	}
-	
-	
 
 	public ExperienceComment save(final ExperienceComment experienceComment) {
 		ExperienceComment result;
@@ -112,15 +107,18 @@ public class ExperienceCommentService {
 
 	// Business Methods
 
-	public Collection<ExperienceComment> findByExperienceId(final int experienceId) {
+	public Collection<ExperienceComment> findByExperienceId(
+			final int experienceId) {
 		Collection<ExperienceComment> result;
 
-		result = this.experienceCommentRepository.findByExperienceId(experienceId);
+		result = this.experienceCommentRepository
+				.findByExperienceId(experienceId);
 		Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
 
 		for (ExperienceComment eC : result) {
 			childs = new ArrayList<ExperienceComment>();
-			childs.addAll(this.experienceCommentRepository.findChilds(eC.getId()));
+			childs.addAll(this.experienceCommentRepository.findChilds(eC
+					.getId()));
 		}
 		result.addAll(childs);
 		return result;

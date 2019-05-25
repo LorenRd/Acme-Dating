@@ -30,9 +30,6 @@ public class RecordService {
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private RecordCommentService recordCommentService;
-
-	@Autowired
 	private CoupleService coupleService;
 
 	@Autowired
@@ -91,7 +88,7 @@ public class RecordService {
 		Assert.isTrue(record.getCouple().getId() == principal.getId());
 
 		for (final RecordComment rC : recordComments) {
-			this.recordCommentService.delete(rC);
+			this.recordCommentRepository.delete(rC);
 		}
 		this.recordRepository.delete(record);
 	}
