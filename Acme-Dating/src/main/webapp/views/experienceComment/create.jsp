@@ -17,10 +17,11 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="experienceComment/create.do" modelAttribute="experienceComment">
+<form:form action="experienceComment/create.do?experienceId=${param['experienceId']}" modelAttribute="experienceComment">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
+
 		<acme:textarea code="experienceComment.body" path="body"/>
 		<br />		
 		

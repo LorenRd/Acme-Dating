@@ -85,16 +85,22 @@ public class ExperienceCommentService {
 		Assert.notNull(result);
 		return result;
 	}
-
-	public ExperienceComment reconstruct(
-			final ExperienceComment experienceComment,
-			final Experience experience, final BindingResult binding) {
+	
+	public ExperienceComment reconstruct(final ExperienceComment experienceComment,boolean isFather, final int id, final BindingResult binding) {
 		ExperienceComment result;
+		Experience experience;
 
 		result = experienceComment;
-		result.setBody(experienceComment.getBody());
 		result.setActor(this.actorService.findByPrincipal());
-		result.setExperience(experience);
+		if(isFather){
+			experience = this.experienceService.findOne(id);
+			result.setExperience(experience);
+		}else{
+			result.setExperienceComment(this.findOne(id));
+
+		}
+		result.setBody(experienceComment.getBody());
+
 		this.validator.validate(result, binding);
 		return result;
 	}

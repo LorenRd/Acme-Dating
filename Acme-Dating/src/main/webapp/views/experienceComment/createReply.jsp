@@ -24,7 +24,7 @@
 </jstl:when>
 </jstl:choose>
 
-<form:form action="experienceComment/create.do" modelAttribute="experienceComment">
+<form:form action="experienceComment/createReply.do?experienceCommentId=${param['experienceCommentId']}" modelAttribute="experienceComment">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
