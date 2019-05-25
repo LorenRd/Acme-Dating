@@ -44,7 +44,6 @@
 		<security:intercept-url pattern="/terms/terms.do" access="permitAll"/>
 		<security:intercept-url pattern="/terms/englishTerms.do" access="permitAll"/>
 
-		<security:intercept-url pattern="/message/administrator/create.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/company/display.do" access="permitAll"/>
 		<security:intercept-url pattern="/company/list.do" access="permitAll"/>
 		<security:intercept-url pattern="/company/register.do" access="isAnonymous()"/>
@@ -53,8 +52,8 @@
 		
 		<security:intercept-url pattern="/experience/display.do" access="permitAll"/>
 		<security:intercept-url pattern="/experience/list.do" access="permitAll"/>
-		<security:intercept-url pattern="/experienceComment/create.do" access="hasAnyRole('COMPANY','USER')"/>
-		<security:intercept-url pattern="/experienceComment/createReply.do" access="hasAnyRole('COMPANY','USER')"/>
+		<security:intercept-url pattern="/experienceComment/create.do" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/experienceComment/createReply.do" access="isAuthenticated()"/>
 		
 		<security:intercept-url pattern="/experience/listCompanyId.do" access="permitAll"/>		
 		<security:intercept-url pattern="/experience/company/list.do" access="hasRole('COMPANY')"/>
@@ -78,10 +77,7 @@
 		<security:intercept-url pattern="/messageBox/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/messageBox/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
-		<security:intercept-url pattern="/experience/list.do" access="permitAll"/>
-		<security:intercept-url pattern="/experience/display.do" access="permitAll"/>
 		
-		<security:intercept-url pattern="/messageBox/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/administrator/create.do" access="hasRole('ADMIN')" /> 
 		
 		<security:intercept-url pattern="/coupleRequest/user/list.do" access="hasRole('USER')" /> 
@@ -101,6 +97,9 @@
 		<security:intercept-url pattern="/record/couple/edit.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/record/couple/delete.do" access="hasRole('USER')"/>		
 		<security:intercept-url pattern="/record/couple/cancel.do" access="hasRole('USER')"/>	
+	
+		<security:intercept-url pattern="/recordComment/create.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/recordComment/createReply.do" access="hasRole('USER')"/>
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

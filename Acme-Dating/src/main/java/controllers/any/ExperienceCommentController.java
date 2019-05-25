@@ -13,84 +13,129 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ExperienceCommentService;
+import services.ExperienceService;
 import controllers.AbstractController;
+import domain.Experience;
 import domain.ExperienceComment;
 
 @Controller
 @RequestMapping("/experienceComment")
 public class ExperienceCommentController extends AbstractController {
-	
+
 	// Services
 
 	@Autowired
-	private ExperienceCommentService			experienceCommentService;
-	
-	//Create comentario raiz
+	private ExperienceCommentService experienceCommentService;
+
+	@Autowired
+	private ExperienceService experienceService;
+
+	// Create comentario raiz
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int experienceId) {
 		ModelAndView result;
 		ExperienceComment experienceComment;
-		
-		experienceComment = this.experienceCommentService.create(true, experienceId);
-		
+
+		experienceComment = this.experienceCommentService.create(true,
+				experienceId);
+
 		result = this.createModelAndView(experienceComment);
 
 		return result;
 	}
 
-	//Create con comentario padre
+	// Create con comentario padre
 	@RequestMapping(value = "/createReply", method = RequestMethod.GET)
 	public ModelAndView createReply(@RequestParam final int experienceCommentId) {
 		ModelAndView result;
 		ExperienceComment experienceComment;
-		
-		experienceComment = this.experienceCommentService.create(false, experienceCommentId);
+
+		experienceComment = this.experienceCommentService.create(false,
+				experienceCommentId);
 
 		result = this.createModelAndView(experienceComment);
 
 		return result;
 	}
-	
-	
-	// SAVE DE CREATE
-	
+
+	// // SAVE DE CREATE
+	//
+	// @RequestMapping(value = "/create", method = RequestMethod.POST, params =
+	// "save")
+	// public ModelAndView createFinal(
+	// @ModelAttribute("experienceComment") ExperienceComment experienceComment,
+	// final BindingResult binding) {
+	// ModelAndView result;
+	//
+	// try {
+	// experienceComment = this.experienceCommentService.reconstruct(
+	// experienceComment, binding);
+	// if (binding.hasErrors()) {
+	// result = this.createModelAndView(experienceComment);
+	// for (final ObjectError e : binding.getAllErrors())
+	// System.out.println(e.getObjectName() + " error ["
+	// + e.getDefaultMessage() + "] "
+	// + Arrays.toString(e.getCodes()));
+	// } else {
+	// experienceComment = this.experienceCommentService
+	// .save(experienceComment);
+	// result = new ModelAndView("redirect:/welcome/index.do");
+	// }
+	//
+	// } catch (final Throwable oops) {
+	// result = this.createModelAndView(experienceComment,
+	// "experienceComment.commit.error");
+	// }
+	// return result;
+	// }
+
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView createFinal(@ModelAttribute("experienceComment") ExperienceComment experienceComment, final BindingResult binding) {
+	public ModelAndView save(
+			@ModelAttribute("experienceComment") final int experienceId,
+			ExperienceComment experienceComment, final BindingResult binding) {
 		ModelAndView result;
+		final Experience experience = this.experienceService
+				.findOne(experienceId);
 
 		try {
-			experienceComment = this.experienceCommentService.reconstruct(experienceComment, binding);
+			experienceComment = this.experienceCommentService.reconstruct(
+					experienceComment, experience, binding);
 			if (binding.hasErrors()) {
 				result = this.createModelAndView(experienceComment);
 				for (final ObjectError e : binding.getAllErrors())
-					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+					System.out.println(e.getObjectName() + " error ["
+							+ e.getDefaultMessage() + "] "
+							+ Arrays.toString(e.getCodes()));
 			} else {
-				experienceComment = this.experienceCommentService.save(experienceComment);
+				experienceComment = this.experienceCommentService
+						.save(experienceComment);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
-
 		} catch (final Throwable oops) {
-			result = this.createModelAndView(experienceComment, "experienceComment.commit.error");
+			result = this.createModelAndView(experienceComment,
+					"experienceComment.commit.error");
 		}
 		return result;
 	}
-	
-	//Ancillary methods--------------
-	
-	private ModelAndView createModelAndView(final ExperienceComment experienceComment) {
+
+	// Ancillary methods--------------
+
+	private ModelAndView createModelAndView(
+			final ExperienceComment experienceComment) {
 		ModelAndView result;
 
 		result = this.createModelAndView(experienceComment, null);
 		return result;
 	}
 
-	private ModelAndView createModelAndView(final ExperienceComment experienceComment, final String messageCode) {
+	private ModelAndView createModelAndView(
+			final ExperienceComment experienceComment, final String messageCode) {
 		ModelAndView result;
-		
-		if(experienceComment.getExperienceComment()!=null){
+
+		if (experienceComment.getExperienceComment() != null) {
 			result = new ModelAndView("experienceComment/createReply");
-		}else{
+		} else {
 			result = new ModelAndView("experienceComment/create");
 		}
 		result.addObject("experienceComment", experienceComment);

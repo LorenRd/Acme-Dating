@@ -21,9 +21,6 @@
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
-		<form:hidden path="actor"/>
-		<form:hidden path="experience"/>
-		
 		<acme:textarea code="experienceComment.body" path="body"/>
 		<br />		
 		
