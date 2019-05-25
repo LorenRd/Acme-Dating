@@ -22,69 +22,67 @@
 
 <!-- Listing grid -->
 
-<c:if test="${not empty couple}">
+<jstl:choose>
+	<jstl:when test="${not empty couple}">
+	
+		<display:table name="records" id="row" requestURI="${requestURI}"
+			pagesize="5" class="displaytag" defaultsort="1">
 
-	<display:table name="records" id="row" requestURI="${requestURI}"
-		pagesize="5" class="displaytag" defaultsort="1">
+			<!-- Attributes -->
 
-		<!-- Attributes -->
+			<spring:message code="record.day" var="dayHeader" />
+			<display:column property="day" title="${dayHeader}" sortable="true" />
 
-		<spring:message code="record.day" var="dayHeader" />
-		<display:column property="day" title="${dayHeader}" sortable="true" />
+			<spring:message code="record.title" var="titleHeader" />
+			<display:column property="title" title="${titleHeader}"
+				sortable="true" />
 
-		<spring:message code="record.title" var="titleHeader" />
-		<display:column property="title" title="${titleHeader}"
-			sortable="true" />
+			<spring:message code="record.body" var="bodyHeader" />
+			<display:column property="body" title="${bodyHeader}" sortable="true" />
 
-		<spring:message code="record.body" var="bodyHeader" />
-		<display:column property="body" title="${bodyHeader}" sortable="true" />
+			<spring:message code="record.photo" var="photoHeader" />
+			<display:column property="photo" title="${photoHeader}"
+				sortable="true" />
 
-		<spring:message code="record.photo" var="photoHeader" />
-		<display:column property="photo" title="${photoHeader}"
-			sortable="true" />
-			
-		<spring:message code="record.category" var="categoryHeader" />
-		<display:column property="category.title" title="${categoryHeader}"
-			sortable="true" />	
+			<spring:message code="record.category" var="categoryHeader" />
+			<display:column property="category.title" title="${categoryHeader}"
+				sortable="true" />
+
+			<security:authorize access="hasRole('USER')">
+
+				<!-- Display -->
+				<display:column>
+					<a href="record/couple/display.do?recordId=${row.id}"><spring:message
+							code="record.display" /></a>
+				</display:column>
+
+				<!-- Edit -->
+				<display:column>
+					<a href="record/couple/edit.do?recordId=${row.id}"><spring:message
+							code="record.edit" /></a>
+				</display:column>
+
+				<!-- Delete -->
+				<display:column>
+					<a href="record/couple/delete.do?recordId=${row.id}"><spring:message
+							code="record.delete" /></a>
+				</display:column>
+
+			</security:authorize>
+
+		</display:table>
 
 		<security:authorize access="hasRole('USER')">
 
-			<!-- Edit -->
-			<display:column>
-				<a href="record/couple/edit.do?recordId=${row.id}"><spring:message
-						code="record.edit" /></a>
-			</display:column>
-
-			<!-- Delete -->
-			<display:column>
-				<a href="record/couple/delete.do?recordId=${row.id}"><spring:message
-						code="record.delete" /></a>
-			</display:column>
+			<!-- Create record -->
+			<acme:button url="record/couple/create.do" code="record.create" />
 
 		</security:authorize>
 
-	</display:table>
-
-	<security:authorize access="hasRole('USER')">
-
-		<!-- Create record -->
-		<acme:button url="record/couple/create.do" code="record.create" />
-
-	</security:authorize>
-
-</c:if>
-
-<c:if test="${empty couple}">
-
-	<jstl:if test="${cookie['language'].getValue()=='en'}">
-
-		<jstl:out value="You do not have couple"></jstl:out>
-
-	</jstl:if>
-	<jstl:if test="${cookie['language'].getValue()=='es'}">
-
-		<jstl:out value="No tienes pareja"></jstl:out>
-
-	</jstl:if>
-
-</c:if>
+	</jstl:when>
+	<jstl:otherwise>
+		<spring:message code="couple.single" />
+		<a href="coupleRequest/user/list.do"><spring:message
+				code="couple.coupleRequest" /></a>
+	</jstl:otherwise>
+</jstl:choose>

@@ -22,7 +22,8 @@
 
 <!-- Listing grid -->
 
-<c:if test="${not empty couple}">
+<jstl:choose>
+	<jstl:when test="${not empty couple}">
 
 	<display:table name="tasks" id="row" requestURI="${requestURI}"
 		pagesize="5" class="displaytag">
@@ -62,19 +63,10 @@
 
 	</security:authorize>
 
-</c:if>
-
-<c:if test="${empty couple}">
-
-    <jstl:if test="${cookie['language'].getValue()=='en'}">
-    
-    	<jstl:out value="You do not have couple"></jstl:out>
-    
-    </jstl:if>
-    <jstl:if test="${cookie['language'].getValue()=='es'}">
-    
-    	<jstl:out value="No tienes pareja"></jstl:out>
-    	
-    </jstl:if>
-    
-</c:if>
+</jstl:when>
+	<jstl:otherwise>
+		<spring:message code="couple.single" />
+		<a href="coupleRequest/user/list.do"><spring:message
+				code="couple.coupleRequest" /></a>
+	</jstl:otherwise>
+</jstl:choose>

@@ -337,6 +337,7 @@
 				<ref bean="messageBox30" />
 			</list>
 		</property>
+		<property name="couple" ref="couple2" />
 	</bean>
 
 	<bean class="domain.User" id="user5">
@@ -371,6 +372,7 @@
 				<ref bean="messageBox36" />
 			</list>
 		</property>
+		<property name="couple" ref="couple2" />
 	</bean>
 
 	<!-- Categories -->
@@ -539,7 +541,7 @@
 		<property name="CVV" value="543" />
 	</bean>
 
-	<!-- Couple -->
+	<!-- Couples -->
 
 	<bean class="domain.Couple" id="couple1">
 		<property name="startDate" value="2018/03/01 13:00" />
@@ -548,6 +550,15 @@
 			<list>
 				<ref bean="trophy1" />
 				<ref bean="trophy5" />
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.Couple" id="couple2">
+		<property name="startDate" value="2018/04/05 11:00" />
+		<property name="score" value="100" />
+		<property name="trophies">
+			<list>
 			</list>
 		</property>
 	</bean>
@@ -1051,24 +1062,24 @@
 	<!-- CoupleRequests -->
 
 	<bean class="domain.CoupleRequest" id="coupleRequest1">
-		<property name="moment" value="2018/12/01 22:30" />
-		<property name="status" value="PENDING" />
-		<property name="sender" ref="user4" />
-		<property name="recipient" ref="user3" />
-	</bean>
-
-	<bean class="domain.CoupleRequest" id="coupleRequest2">
 		<property name="moment" value="2018/11/11 11:11" />
 		<property name="status" value="PENDING" />
 		<property name="sender" ref="user5" />
 		<property name="recipient" ref="user3" />
 	</bean>
 
-	<bean class="domain.CoupleRequest" id="coupleRequest3">
+	<bean class="domain.CoupleRequest" id="coupleRequest2">
 		<property name="moment" value="2019/02/11 12:10" />
 		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
+	</bean>
+
+	<bean class="domain.CoupleRequest" id="coupleRequest3">
+		<property name="moment" value="2018/04/05 11:00" />
+		<property name="status" value="ACCEPTED" />
+		<property name="sender" ref="user6" />
+		<property name="recipient" ref="user4" />
 	</bean>
 
 	<!-- ExperienceComments -->
