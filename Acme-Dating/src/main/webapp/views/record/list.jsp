@@ -31,7 +31,7 @@
 			<!-- Attributes -->
 
 			<spring:message code="record.day" var="dayHeader" />
-			<display:column property="day" title="${dayHeader}" sortable="true" />
+			<display:column property="day" title="${dayHeader}" sortable="false" defaultorder="descending"/>
 
 			<spring:message code="record.title" var="titleHeader" />
 			<display:column property="title" title="${titleHeader}"

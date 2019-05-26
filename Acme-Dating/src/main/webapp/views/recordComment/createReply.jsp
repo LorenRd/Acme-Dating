@@ -21,14 +21,11 @@
 
 <jstl:choose>
 	<jstl:when test="${not empty recordComment.recordComment}">
-		<b><spring:message code="recordComment.reply" /></b>: <br />
-		<br />
-		<jstl:out value="${recordComment.recordComment.body}" />
+		<b><spring:message code="recordComment.reply" /></b>: <jstl:out value="${recordComment.recordComment.body}" />
 	</jstl:when>
 </jstl:choose>
 
-<form:form action="recordComment/create.do"
-	modelAttribute="recordComment">
+<form:form action="recordComment/createReply.do?recordCommentId=${param['recordCommentId']}" modelAttribute="recordComment">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 

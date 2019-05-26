@@ -1,6 +1,8 @@
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,6 +106,12 @@ public class RecordService {
 
 	public Record reconstruct(final Record record, final BindingResult binding) {
 		Record result;
+		Date dt = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(dt);
+		c.add(Calendar.DATE, 1);
+		
+		
 		if (record.getId() == 0) {
 			result = record;
 			result.setCouple(this.coupleService.findByUser());
@@ -129,7 +137,6 @@ public class RecordService {
 				result.setCategory(record.getCategory());
 			}
 		}
-
 		this.validator.validate(result, binding);
 
 		return result;

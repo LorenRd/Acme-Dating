@@ -13,21 +13,26 @@
 
 <jstl:choose>
 	<jstl:when test="${hasCouple == true}">
+		<table class="tab">
+			<tr><td style="width: 110px"><acme:image cssClass="categorias" src="${record.category.picture}" /></td>
+			<td>		
+				<b><spring:message code="record.day" /></b>:
+				<jstl:out value="${record.day}"/><br/>	
 
-		<b><spring:message code="record.day" /></b>:
-		<jstl:out value="${record.day}"/><br/>	
-
-		<b><spring:message code="record.title" /></b>:
-		<jstl:out value="${record.title}"/><br/>
-
-		<b><spring:message code="record.body" /></b>:
-		<jstl:out value="${record.body }"/><br/>
-	
-		<b><spring:message code="record.photo" /></b>:
-		<acme:image src="${record.photo}" /><br/>
+				<b><spring:message code="record.title" /></b>:
+				<jstl:out value="${record.title}"/><br/>
+		
+				<b><spring:message code="record.body" /></b>:
+				<jstl:out value="${record.body }"/><br/>
 			
-		<b><spring:message code="record.category" /></b>:
-		<jstl:out value="${record.category.title}"/><br/>
+				<b><spring:message code="record.photo" /></b>:
+				<acme:image src="${record.photo}" /><br/>
+					
+				<b><spring:message code="record.category" /></b>:
+				<jstl:out value="${record.category.title}"/><br/>
+		</td></tr>
+		</table>
+
 
 		<!-- TABLA DE COMENTARIOS -->
 <h3> <spring:message code="record.comments" /> </h3>
@@ -37,12 +42,12 @@
 <c:forEach items="${comments}" var="comment">
     <!-- Padres: Tienen referencia a record pero no a record comment, opcion de reply -->
   	<jstl:if test="${empty comment.recordComment}">
-  		<li><jstl:if test="${comment.actor.id == record.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${comment.actor.name}"/>:</b> <jstl:out value="${comment.body}"/> <a href="recordComment/createReply.do?recordCommentId=${comment.id}"><spring:message code="record.comment.reply"/></a></li>
+  		<li><jstl:out value="${comment.body}"/> <a href="recordComment/createReply.do?recordCommentId=${comment.id}"><spring:message code="record.comment.reply"/></a></li>
   	    	<!-- Hijos, habrá que volver a recorrer todos los comments buscando cuales son los hijos y poniendolos -->
 			<ul>
 			<c:forEach items="${comments}" var="commentChild">
 			  	<jstl:if test="${comment.id == commentChild.recordComment.id}">
-			  		<li><jstl:if test="${commentChild.actor.id == record.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${commentChild.actor.name}"/>:</b> <jstl:out value="${commentChild.body}"/></li>
+			  		<li><jstl:out value="${commentChild.body}"/></li>
 				</jstl:if>
 			</c:forEach>
 			</ul>

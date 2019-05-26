@@ -19,8 +19,7 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="recordComment/create.do"
-	modelAttribute="recordComment">
+<form:form action="recordComment/create.do?recordId=${param['recordId']}" modelAttribute="recordComment">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 
