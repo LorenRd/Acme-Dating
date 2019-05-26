@@ -90,3 +90,9 @@
 	
 </jstl:if>
 </security:authorize>
+
+<br/>
+<br/>
+<jstl:if test="${administrator.userAccount.username == pageContext.request.userPrincipal.name}">
+	<acme:button url="message/actor/exportData.do" code="actor.exportData"/>
+</jstl:if>

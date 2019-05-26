@@ -49,8 +49,12 @@ public class SocialNetworkService {
 
 	public SocialNetwork reconstructPruned(final SocialNetwork socialNetwork, final BindingResult binding) {
 		SocialNetwork result;
-		if (socialNetwork.getId() == 0)
+		final User user = this.userService.findByPrincipal();
+		if (socialNetwork.getId() == 0) {
 			result = socialNetwork;
+			result.setUser(user);
+		}
+
 		else
 			result = this.socialNetworkRepository.findOne(socialNetwork.getId());
 		result.setName(socialNetwork.getName());
@@ -72,6 +76,14 @@ public class SocialNetworkService {
 		Assert.notNull(result);
 
 		return null;
+	}
+
+	public SocialNetwork create() {
+		SocialNetwork result;
+		result = new SocialNetwork();
+		final User user = this.userService.findByPrincipal();
+		result.setUser(user);
+		return result;
 	}
 
 }

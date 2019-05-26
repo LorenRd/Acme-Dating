@@ -114,9 +114,21 @@
 
 <security:authorize access="hasRole('USER')">
 <jstl:if test="${user.userAccount.username == pageContext.request.userPrincipal.name}">
+<acme:button url="socialNetwork/create.do" code="user.socialNetwork.create"/>
+</jstl:if>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+<jstl:if test="${user.userAccount.username == pageContext.request.userPrincipal.name}">
 <input type="button" name="save" class="ui button"
 	value="<spring:message code="user.edit" />"
 	onclick="javascript: relativeRedir('user/edit.do');" />
 	
 </jstl:if>
 </security:authorize>
+
+<br/>
+<br/>
+<jstl:if test="${user.userAccount.username == pageContext.request.userPrincipal.name}">
+	<acme:button url="message/actor/exportData.do" code="actor.exportData"/>
+</jstl:if>

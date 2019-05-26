@@ -2,6 +2,7 @@
 package controllers.company;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import javax.validation.Valid;
 
@@ -18,8 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CompanyService;
 import services.CustomisationService;
+import services.ExperienceService;
 import controllers.AbstractController;
 import domain.Company;
+import domain.Experience;
 import forms.CompanyForm;
 
 @Controller
@@ -34,6 +37,9 @@ public class CompanyController extends AbstractController {
 	@Autowired
 	private CustomisationService	customisationService;
 
+	@Autowired
+	private ExperienceService		experienceService;
+
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -45,8 +51,15 @@ public class CompanyController extends AbstractController {
 			company = this.companyService.findByPrincipal();
 		else
 			company = this.companyService.findOne(companyId);
+
+		Collection<Experience> experiences;
+
+		experiences = this.experienceService.findByCompany(company.getId());
+
 		result = new ModelAndView("company/display");
 		result.addObject("company", company);
+		result.addObject("experiences", experiences);
+
 		return result;
 	}
 
