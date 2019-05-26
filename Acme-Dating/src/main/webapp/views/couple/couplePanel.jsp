@@ -16,43 +16,49 @@
 <!-- Couple members -->
 <h3><spring:message code="couple.members"/></h3>
 <div align="center">
-<table style="width:100%">
+<table class="tab">
 <tr>
 <td>
 <div align="center">
-<img src="${principal.photo}" /><br />
-<jstl:out value="${principal.name}"></jstl:out>
+<img src="${principal.photo}" /><br /><br />
+<b><jstl:out value="${principal.name}"/></b>
 </div>
 </td>
+<td style="text-align:center; vertical-align: middle;"><h4><jstl:out value="${couple.score}" /> <spring:message code="couple.score"/></h4></td>
 <td>
 <div align="center">
-<img src="${darling.photo}" /><br />
-<jstl:out value="${darling.name}"></jstl:out>
+<img src="${darling.photo}" /><br /><br />
+<b><jstl:out value="${darling.name}" /></b>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <!-- Score -->
-<h3><spring:message code="couple.score"/></h3>
-<h4><jstl:out value="${couple.score}"></jstl:out></h4>
+<!--<h3><spring:message code="couple.score"/></h3>
+<h4><jstl:out value="${couple.score}"></jstl:out></h4>  -->
 <!-- Trophies -->
 <h3><spring:message code="couple.trophies"/></h3>
 <div align="center">
-<table style="width:100%">
+<table class="tab">
   <tr>
   <jstl:forEach items="${trophies}" var="trophy" >
   <td>
 <div align="center">
-<img src="${trophy.picture}" /><br />
-<jstl:out value="${trophy.title}"></jstl:out>
+<img src="${trophy.picture}" /><br /><br />
+<b><jstl:out value="${trophy.title}" /></b>
 </div>
 </td>
 </jstl:forEach> 
   </tr>
 </table>
 </div>
-
+<h3><spring:message code="couple.options"/></h3>
+<div align="center">
+<table class="tab">
+<tr><td style="text-align:center; vertical-align: middle;"><a href="record/couple/list.do"><img src="images/icons/diary.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="task/couple/list.do"><img src="images/icons/to-do-list.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="experience/list.do"><img src="images/icons/waterfall.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="book/couple/list.do"><img src="images/icons/luggage.png" /></a></td></tr>
+</table>
+</div>
 </jstl:when>
 <jstl:otherwise>
 <spring:message code="couple.single" /><a href="coupleRequest/user/list.do"><spring:message code="couple.coupleRequest"/></a>

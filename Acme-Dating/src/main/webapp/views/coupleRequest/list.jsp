@@ -9,6 +9,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+
+<jstl:choose>
+<jstl:when test="${!haveCouple}">
 <!-- Listing grid -->
 
 <display:table name="coupleRequests" id="row" requestURI="${requestURI}"
@@ -46,3 +49,8 @@
 	</div>
 </jstl:if>
 </security:authorize>
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="couple.inCouple" /><a href="couple/display.do"><spring:message code="couple.panel"/></a>
+</jstl:otherwise>
+</jstl:choose>
