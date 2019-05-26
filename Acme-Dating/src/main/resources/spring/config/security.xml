@@ -96,6 +96,13 @@
 		<security:intercept-url pattern="/coupleRequest/user/accept.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/coupleRequest/user/reject.do" access="hasRole('USER')" />
 	
+		<security:intercept-url pattern="/challenge/user/list.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/challenge/user/display.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/challenge/user/create.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/challenge/user/accept.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/challenge/user/reject.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/challenge/user/complete.do" access="hasRole('USER')" />
+		
 		<security:intercept-url pattern="/task/couple/list.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/task/couple/create.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/task/couple/edit.do" access="hasRole('USER')"/>
