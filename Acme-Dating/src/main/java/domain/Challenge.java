@@ -60,7 +60,7 @@ public class Challenge extends DomainEntity {
 		this.description = description;
 	}
 
-	@Range(min = 1, max = 100)
+	@Range(min = 0, max = 100)
 	public int getScore() {
 		return this.score;
 	}
