@@ -24,37 +24,13 @@
 
 <jstl:choose>
 	<jstl:when test="${not empty couple}">
-
-	<display:table name="tasks" id="row" requestURI="${requestURI}"
-		pagesize="5" class="displaytag">
-
-		<!-- Attributes -->
-
-		<spring:message code="task.title" var="titleHeader" />
-		<display:column property="title" title="${titleHeader}"
-			sortable="true" />
-
-		<spring:message code="task.isCompleted" var="isCompletedHeader" />
-		<display:column property="isCompleted" title="${isCompletedHeader}"
-			sortable="true" />
-
-		<security:authorize access="hasRole('USER')">
-
-			<!-- Edit -->
-			<display:column>
-				<a href="task/couple/edit.do?taskId=${row.id}"><spring:message
-						code="task.edit" /></a>
-			</display:column>
-
-			<!-- Delete -->
-			<display:column>
-				<a href="task/couple/delete.do?taskId=${row.id}"><spring:message
-						code="task.delete" /></a>
-			</display:column>
-
-		</security:authorize>
-
-	</display:table>
+	<table class="tab2">
+	<jstl:forEach items="${tasks}" var="task" >
+	<tr style="text-align:center; vertical-align: middle;">
+	<td width="30px"><a href="task/couple/changeStatus.do?taskId=${task.id}"><jstl:choose><jstl:when test="${task.isCompleted}"><img src="images/icons/checked.png" /></jstl:when><jstl:otherwise><img src="images/icons/unchecked.png" /></jstl:otherwise></jstl:choose></a></td> <td width="150px" style="text-align:left; vertical-align: middle;">  <a href="task/couple/edit.do?taskId=${task.id}"><b><jstl:out value="${task.title}" /></b></a></td> <td width="30px"><a href="task/couple/delete.do?taskId=${task.id}"><img src="images/icons/minus.png" /></a></td>
+	</tr>
+	</jstl:forEach>
+	</table>
 
 	<security:authorize access="hasRole('USER')">
 

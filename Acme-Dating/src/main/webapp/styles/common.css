@@ -53,6 +53,12 @@ body {
     vertical-align: middle;
 }
 
+.tab2{
+	border:none;
+	text-align: center; 
+    vertical-align: middle;
+}
+
 .categorias{
 	height: 100px;
 	width: 100px
