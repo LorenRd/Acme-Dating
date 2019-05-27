@@ -9,6 +9,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<jstl:choose>
+	<jstl:when test="${not empty couple}">
+
 <!-- Listing grid -->
 
 <display:table name="books" id="row" requestURI="${requestURI}"
@@ -40,3 +43,11 @@
 </display:table>
 
 <!-- Book a experience -->
+
+</jstl:when>
+	<jstl:otherwise>
+		<spring:message code="couple.single" />
+		<a href="coupleRequest/user/list.do"><spring:message
+				code="couple.coupleRequest" /></a>
+	</jstl:otherwise>
+</jstl:choose>
