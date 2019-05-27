@@ -1,5 +1,5 @@
 <%--
- * action-2.jsp
+ * edit.jsp
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -15,5 +15,28 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<p><spring:message code="administrator.action.2" /></p>
+<form:form action="socialNetwork/create.do" modelAttribute="socialNetwork">
+	<form:hidden path="id" />
+	<form:hidden path="version"/>
+
+	<div class="ui equal width form">
+		<div class="fields">
+			<!-- Name -->
+			<acme:textbox code="socialNetwork.name" path="name"/>
+			<!-- Surname -->
+			<acme:textbox code="socialNetwork.linkProfile" path="linkProfile"/>
+			
+		</div>
+			
+	</div>
+
+	<input type="submit" name="create" id="create"
+		value="<spring:message code="socialNetwork.save" />" />
+	
+	<acme:cancel url="user/display.do" code="socialNetwork.cancel"/>
+
+
+</form:form>
+

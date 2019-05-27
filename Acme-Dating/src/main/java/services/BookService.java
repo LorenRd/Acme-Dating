@@ -1,9 +1,11 @@
+
 package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +25,17 @@ public class BookService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private BookRepository bookRepository;
+	private BookRepository		bookRepository;
 
 	@Autowired
-	private CoupleService			coupleService;
-	
-	@Autowired
-	private ExperienceService			experienceService;
+	private CoupleService		coupleService;
 
 	@Autowired
-	private Validator validator;
+	private ExperienceService	experienceService;
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Simple CRUD Methods
 	public void delete(final Book book) {
@@ -52,15 +55,15 @@ public class BookService {
 	public Book save(final Book book) {
 		Book result;
 		this.experienceService.subtractPlaces(book.getExperience().getId());
-		
+
 		result = this.bookRepository.save(book);
 		Assert.notNull(result);
 		return result;
 	}
-	
+
 	public Book saveScore(final Book book) {
 		Book result;
-		
+
 		result = this.bookRepository.save(book);
 		Assert.notNull(result);
 		return result;
@@ -104,7 +107,7 @@ public class BookService {
 		result.setCouple(principal);
 		result.setFeatures(new ArrayList<Feature>());
 		result.setMoment(new Date(System.currentTimeMillis() - 1));
-		
+
 		return result;
 	}
 
@@ -130,17 +133,15 @@ public class BookService {
 			result.setExperience(bookForm.getExperience());
 			result.setDate(bookForm.getDate());
 			result.setFeatures(bookForm.getFeatures());
-			
-			if(result.getDate().before(Calendar.getInstance().getTime()))
+
+			if (result.getDate().before(Calendar.getInstance().getTime()))
 				binding.rejectValue("date", "book.validation.date", "Date must be future");
 
 		} else {
 			result = this.bookRepository.findOne(bookForm.getId());
 			result.setScore(bookForm.getScore());
-			
-			
-		}
 
+		}
 
 		this.validator.validate(result, binding);
 		return result;
@@ -152,6 +153,12 @@ public class BookService {
 		result = this.bookRepository.findByFeatureId(featureId);
 		
 		return result;
+	}
+
+	public Collection<Book> findByFeatureId(final int featureId) {
+		Collection<Book> books;
+		books = this.bookRepository.findByFeatureId(featureId);
+		return books;
 	}
 
 }

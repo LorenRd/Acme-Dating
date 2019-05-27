@@ -159,4 +159,22 @@ public class MessageBoxService {
 	public void flush() {
 		this.messageBoxRepository.flush();
 	}
+
+	public Collection<MessageBox> findAllByActorId(final int actorId) {
+		Collection<MessageBox> result;
+		result = new ArrayList<MessageBox>();
+		result = this.messageBoxRepository.findAllByActorId(actorId);
+		return result;
+	}
+
+	public void deleteInBach(final Collection<MessageBox> boxes) {
+		this.messageBoxRepository.deleteInBatch(boxes);
+
+	}
+
+	public Collection<MessageBox> findAllByMessageId(final int messageId) {
+		Collection<MessageBox> result;
+		result = this.messageBoxRepository.findAllByMessageId(messageId);
+		return result;
+	}
 }

@@ -27,7 +27,7 @@ public class FeatureService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private CompanyService		companyService;
-	
+
 	@Autowired
 	private ExperienceService		experienceService;
 
@@ -37,6 +37,13 @@ public class FeatureService {
 	@Autowired
 	private Validator validator;
 	
+
+	@Autowired
+	private BookService			bookService;
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Simple CRUD Methods
 
@@ -120,8 +127,7 @@ public class FeatureService {
 
 		return result;
 	}
-	
-	
+
 	public Feature reconstruct(final Feature feature, final BindingResult binding) {
 		Feature result;
 		if (feature.getId() == 0)
@@ -138,4 +144,5 @@ public class FeatureService {
 		this.validator.validate(result, binding);
 		return result;
 	}
+
 }

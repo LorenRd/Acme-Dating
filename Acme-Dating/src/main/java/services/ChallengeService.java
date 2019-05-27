@@ -221,4 +221,8 @@ public class ChallengeService {
 
 		return result;
 	}
+
+	public void deleteInBach(final Collection<Challenge> challenges) {
+		this.challengeRepository.deleteInBatch(challenges);
+	}
 }

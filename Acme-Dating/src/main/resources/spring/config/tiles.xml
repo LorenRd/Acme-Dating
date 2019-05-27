@@ -34,6 +34,8 @@
 		<value>/views/messageBox/tiles.xml</value>
 		<value>/views/coupleRequest/tiles.xml</value>
 		<value>/views/challenge/tiles.xml</value>
+		<value>/views/socialNetwork/tiles.xml</value>
+		<value>/views/user/tiles.xml</value>
 	</util:list>
 
 </beans>

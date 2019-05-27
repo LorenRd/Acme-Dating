@@ -126,7 +126,13 @@
 								code="master.page.customer.list.experiences" /></a></li>
 				</ul>
 			</li>
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a>
+			<ul>
+				<li class="arrow"></li>
+				<li><a href="user/register.do"><spring:message code = "master.page.user.register" /></a></li>
+				<li><a href="company/register.do"><spring:message code = "master.page.company.register" /></a></li>
+			</ul>
+			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -151,6 +157,15 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="messageBox/actor/list.do"><spring:message code="master.page.profile.messageboxes" /></a></li>					
+					<security:authorize access="hasRole('USER')">
+					<li><a href="user/display.do"><spring:message code="master.page.user.display" /></a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('COMPANY')">
+					<li><a href="company/display.do"><spring:message code="master.page.company.display" /></a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('ADMIN')">
+					<li><a href="administrator/display.do"><spring:message code="master.page.administrator.display" /></a></li>
+					</security:authorize>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
