@@ -146,14 +146,6 @@ public class BookService {
 		this.validator.validate(result, binding);
 		return result;
 	}
-	
-	public Collection<Book> findByFeatureId (final int featureId){
-		Collection<Book> result;
-		
-		result = this.bookRepository.findByFeatureId(featureId);
-		
-		return result;
-	}
 
 	public Collection<Book> findByFeatureId(final int featureId) {
 		Collection<Book> books;

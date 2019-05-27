@@ -29,14 +29,7 @@ public class FeatureService {
 	private CompanyService		companyService;
 
 	@Autowired
-	private ExperienceService		experienceService;
-
-	@Autowired
-	private BookService		bookService;
-	
-	@Autowired
-	private Validator validator;
-	
+	private ExperienceService	experienceService;
 
 	@Autowired
 	private BookService			bookService;
@@ -78,26 +71,25 @@ public class FeatureService {
 		Collection<Experience> experiences;
 		Collection<Book> books;
 
-		
 		experiences = this.experienceService.findByFeatureId(feature.getId());
 		books = this.bookService.findByFeatureId(feature.getId());
-		for (Experience e : experiences) {
+		for (final Experience e : experiences) {
 			Collection<Feature> features = new ArrayList<Feature>();
 			features = e.getFeatures();
 			features.remove(feature);
-			
+
 			e.setFeatures(features);
 			this.experienceService.save(e);
 		}
-		for (Book b : books) {
+		for (final Book b : books) {
 			Collection<Feature> features = new ArrayList<Feature>();
 			features = b.getFeatures();
 			features.remove(feature);
-			
+
 			b.setFeatures(features);
 			this.bookService.save(b);
 		}
-		
+
 		this.featureRepository.delete(feature);
 
 	}
