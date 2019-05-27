@@ -133,7 +133,14 @@ public class ExperienceService {
 	}
 
 	// Business Methods
-
+	public Collection<Experience> findByFeatureId (final int featureId){
+		Collection<Experience> result;
+		
+		result = this.experienceRepository.findByFeatureId(featureId);
+		
+		return result;
+	}
+	
 	public Collection<Experience> findByCompany(final int companyId) {
 		Collection<Experience> result;
 
