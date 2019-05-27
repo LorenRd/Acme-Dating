@@ -109,6 +109,7 @@ public class CoupleService {
 		Collection<Task> tasks;
 		Collection<Book> books;
 		Collection<Challenge> challenges;
+		Collection<User> users;
 
 		Assert.notNull(couple);
 		Assert.isTrue(couple.getId() != 0);
@@ -132,6 +133,13 @@ public class CoupleService {
 		challenges.addAll(this.challengeService.findBySenderId(principal.getId()));
 		for (final Challenge c : challenges)
 			this.challengeService.delete(c);
+		
+		couple.getTrophies().clear();
+		
+		users = this.findUsersOfACouple(couple.getId());
+		for (User u : users) {
+			u.setCouple(null);
+		}
 
 		this.coupleRepository.delete(couple);
 		this.flush();

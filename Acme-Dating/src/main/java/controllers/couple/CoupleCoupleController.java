@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CoupleService;
@@ -64,18 +63,20 @@ public class CoupleCoupleController {
 
 	//Delete
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int coupleId) {
+	public ModelAndView delete() {
 		ModelAndView result;
 		Couple couple;
-
-		couple = this.coupleService.findOne(coupleId);
+		
+		couple = this.coupleService.findByUser();
+		
+		couple = this.coupleService.findOne(couple.getId());
 		Assert.notNull(couple);
+		this.coupleService.delete(couple);
 
 		try {
-			this.coupleService.delete(couple);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:display.do?coupleId=" + coupleId);
+			result = new ModelAndView("redirect:display.do");
 		}
 		return result;
 	}
