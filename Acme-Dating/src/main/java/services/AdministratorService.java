@@ -146,32 +146,6 @@ public class AdministratorService {
 		this.administratorRepository.flush();
 	}
 
-	// public void computeTrophies() {
-	// Collection<Trophy> trophies;
-	// Collection<Couple> couples;
-	// Collection<Challenge> challenges;
-	// Collection<Experience> experiences;
-	// Collection<User> users;
-	//
-	// Collection<Trophy> reachedTrophies;
-	//
-	// trophies = this.trophyService.findAll();
-	// couples = this.coupleService.findAll();
-	// challenges = this.challengeService.findAll();
-	// experiences = this.experienceService.findAll();
-	// users = this.userService.findAll();
-	// //.equals("COMPLETED")
-	// for(Trophy t : trophies){
-	// for(Couple c : couples){
-	// for(Challenge ch : challenges){
-	// if(((c.getScore() >= t.getScoreToReach()) || () )){
-	//
-	// }
-	// }
-	// }
-	// }
-	// }
-
 	public void computeTrophies(){
 		Collection<Trophy> trophies = this.trophyService.findAll();
 		Collection<Couple> couples = this.coupleService.findAll();
@@ -180,16 +154,13 @@ public class AdministratorService {
 			Collection<Trophy> reachedTrophies = new ArrayList<Trophy>();
 			Collection<Book> books = this.bookService.findAllByCoupleId(c.getId());
 			Collection<User> users = this.userService.findByCoupleId(c.getId());
-			Integer cont = 0;
-			Integer numberOfCompletedChallenges;
+			int numberOfCompletedChallenges = 0;
 			for(User u : users){
 				Collection<Challenge> challenges = this.challengeService.findAllCompletedBySenderId(u.getId());
-				numberOfCompletedChallenges = challenges.size();
-				cont = numberOfCompletedChallenges;
-				break;
+				numberOfCompletedChallenges += challenges.size();
 			}
 			for(Trophy t : trophies){
-				if((c.getScore() >= t.getScoreToReach()) || (books.size() >= t.getExperiencesToShare()) || (cont >= t.getChallengesToComplete()) ){
+				if(((c.getScore() >= t.getScoreToReach())&& t.getScoreToReach()>0) || ((books.size() >= t.getExperiencesToShare())&& t.getExperiencesToShare()>0) || ((numberOfCompletedChallenges >= t.getChallengesToComplete())&& t.getChallengesToComplete()> 0) ){
 					reachedTrophies.add(t);
 				}
 			}
