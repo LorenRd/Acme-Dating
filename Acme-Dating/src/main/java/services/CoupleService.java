@@ -14,6 +14,7 @@ import repositories.CoupleRepository;
 import domain.Book;
 import domain.Challenge;
 import domain.Couple;
+import domain.CoupleRequest;
 import domain.Record;
 import domain.Task;
 import domain.Trophy;
@@ -25,23 +26,26 @@ public class CoupleService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CoupleRepository	coupleRepository;
+	private CoupleRepository		coupleRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private UserService			userService;
+	private UserService				userService;
 
 	@Autowired
-	private RecordService		recordService;
+	private RecordService			recordService;
 
 	@Autowired
-	private TaskService			taskService;
+	private TaskService				taskService;
 
 	@Autowired
-	private BookService			bookService;
+	private BookService				bookService;
 
 	@Autowired
-	private ChallengeService	challengeService;
+	private ChallengeService		challengeService;
+
+	@Autowired
+	private CoupleRequestService	coupleRequestService;
 
 
 	public Couple create(final User sender, final User recipient) {
@@ -110,6 +114,7 @@ public class CoupleService {
 		Collection<Book> books;
 		Collection<Challenge> challenges;
 		Collection<User> users;
+		Collection<CoupleRequest> requests;
 
 		Assert.notNull(couple);
 		Assert.isTrue(couple.getId() != 0);
@@ -133,13 +138,18 @@ public class CoupleService {
 		challenges.addAll(this.challengeService.findBySenderId(principal.getId()));
 		for (final Challenge c : challenges)
 			this.challengeService.delete(c);
-		
+
 		couple.getTrophies().clear();
-		
+
 		users = this.findUsersOfACouple(couple.getId());
-		for (User u : users) {
-			u.setCouple(null);
+		for (final User u1 : users) {
+			requests = this.coupleRequestService.findCoupleRequestsByRecipientId(u1.getId());
+			for (final CoupleRequest cR : requests)
+				this.coupleRequestService.delete(cR);
 		}
+
+		for (final User u2 : users)
+			u2.setCouple(null);
 
 		this.coupleRepository.delete(couple);
 		this.flush();
