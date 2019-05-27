@@ -11,7 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CoupleRepository;
+import domain.Book;
+import domain.Challenge;
 import domain.Couple;
+import domain.Record;
+import domain.Task;
 import domain.Trophy;
 import domain.User;
 
@@ -26,6 +30,18 @@ public class CoupleService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private UserService			userService;
+
+	@Autowired
+	private RecordService		recordService;
+
+	@Autowired
+	private TaskService			taskService;
+
+	@Autowired
+	private BookService			bookService;
+
+	@Autowired
+	private ChallengeService	challengeService;
 
 
 	public Couple create(final User sender, final User recipient) {
@@ -81,10 +97,63 @@ public class CoupleService {
 
 	public Collection<User> findUsersOfACouple(final int coupleId) {
 		Collection<User> users;
-		
+
 		users = this.coupleRepository.findUsersOfACouple(coupleId);
-		
+
 		return users;
 	}
 
+	public void delete(final Couple couple) {
+		User principal;
+		Collection<Record> records;
+		Collection<Task> tasks;
+		Collection<Book> books;
+		Collection<Challenge> challenges;
+
+		Assert.notNull(couple);
+		Assert.isTrue(couple.getId() != 0);
+
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+
+		records = this.recordService.findByCoupleId(couple.getId());
+		for (final Record r : records)
+			this.recordService.delete(r);
+
+		tasks = this.taskService.findByCoupleId(couple.getId());
+		for (final Task t : tasks)
+			this.taskService.delete(t);
+
+		books = this.bookService.findAllByCoupleId(couple.getId());
+		for (final Book b : books)
+			this.bookService.delete(b);
+
+		challenges = this.challengeService.findByRecipientId(principal.getId());
+		challenges.addAll(this.challengeService.findBySenderId(principal.getId()));
+		for (final Challenge c : challenges)
+			this.challengeService.delete(c);
+
+		this.coupleRepository.delete(couple);
+		this.flush();
+	}
+
+	public Couple findOne(final int coupleId) {
+		Couple result;
+
+		result = this.coupleRepository.findOne(coupleId);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Couple> findAll() {
+		Collection<Couple> result;
+
+		result = this.coupleRepository.findAll();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public void flush() {
+		this.coupleRepository.flush();
+	}
 }
