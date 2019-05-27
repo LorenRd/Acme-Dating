@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -11,7 +12,13 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.Book;
+import domain.Challenge;
+import domain.Couple;
 import domain.CreditCard;
+import domain.Experience;
+import domain.Trophy;
+import domain.User;
 
 @Service
 @Transactional
@@ -28,6 +35,15 @@ public class AdministratorService {
 
 	@Autowired
 	private CreditCardService creditCardService;
+
+	@Autowired
+	private TrophyService trophyService;
+
+	@Autowired
+	private CoupleService coupleService;
+
+	@Autowired
+	private BookService bookService;
 
 	public Administrator findByPrincipal() {
 		Administrator res;
@@ -104,8 +120,6 @@ public class AdministratorService {
 		return saved;
 	}
 
-
-
 	public Collection<Administrator> findAll() {
 		Collection<Administrator> result;
 
@@ -122,8 +136,58 @@ public class AdministratorService {
 		return result;
 
 	}
-	
+
 	public void flush() {
 		this.administratorRepository.flush();
+	}
+
+	// public void computeTrophies() {
+	// Collection<Trophy> trophies;
+	// Collection<Couple> couples;
+	// Collection<Challenge> challenges;
+	// Collection<Experience> experiences;
+	// Collection<User> users;
+	//
+	// Collection<Trophy> reachedTrophies;
+	//
+	// trophies = this.trophyService.findAll();
+	// couples = this.coupleService.findAll();
+	// challenges = this.challengeService.findAll();
+	// experiences = this.experienceService.findAll();
+	// users = this.userService.findAll();
+	// //.equals("COMPLETED")
+	// for(Trophy t : trophies){
+	// for(Couple c : couples){
+	// for(Challenge ch : challenges){
+	// if(((c.getScore() >= t.getScoreToReach()) || () )){
+	//
+	// }
+	// }
+	// }
+	// }
+	// }
+
+	public void computeTrophies(){
+		Collection<Trophy> trophies;
+		Collection<Couple> couples;
+		Collection<Challenge> challenges;
+		Collection<Experience> experiences;
+		Collection<User> 		users;
+		
+		trophies = this.trophyService.findAll();
+		couples = this.coupleService.findAll();
+		challenges = this.challengeService.findAll();
+		experiences = this.experienceService.findAll();
+		
+		for(Couple c : couples){
+			Collection<Trophy> reachedTrophies = new ArrayList<Trophy>();
+			Collection<Book> books = this.bookService.findAllByCoupleId(c.getId());
+			for(Trophy t : trophies){
+				if((c.getScore() >= t.getScoreToReach()) || (books.size() >= t.getExperiencesToShare()) ||  ){
+					reachedTrophies.add(t);
+				}
+			}
+			c.setTrophies(reachedTrophies);
+		}
 	}
 }

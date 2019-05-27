@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.BookRepository;
+import security.Authority;
+import domain.Actor;
 import domain.Book;
 import domain.Couple;
 import domain.Feature;
@@ -26,13 +28,16 @@ public class BookService {
 	private BookRepository bookRepository;
 
 	@Autowired
-	private CoupleService			coupleService;
-	
+	private CoupleService coupleService;
+
 	@Autowired
-	private ExperienceService			experienceService;
+	private ExperienceService experienceService;
 
 	@Autowired
 	private Validator validator;
+
+	@Autowired
+	private ActorService actorService;
 
 	// Simple CRUD Methods
 	public void delete(final Book book) {
@@ -52,15 +57,15 @@ public class BookService {
 	public Book save(final Book book) {
 		Book result;
 		this.experienceService.subtractPlaces(book.getExperience().getId());
-		
+
 		result = this.bookRepository.save(book);
 		Assert.notNull(result);
 		return result;
 	}
-	
+
 	public Book saveScore(final Book book) {
 		Book result;
-		
+
 		result = this.bookRepository.save(book);
 		Assert.notNull(result);
 		return result;
@@ -104,7 +109,7 @@ public class BookService {
 		result.setCouple(principal);
 		result.setFeatures(new ArrayList<Feature>());
 		result.setMoment(new Date(System.currentTimeMillis() - 1));
-		
+
 		return result;
 	}
 
@@ -130,20 +135,75 @@ public class BookService {
 			result.setExperience(bookForm.getExperience());
 			result.setDate(bookForm.getDate());
 			result.setFeatures(bookForm.getFeatures());
-			
-			if(result.getDate().before(Calendar.getInstance().getTime()))
-				binding.rejectValue("date", "book.validation.date", "Date must be future");
+
+			if (result.getDate().before(Calendar.getInstance().getTime()))
+				binding.rejectValue("date", "book.validation.date",
+						"Date must be future");
 
 		} else {
 			result = this.bookRepository.findOne(bookForm.getId());
 			result.setScore(bookForm.getScore());
-			
-			
-		}
 
+		}
 
 		this.validator.validate(result, binding);
 		return result;
 	}
 
+	public Double avgExperiencesPerCouple() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.bookRepository.avgExperiencesPerCouple();
+
+		return result;
+	}
+
+	public Double minExperiencesPerCouple() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.bookRepository.minExperiencesPerCouple();
+
+		return result;
+	}
+
+	public Double maxExperiencesPerCouple() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.bookRepository.maxExperiencesPerCouple();
+
+		return result;
+	}
+
+	public Double stddevExperiencesPerCouple() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.bookRepository.stddevExperiencesPerCouple();
+
+		return result;
+	}
+	
 }

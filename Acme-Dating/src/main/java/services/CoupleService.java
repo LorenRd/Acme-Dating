@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -21,12 +20,11 @@ public class CoupleService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CoupleRepository	coupleRepository;
+	private CoupleRepository coupleRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private UserService			userService;
-
+	private UserService userService;
 
 	public Couple create(final User sender, final User recipient) {
 		Couple result;
@@ -48,7 +46,8 @@ public class CoupleService {
 		return result;
 	}
 
-	public Couple save(final Couple couple, final User sender, final User recipient) {
+	public Couple save(final Couple couple, final User sender,
+			final User recipient) {
 		Couple result;
 		Date startDate;
 
@@ -81,10 +80,18 @@ public class CoupleService {
 
 	public Collection<User> findUsersOfACouple(final int coupleId) {
 		Collection<User> users;
-		
+
 		users = this.coupleRepository.findUsersOfACouple(coupleId);
-		
+
 		return users;
+	}
+
+	public Collection<Couple> findAll() {
+		Collection<Couple> result;
+
+		result = this.coupleRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 }

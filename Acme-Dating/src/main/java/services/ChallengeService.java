@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -12,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ChallengeRepository;
+import security.Authority;
+import domain.Actor;
 import domain.Challenge;
 import domain.Couple;
 import domain.User;
@@ -23,16 +24,18 @@ public class ChallengeService {
 	// Managed Repository
 
 	@Autowired
-	private ChallengeRepository	challengeRepository;
+	private ChallengeRepository challengeRepository;
 
 	// Supporting services
 
 	@Autowired
-	private UserService			userService;
+	private UserService userService;
 
 	@Autowired
-	private Validator			validator;
+	private Validator validator;
 
+	@Autowired
+	private ActorService actorService;
 
 	// Simple CRUD methods
 
@@ -194,4 +197,61 @@ public class ChallengeService {
 
 		return result;
 	}
+
+	public Double avgCompletedChallengesPerSender() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.challengeRepository.avgCompletedChallengesPerSender();
+
+		return result;
+	}
+
+	public Double minCompletedChallengesPerSender() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.challengeRepository.minCompletedChallengesPerSender();
+
+		return result;
+	}
+
+	public Double maxCompletedChallengesPerSender() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.challengeRepository.maxCompletedChallengesPerSender();
+
+		return result;
+	}
+
+	public Double stddevCompletedChallengesPerSender() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.challengeRepository.stddevCompletedChallengesPerSender();
+
+		return result;
+	}
+
 }
