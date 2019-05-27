@@ -177,6 +177,14 @@ public class ChallengeService {
 		return result;
 	}
 
+	public Collection<Challenge> findAllCompletedBySenderId(final int userId) {
+		Collection<Challenge> result;
+
+		result = this.challengeRepository.findAllCompletedBySenderId(userId);
+
+		return result;
+	}
+
 	public Challenge reconstruct(final Challenge c, final BindingResult binding) {
 		Challenge result;
 		if (c.getId() == 0)

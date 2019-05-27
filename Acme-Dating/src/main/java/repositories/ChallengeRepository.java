@@ -17,6 +17,9 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Integer> {
 	@Query("select c from Challenge c where c.sender.id = ?1")
 	Collection<Challenge> findBySenderId(int userId);
 
+	@Query("select c from Challenge c where c.sender.id = ?1 AND c.status = 'COMPLETED'")
+	Collection<Challenge> findAllCompletedBySenderId(int userId);
+
 	@Query("select avg(1.0*(select count(c) from Challenge c where c.sender.id = sender.id AND c.status = 'COMPLETED')) from Challenge c")
 	Double avgCompletedChallengesPerSender();
 

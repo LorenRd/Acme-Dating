@@ -16,7 +16,6 @@ import domain.Book;
 import domain.Challenge;
 import domain.Couple;
 import domain.CreditCard;
-import domain.Experience;
 import domain.Trophy;
 import domain.User;
 
@@ -174,11 +173,8 @@ public class AdministratorService {
 	// }
 
 	public void computeTrophies(){
-		Collection<Trophy> trophies;
-		Collection<Couple> couples;
-		
-		trophies = this.trophyService.findAll();
-		couples = this.coupleService.findAll();
+		Collection<Trophy> trophies = this.trophyService.findAll();
+		Collection<Couple> couples = this.coupleService.findAll();
 		
 		for(Couple c : couples){
 			Collection<Trophy> reachedTrophies = new ArrayList<Trophy>();
@@ -187,9 +183,10 @@ public class AdministratorService {
 			Integer cont = 0;
 			Integer numberOfCompletedChallenges;
 			for(User u : users){
-				Collection<Challenge> challenges = this.challengeService.findAllCompletedBySenderId(u);
+				Collection<Challenge> challenges = this.challengeService.findAllCompletedBySenderId(u.getId());
 				numberOfCompletedChallenges = challenges.size();
-				cont = cont + numberOfCompletedChallenges;
+				cont = numberOfCompletedChallenges;
+				break;
 			}
 			for(Trophy t : trophies){
 				if((c.getScore() >= t.getScoreToReach()) || (books.size() >= t.getExperiencesToShare()) || (cont >= t.getChallengesToComplete()) ){
