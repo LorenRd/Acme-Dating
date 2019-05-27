@@ -23,4 +23,5 @@ public interface CoupleRequestRepository extends JpaRepository<CoupleRequest, In
 
 	@Query("select cR from CoupleRequest cR where cR.sender.id = ?1 or cR.recipient.id = ?1")
 	Collection<CoupleRequest> findAllCoupleRequestsByUserId(int userId);
+
 }

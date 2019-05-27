@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +23,8 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import domain.Administrator;
 import domain.CreditCard;
+import domain.Message;
+import domain.MessageBox;
 import forms.AdministratorForm;
 
 @Service
@@ -45,6 +48,9 @@ public class AdministratorService {
 
 	@Autowired
 	private CreditCardService		creditCardService;
+
+	@Autowired
+	private MessageService			messageService;
 
 	@Autowired
 	private MessageBoxService		messageBoxService;
@@ -221,6 +227,38 @@ public class AdministratorService {
 		this.validator.validate(result, binding);
 		this.administratorRepository.flush();
 		return result;
+	}
+
+	public void delete() {
+		/*
+		 * Orden de borrado:
+		 * 1 Mensajes
+		 * 2 CC
+		 * 3 Company
+		 */
+
+		Collection<Administrator> admins;
+		admins = this.administratorRepository.findAll();
+		Assert.isTrue(admins.size() > 1);
+		Administrator principal;
+		final Collection<Message> messagesR;
+		final Collection<Message> messagesS;
+
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+
+		messagesR = this.messageService.findByRecipientId(principal.getId());
+		for (final Message m : messagesR)
+			this.messageService.deleteRecipient(m);
+
+		messagesS = this.messageService.findBySenderId(principal.getId());
+		for (final Message m : messagesS)
+			this.messageService.deleteSender(m);
+
+		this.administratorRepository.delete(principal);
+
+		this.creditCardService.delete(principal.getCreditCard());
+
 	}
 
 }

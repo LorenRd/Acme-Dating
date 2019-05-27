@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -21,18 +22,19 @@ public class ExperienceCommentService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ExperienceCommentRepository experienceCommentRepository;
+	private ExperienceCommentRepository	experienceCommentRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private Validator validator;
+	private Validator					validator;
 
 	@Autowired
-	private ExperienceService experienceService;
+	private ExperienceService			experienceService;
+
 
 	// Simple CRUD Methods
 
@@ -110,31 +112,23 @@ public class ExperienceCommentService {
 		return result;
 	}
 
-
-	public void delete(ExperienceComment experienceComment) {
+	public void delete(final ExperienceComment experienceComment) {
 		this.experienceCommentRepository.delete(experienceComment);
 	}
 	// Business Methods
 
-	public Collection<ExperienceComment> findByExperienceId(
-			final int experienceId) {
+	public Collection<ExperienceComment> findByExperienceId(final int experienceId) {
 		Collection<ExperienceComment> result;
 
-		result = this.experienceCommentRepository
-				.findByExperienceId(experienceId);
+		result = this.experienceCommentRepository.findByExperienceId(experienceId);
 		Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
 
 		for (final ExperienceComment eC : result) {
 			childs = new ArrayList<ExperienceComment>();
-			childs.addAll(this.experienceCommentRepository.findChilds(eC
-					.getId()));
+			childs.addAll(this.experienceCommentRepository.findChilds(eC.getId()));
 		}
 		result.addAll(childs);
 		return result;
-	}
-
-	public void delete(final ExperienceComment comment) {
-		this.experienceCommentRepository.delete(comment);
 	}
 
 	public void flush() {

@@ -25,7 +25,6 @@ import domain.Book;
 import domain.Company;
 import domain.CreditCard;
 import domain.Experience;
-import domain.ExperienceComment;
 import domain.Message;
 import forms.CompanyForm;
 
@@ -54,6 +53,9 @@ public class CompanyService {
 	private ExperienceService			experienceService;
 
 	@Autowired
+	private FeatureService				featureService;
+
+	@Autowired
 	private MessageService				messageService;
 
 	@Autowired
@@ -61,12 +63,12 @@ public class CompanyService {
 
 	@Autowired
 	private BookService					bookService;
-	// Simple CRUD Methods
-	@Autowired
-	private MessageBoxService			messageBoxService;
+
 	@Autowired
 	private Validator					validator;
 
+
+	// Simple CRUD Methods
 
 	// Simple CRUD Methods
 
@@ -284,22 +286,23 @@ public class CompanyService {
 		 */
 		Company principal;
 		Collection<Experience> experiences;
-		final Collection<Message> messages;
-		Collection<ExperienceComment> comments;
+		final Collection<Message> messagesR;
+		final Collection<Message> messagesS;
 
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
 
 		experiences = this.experienceService.findByCompany(principal.getId());
-		for (final Experience e : experiences) {
-			comments = this.experienceCommentService.findByExperienceId(e.getId());
-			for (final ExperienceComment comment : comments)
-				this.experienceCommentService.delete(comment);
+		for (final Experience e : experiences)
 			this.experienceService.delete(e);
-		}
 
-		messages = this.messageService.findBySenderId(principal.getId());
-		this.messageService.deleteInBach(messages);
+		messagesR = this.messageService.findByRecipientId(principal.getId());
+		for (final Message m : messagesR)
+			this.messageService.deleteRecipient(m);
+
+		messagesS = this.messageService.findBySenderId(principal.getId());
+		for (final Message m : messagesS)
+			this.messageService.deleteSender(m);
 
 		this.companyRepository.delete(principal);
 

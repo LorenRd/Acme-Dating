@@ -171,4 +171,10 @@ public class MessageBoxService {
 		this.messageBoxRepository.deleteInBatch(boxes);
 
 	}
+
+	public Collection<MessageBox> findAllByMessageId(final int messageId) {
+		Collection<MessageBox> result;
+		result = this.messageBoxRepository.findAllByMessageId(messageId);
+		return result;
+	}
 }

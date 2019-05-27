@@ -11,7 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.FeatureRepository;
+import domain.Book;
 import domain.Company;
+import domain.Experience;
 import domain.Feature;
 
 @Service
@@ -24,10 +26,16 @@ public class FeatureService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private CompanyService		companyService;
-	
+
 	@Autowired
-	private Validator validator;
-	
+	private ExperienceService	experienceService;
+
+	@Autowired
+	private BookService			bookService;
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Simple CRUD Methods
 
@@ -59,6 +67,18 @@ public class FeatureService {
 	}
 
 	public void delete(final Feature feature) {
+
+		Collection<Experience> experiences;
+		Collection<Book> books;
+		books = this.bookService.findByFeatureId(feature.getId());
+		experiences = this.experienceService.findByFeatureId(feature.getId());
+
+		for (final Book b : books)
+			b.getFeatures().remove(feature);
+
+		for (final Experience e : experiences)
+			e.getFeatures().remove(feature);
+
 		this.featureRepository.delete(feature);
 
 	}
@@ -88,8 +108,7 @@ public class FeatureService {
 
 		return result;
 	}
-	
-	
+
 	public Feature reconstruct(final Feature feature, final BindingResult binding) {
 		Feature result;
 		if (feature.getId() == 0)
@@ -106,4 +125,5 @@ public class FeatureService {
 		this.validator.validate(result, binding);
 		return result;
 	}
+
 }

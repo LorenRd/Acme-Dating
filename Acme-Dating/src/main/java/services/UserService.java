@@ -188,8 +188,10 @@ public class UserService {
 		Couple couple;
 		Collection<SocialNetwork> socialNetworks;
 		final Collection<CoupleRequest> coupleRequests;
-		final Collection<Challenge> challenges;
-		final Collection<Message> messages;
+		final Collection<Challenge> challengesR;
+		final Collection<Challenge> challengesS;
+		final Collection<Message> messagesR;
+		final Collection<Message> messagesS;
 
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
@@ -203,11 +205,19 @@ public class UserService {
 		coupleRequests = this.coupleRequestService.findAllCoupleRequestsByUserId(principal.getId());
 		this.coupleRequestService.deleteInBach(coupleRequests);
 
-		challenges = this.challengeService.findAllChallengesByUserId(principal.getId());
-		this.challengeService.deleteInBach(challenges);
+		challengesR = this.challengeService.findByRecipientId(principal.getId());
+		this.challengeService.deleteInBach(challengesR);
 
-		messages = this.messageService.findBySenderId(principal.getId());
-		this.messageService.deleteInBach(messages);
+		challengesS = this.challengeService.findBySenderId(principal.getId());
+		this.challengeService.deleteInBach(challengesS);
+
+		messagesR = this.messageService.findByRecipientId(principal.getId());
+		for (final Message m : messagesR)
+			this.messageService.deleteRecipient(m);
+
+		messagesS = this.messageService.findBySenderId(principal.getId());
+		for (final Message m : messagesS)
+			this.messageService.deleteSender(m);
 
 		this.userRepository.delete(principal);
 
