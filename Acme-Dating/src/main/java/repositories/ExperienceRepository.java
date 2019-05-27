@@ -1,3 +1,4 @@
+
 package repositories;
 
 import java.util.Collection;
@@ -39,4 +40,7 @@ public interface ExperienceRepository extends
 	@Query("select avg(1.0*(select e.price from Experience e where e.company.id = c.id)) from Company c")
 	Double avgPriceOfExperiencesPerCompany();
 
+
+	@Query("select e from Experience e join e.features ef where ef.id = ?1")
+	Collection<Experience> findByFeatureId(int featureId);
 }

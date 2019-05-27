@@ -37,7 +37,48 @@
 	</tbody>
 </table>
 
+	<security:authorize access="hasRole('COMPANY')">
+		<jstl:if test="${company.userAccount.username == pageContext.request.userPrincipal.name}">
+		
+		<h3> <spring:message code="creditCard" /> </h3>
+<table class="ui celled table">
+	<tbody>
+		
+		<tr>
+			<td><spring:message code="creditCard.holderName" />
+			<td data-label="holderName"><jstl:out value="${company.creditCard.holderName}" /></td>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="creditCard.brandName" />
+			<td data-label="brandName"><jstl:out value="${company.creditCard.brandName}" /></td>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="creditCard.number" />
+			<td data-label="number"><jstl:out value="${company.creditCard.number}" /></td>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="creditCard.expirationMonth" />
+			<td data-label="expirationMonth"><jstl:out value="${company.creditCard.expirationMonth}" /></td>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="creditCard.expirationYear" />
+			<td data-label="expirationYear"><jstl:out value="${company.creditCard.expirationYear}" /></td>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="creditCard.CVV" />
+			<td data-label="CVV"><jstl:out value="${company.creditCard.CVV}" /></td>
+		</tr>
+	
+	</tbody>
+</table>
 
+	</jstl:if>
+	</security:authorize>
 
 <!-- Experiences -->
 <h3> <spring:message code="company.experiences" /> </h3>
@@ -65,7 +106,7 @@
 
 <security:authorize access="hasRole('COMPANY')">
 <jstl:if test="${company.userAccount.username == pageContext.request.userPrincipal.name}">
-<acme:button url="position/company/create.do" code="position.create"/>
+<acme:button url="experience/company/create.do" code="experience.create"/>
 </jstl:if>
 </security:authorize>
 

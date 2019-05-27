@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -21,18 +22,19 @@ public class ExperienceCommentService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ExperienceCommentRepository experienceCommentRepository;
+	private ExperienceCommentRepository	experienceCommentRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private Validator validator;
+	private Validator					validator;
 
 	@Autowired
-	private ExperienceService experienceService;
+	private ExperienceService			experienceService;
+
 
 	// Simple CRUD Methods
 
@@ -78,6 +80,13 @@ public class ExperienceCommentService {
 		return result;
 	}
 
+	public Collection<ExperienceComment> findChilds(final int experienceCommentFatherId) {
+		Collection<ExperienceComment> result;
+
+		result = this.experienceCommentRepository.findChilds(experienceCommentFatherId);
+
+		return result;
+	}
 	public ExperienceComment save(final ExperienceComment experienceComment) {
 		ExperienceComment result;
 
@@ -85,40 +94,38 @@ public class ExperienceCommentService {
 		Assert.notNull(result);
 		return result;
 	}
-	
-	public ExperienceComment reconstruct(final ExperienceComment experienceComment,boolean isFather, final int id, final BindingResult binding) {
+
+	public ExperienceComment reconstruct(final ExperienceComment experienceComment, final boolean isFather, final int id, final BindingResult binding) {
 		ExperienceComment result;
 		Experience experience;
 
 		result = experienceComment;
 		result.setActor(this.actorService.findByPrincipal());
-		if(isFather){
+		if (isFather) {
 			experience = this.experienceService.findOne(id);
 			result.setExperience(experience);
-		}else{
+		} else
 			result.setExperienceComment(this.findOne(id));
-
-		}
 		result.setBody(experienceComment.getBody());
 
 		this.validator.validate(result, binding);
 		return result;
 	}
 
+	public void delete(final ExperienceComment experienceComment) {
+		this.experienceCommentRepository.delete(experienceComment);
+	}
 	// Business Methods
 
-	public Collection<ExperienceComment> findByExperienceId(
-			final int experienceId) {
+	public Collection<ExperienceComment> findByExperienceId(final int experienceId) {
 		Collection<ExperienceComment> result;
 
-		result = this.experienceCommentRepository
-				.findByExperienceId(experienceId);
+		result = this.experienceCommentRepository.findByExperienceId(experienceId);
 		Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
 
-		for (ExperienceComment eC : result) {
+		for (final ExperienceComment eC : result) {
 			childs = new ArrayList<ExperienceComment>();
-			childs.addAll(this.experienceCommentRepository.findChilds(eC
-					.getId()));
+			childs.addAll(this.experienceCommentRepository.findChilds(eC.getId()));
 		}
 		result.addAll(childs);
 		return result;

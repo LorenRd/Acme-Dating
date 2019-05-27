@@ -194,4 +194,45 @@ public class MessageService {
 	public void flush() {
 		this.messageRepository.flush();
 	}
+
+	public Collection<Message> findBySenderId(final int actorId) {
+		Collection<Message> result;
+
+		result = this.messageRepository.findBySenderId(actorId);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Message> findByRecipientId(final int actorId) {
+		Collection<Message> result;
+
+		result = this.messageRepository.findByRecipientId(actorId);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public void deleteInBach(final Collection<Message> messages) {
+		this.messageRepository.deleteInBatch(messages);
+	}
+
+	//Borrar mensaje si eres el que lo manda
+	public void deleteSender(final Message m) {
+		Collection<MessageBox> boxes;
+		boxes = this.messageBoxService.findAllByMessageId(m.getId());
+
+		for (final MessageBox b : boxes)
+			b.getMessages().remove(m);
+
+		this.messageRepository.delete(m);
+	}
+
+	//Borrar mensaje si eres el que lo recibe
+	public void deleteRecipient(final Message m) {
+		Collection<MessageBox> boxes;
+		boxes = this.messageBoxService.findAllByMessageId(m.getId());
+
+		for (final MessageBox b : boxes)
+			b.getMessages().remove(m);
+	}
+
 }

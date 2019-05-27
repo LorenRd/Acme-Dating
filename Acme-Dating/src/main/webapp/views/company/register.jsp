@@ -27,14 +27,12 @@
 		
 		<fieldset>
     	<legend><spring:message code="company.fieldset.personalInformation"/></legend>
+    	<acme:textbox code="company.commercialName" path="commercialName" placeholder="HP"/>
 		<acme:textbox code="company.name" path="name" placeholder="Homer"/>
 		<acme:textbox code="company.surname" path="surname" placeholder="Simpson"/>
 		<acme:textbox code="company.photo" path="photo" placeholder="https://www.jazzguitar.be/images/bio/homer-simpson.jpg"/>
 		<acme:textbox code="company.email" path="email" placeholder="homerjsimpson@email.com"/>
 		<acme:textbox code="company.phone" path="phone" placeholder="+34 600 1234"/>
-		<acme:textbox code="company.address" path="address" placeholder="123 Main St Anytown, Australia"/>
-		<acme:textbox code="company.vatNumber" path="vatNumber" placeholder="4"/>
-		<acme:textbox code="company.commercialName" path="commercialName" placeholder="Señor Quitanieves"/>
 		
 		</fieldset>
 		
@@ -50,7 +48,7 @@
 		</fieldset>
 		
 		<fieldset>
-    	<legend><spring:message code="company.fieldset.userAccount"/></legend>
+    	<legend><spring:message code="company.fieldset.companyAccount"/></legend>
 		<acme:textbox code="company.username" path="username" placeholder="HomerS"/>
 		
 		<acme:password code="company.password" path="password"/>
@@ -58,7 +56,7 @@
 		
 		</fieldset>
 		<br/>
-		
+	
 		<acme:checkbox code="company.confirmTerms" path="checkBox"/>
 		
 		<jstl:if test="${cookie['language'].getValue()=='en'}">

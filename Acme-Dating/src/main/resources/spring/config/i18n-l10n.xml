@@ -35,6 +35,9 @@
 		<value>/views/messageBox/messages</value>
 		<value>/views/coupleRequest/messages</value>
 		<value>/views/challenge/messages</value>
+		<value>/views/socialNetwork/messages</value>
+		<value>/views/creditCard/messages</value>
+		<value>/views/user/messages</value>
 	</util:list>
 
 </beans>

@@ -1,3 +1,4 @@
+
 package repositories;
 
 import java.util.Collection;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import domain.Book;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
+
 	@Query("select b from Book b where b.experience.id = ?1")
 	Collection<Book> findAllByExperienceId(int experienceId);
 
@@ -29,4 +31,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 	@Query("select stddev(1.0*(select count(b) from Book b where b.couple.id = c.id)) from Couple c")
 	Double stddevExperiencesPerCouple();
 
+
+	@Query("select b from Book b join b.features bf where bf.id = ?1")
+	Collection<Book> findByFeatureId(int featureId);
 }

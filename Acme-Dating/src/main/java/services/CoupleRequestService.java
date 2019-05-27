@@ -168,6 +168,12 @@ public class CoupleRequestService {
 		return result;
 	}
 
+	public Collection<CoupleRequest> findAllCoupleRequestsByUserId(final int userId) {
+		Collection<CoupleRequest> result;
+		result = this.coupleRequestRepository.findAllCoupleRequestsByUserId(userId);
+		return result;
+	}
+
 	public CoupleRequest findCoupleRequestsBySenderId(final int userId) {
 		CoupleRequest result;
 
@@ -191,5 +197,9 @@ public class CoupleRequestService {
 		this.validator.validate(result, binding);
 
 		return result;
+	}
+
+	public void deleteInBach(final Collection<CoupleRequest> coupleRequests) {
+		this.coupleRequestRepository.deleteInBatch(coupleRequests);
 	}
 }

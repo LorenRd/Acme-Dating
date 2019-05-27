@@ -31,4 +31,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Integer> {
 
 	@Query("select stddev(1.0*(select count(c) from Challenge c where c.sender.id = sender.id AND c.status = 'COMPLETED')) from Challenge c")
 	Double stddevCompletedChallengesPerSender();
+
+	@Query("select c from Challenge c where c.recipient.id = ?1 or c.sender.id = ?1")
+	Collection<Challenge> findAllChallengesByUserId(int userId);
 }

@@ -1,9 +1,11 @@
+
 package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +27,7 @@ public class BookService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private BookRepository bookRepository;
+	private BookRepository		bookRepository;
 
 	@Autowired
 	private CoupleService coupleService;
@@ -34,7 +36,7 @@ public class BookService {
 	private ExperienceService experienceService;
 
 	@Autowired
-	private Validator validator;
+	private Validator			validator;
 
 	@Autowired
 	private ActorService actorService;
@@ -206,4 +208,10 @@ public class BookService {
 		return result;
 	}
 	
+	public Collection<Book> findByFeatureId(final int featureId) {
+		Collection<Book> books;
+		books = this.bookRepository.findByFeatureId(featureId);
+		return books;
+	}
+
 }

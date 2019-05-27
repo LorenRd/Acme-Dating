@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.FeatureRepository;
+import domain.Book;
 import domain.Company;
+import domain.Experience;
 import domain.Feature;
 
 @Service
@@ -24,10 +27,16 @@ public class FeatureService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private CompanyService		companyService;
-	
+
 	@Autowired
-	private Validator validator;
-	
+	private ExperienceService	experienceService;
+
+	@Autowired
+	private BookService			bookService;
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Simple CRUD Methods
 
@@ -59,6 +68,28 @@ public class FeatureService {
 	}
 
 	public void delete(final Feature feature) {
+		Collection<Experience> experiences;
+		Collection<Book> books;
+
+		experiences = this.experienceService.findByFeatureId(feature.getId());
+		books = this.bookService.findByFeatureId(feature.getId());
+		for (final Experience e : experiences) {
+			Collection<Feature> features = new ArrayList<Feature>();
+			features = e.getFeatures();
+			features.remove(feature);
+
+			e.setFeatures(features);
+			this.experienceService.save(e);
+		}
+		for (final Book b : books) {
+			Collection<Feature> features = new ArrayList<Feature>();
+			features = b.getFeatures();
+			features.remove(feature);
+
+			b.setFeatures(features);
+			this.bookService.save(b);
+		}
+
 		this.featureRepository.delete(feature);
 
 	}
@@ -88,8 +119,7 @@ public class FeatureService {
 
 		return result;
 	}
-	
-	
+
 	public Feature reconstruct(final Feature feature, final BindingResult binding) {
 		Feature result;
 		if (feature.getId() == 0)
@@ -106,4 +136,5 @@ public class FeatureService {
 		this.validator.validate(result, binding);
 		return result;
 	}
+
 }

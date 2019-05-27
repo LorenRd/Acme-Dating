@@ -4,17 +4,24 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.AdministratorRepository;
+import repositories.CustomisationRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import security.UserAccountRepository;
 import domain.Administrator;
 import domain.Book;
 import domain.Challenge;
@@ -22,7 +29,9 @@ import domain.Couple;
 import domain.CreditCard;
 import domain.Trophy;
 import domain.User;
+import domain.Message;
 import domain.MessageBox;
+import forms.AdministratorForm;
 
 @Service
 @Transactional
@@ -32,6 +41,12 @@ public class AdministratorService {
 
 	@Autowired
 	private AdministratorRepository	administratorRepository;
+
+	@Autowired
+	private CustomisationRepository	customisationRepository;
+
+	@Autowired
+	private UserAccountRepository	useraccountRepository;
 
 	// Supporting services-------------------------------------------
 	@Autowired
@@ -56,7 +71,13 @@ public class AdministratorService {
 	private UserService userService;
 
 	@Autowired
+	private MessageService			messageService;
+
+	@Autowired
 	private MessageBoxService		messageBoxService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public Administrator findByPrincipal() {
@@ -82,19 +103,17 @@ public class AdministratorService {
 		UserAccount userAccount;
 		Authority authority;
 		CreditCard creditCard;
-		List<MessageBox> boxes;
 
 		result = new Administrator();
 		userAccount = new UserAccount();
 		authority = new Authority();
 		creditCard = this.creditCardService.create();
-		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		authority.setAuthority("ADMIN");
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
-		result.setMessageBoxes(boxes);
+		result.setMessageBoxes(new ArrayList<MessageBox>());
 
 		return result;
 
@@ -103,6 +122,7 @@ public class AdministratorService {
 	public Administrator save(final Administrator administrator) {
 		Administrator saved;
 		UserAccount logedUserAccount;
+		final List<MessageBox> messageBoxes;
 
 		final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 		logedUserAccount = this.actorService.createUserAccount(Authority.ADMIN);
@@ -114,6 +134,8 @@ public class AdministratorService {
 			creditCard = this.creditCardService.saveNew(administrator.getCreditCard());
 			administrator.setCreditCard(creditCard);
 			saved = this.administratorRepository.saveAndFlush(administrator);
+			messageBoxes = this.messageBoxService.createSystemBoxes(saved);
+			saved.setMessageBoxes(messageBoxes);
 
 		} else {
 			logedUserAccount = LoginService.getPrincipal();
@@ -171,4 +193,116 @@ public class AdministratorService {
 			c.setTrophies(reachedTrophies);
 		}
 	}
+
+	public AdministratorForm construct(final Administrator administrator) {
+		final AdministratorForm administratorForm = new AdministratorForm();
+		administratorForm.setEmail(administrator.getEmail());
+		administratorForm.setId(administrator.getId());
+		administratorForm.setName(administrator.getName());
+		administratorForm.setPhone(administrator.getPhone());
+		administratorForm.setPhoto(administrator.getPhoto());
+		administratorForm.setSurname(administrator.getSurname());
+		administratorForm.setBrandName(administrator.getCreditCard().getBrandName());
+		administratorForm.setCVV(administrator.getCreditCard().getCVV());
+		administratorForm.setExpirationMonth(administrator.getCreditCard().getExpirationMonth());
+		administratorForm.setExpirationYear(administrator.getCreditCard().getExpirationYear());
+		administratorForm.setHolderName(administrator.getCreditCard().getHolderName());
+		administratorForm.setNumber(administrator.getCreditCard().getNumber());
+		administratorForm.setCheckBox(administratorForm.getCheckBox());
+		administratorForm.setUsername(administrator.getUserAccount().getUsername());
+		return administratorForm;
+	}
+
+	public Administrator reconstruct(final AdministratorForm administratorForm, final BindingResult binding) {
+		Administrator result;
+
+		result = this.create();
+		result.getUserAccount().setUsername(administratorForm.getUsername());
+		result.getUserAccount().setPassword(administratorForm.getPassword());
+		result.setEmail(administratorForm.getEmail());
+		result.setName(administratorForm.getName());
+		result.setPhoto(administratorForm.getPhoto());
+		result.setSurname(administratorForm.getSurname());
+		result.getCreditCard().setBrandName(administratorForm.getBrandName());
+		result.getCreditCard().setCVV(administratorForm.getCVV());
+		result.getCreditCard().setExpirationMonth(administratorForm.getExpirationMonth());
+		result.getCreditCard().setExpirationYear(administratorForm.getExpirationYear());
+		result.getCreditCard().setHolderName(administratorForm.getHolderName());
+		result.getCreditCard().setNumber(administratorForm.getNumber());
+
+		if (!StringUtils.isEmpty(administratorForm.getPhone())) {
+			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
+			final Matcher matcher = pattern.matcher(administratorForm.getPhone());
+			if (matcher.matches())
+				administratorForm.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + administratorForm.getPhone());
+		}
+		result.setPhone(administratorForm.getPhone());
+
+		if (!administratorForm.getPassword().equals(administratorForm.getPasswordChecker()))
+			binding.rejectValue("passwordChecker", "administrator.validation.passwordsNotMatch", "Passwords doesnt match");
+		if (!this.useraccountRepository.findUserAccountsByUsername(administratorForm.getUsername()).isEmpty() || administratorForm.getUsername().equals(LoginService.getPrincipal().getUsername()))
+			binding.rejectValue("username", "administrator.validation.usernameExists", "This username already exists");
+		if (administratorForm.getCheckBox() == false)
+			binding.rejectValue("checkBox", "administrator.validation.checkBox", "This checkbox must be checked");
+
+		this.validator.validate(result, binding);
+		this.administratorRepository.flush();
+		return result;
+	}
+
+	public Administrator reconstructPruned(final Administrator administrator, final BindingResult binding) {
+		Administrator result;
+		if (administrator.getId() == 0)
+			result = administrator;
+		else
+			result = this.administratorRepository.findOne(administrator.getId());
+		result.setEmail(administrator.getEmail());
+		result.setName(administrator.getName());
+		result.setPhoto(administrator.getPhoto());
+		result.setSurname(administrator.getSurname());
+
+		if (!StringUtils.isEmpty(administrator.getPhone())) {
+			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
+			final Matcher matcher = pattern.matcher(administrator.getPhone());
+			if (matcher.matches())
+				administrator.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + administrator.getPhone());
+		}
+		result.setPhone(administrator.getPhone());
+		this.validator.validate(result, binding);
+		this.administratorRepository.flush();
+		return result;
+	}
+
+	public void delete() {
+		/*
+		 * Orden de borrado:
+		 * 1 Mensajes
+		 * 2 CC
+		 * 3 Company
+		 */
+
+		Collection<Administrator> admins;
+		admins = this.administratorRepository.findAll();
+		Assert.isTrue(admins.size() > 1);
+		Administrator principal;
+		final Collection<Message> messagesR;
+		final Collection<Message> messagesS;
+
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+
+		messagesR = this.messageService.findByRecipientId(principal.getId());
+		for (final Message m : messagesR)
+			this.messageService.deleteRecipient(m);
+
+		messagesS = this.messageService.findBySenderId(principal.getId());
+		for (final Message m : messagesS)
+			this.messageService.deleteSender(m);
+
+		this.administratorRepository.delete(principal);
+
+		this.creditCardService.delete(principal.getCreditCard());
+
+	}
+
 }

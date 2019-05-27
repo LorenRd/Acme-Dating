@@ -1,5 +1,7 @@
+
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -11,12 +13,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.RecordCommentRepository;
+import repositories.RecordRepository;
 import domain.Category;
 import domain.Couple;
 import domain.Record;
 import domain.RecordComment;
-import repositories.RecordCommentRepository;
-import repositories.RecordRepository;
 
 @Service
 @Transactional
@@ -24,10 +26,10 @@ public class RecordService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private RecordRepository recordRepository;
+	private RecordRepository		recordRepository;
 
 	@Autowired
-	private RecordCommentRepository recordCommentRepository;
+	private RecordCommentRepository	recordCommentRepository;
 
 	// Supporting services ----------------------------------------------------
 
@@ -35,14 +37,15 @@ public class RecordService {
 	private CoupleService coupleService;
 
 	@Autowired
-	private Validator validator;
+	private Validator				validator;
+
 
 	// Simple CRUD Methods
 
 	public Record create() {
 		Record result;
 		final Couple principal;
-		Category category = new Category();
+		final Category category = new Category();
 
 		principal = this.coupleService.findByUser();
 		Assert.notNull(principal);
@@ -79,8 +82,7 @@ public class RecordService {
 
 	public void delete(final Record record) {
 		Couple principal;
-		Collection<RecordComment> recordComments = this.recordCommentRepository
-				.findByRecordId(record.getId());
+		final Collection<RecordComment> recordComments = this.recordCommentRepository.findByRecordId(record.getId());
 
 		Assert.notNull(record);
 
@@ -88,9 +90,16 @@ public class RecordService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(record.getCouple().getId() == principal.getId());
-
-		for (final RecordComment rC : recordComments) {
-			this.recordCommentRepository.delete(rC);
+		
+		for (RecordComment rC : recordComments) {
+			if(rC.getRecord()!=null){
+				Collection<RecordComment> childs = new ArrayList<RecordComment>();
+				childs = this.recordCommentRepository.findChilds(rC.getId());
+				for (RecordComment rCC : childs) {
+					this.recordCommentRepository.delete(rCC);
+				}
+				this.recordCommentRepository.delete(rC);
+			}
 		}
 		this.recordRepository.delete(record);
 	}
@@ -118,23 +127,19 @@ public class RecordService {
 		} else {
 			result = this.recordRepository.findOne(record.getId());
 
-			if (!(record.getDay() == null)) {
+			if (!(record.getDay() == null))
 				result.setDay(record.getDay());
-			}
 
-			if (!record.getTitle().equals("")) {
+			if (!record.getTitle().equals(""))
 				result.setTitle(record.getTitle());
-			}
 
-			if (!record.getBody().equals("")) {
+			if (!record.getBody().equals(""))
 				result.setBody(record.getBody());
-			}
 
 			result.setPhoto(record.getPhoto());
 
-			if (!(record.getCategory() == null)) {
+			if (!(record.getCategory() == null))
 				result.setCategory(record.getCategory());
-			}
 		}
 		this.validator.validate(result, binding);
 

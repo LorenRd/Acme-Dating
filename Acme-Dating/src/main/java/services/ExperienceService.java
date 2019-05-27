@@ -1,6 +1,8 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import domain.Actor;
 import domain.Book;
 import domain.Company;
 import domain.Experience;
+import domain.ExperienceComment;
 import domain.Feature;
 
 @Service
@@ -36,6 +39,7 @@ public class ExperienceService {
 	private FeatureService featureService;
 
 	@Autowired
+	private ExperienceCommentService	experienceCommentService;
 	private Validator validator;
 
 	@Autowired
@@ -94,7 +98,8 @@ public class ExperienceService {
 	public void delete(final Experience experience) {
 		Company principal;
 		Collection<Book> books;
-		Collection<Feature> features;
+		final Collection<Feature> features = new ArrayList<Feature>();
+		final Collection<ExperienceComment> experienceComments;
 		Assert.notNull(experience);
 
 		principal = this.companyService.findByPrincipal();
@@ -102,16 +107,25 @@ public class ExperienceService {
 
 		Assert.isTrue(experience.getCompany().getId() == principal.getId());
 
+		features.addAll(experience.getFeatures());
 		books = this.bookService.findAllByExperienceId(experience.getId());
+
+		for (final Feature f : features)
+			this.featureService.delete(f);
 
 		for (final Book b : books)
 			this.bookService.delete(b);
 
-		features = experience.getFeatures();
+		experienceComments = this.experienceCommentService.findByExperienceId(experience.getId());
 
-		for (Feature f : features) {
-			this.featureService.delete(f);
-		}
+		for (final ExperienceComment eC : experienceComments)
+			if (eC.getExperience() != null) {
+				Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
+				childs = this.experienceCommentService.findChilds(eC.getId());
+				for (final ExperienceComment eCC : childs)
+					this.experienceCommentService.delete(eCC);
+				this.experienceCommentService.delete(eC);
+			}
 
 		this.experienceRepository.delete(experience);
 	}
@@ -161,7 +175,7 @@ public class ExperienceService {
 		this.experienceRepository.flush();
 	}
 
-	public void subtractPlaces(int experienceId) {
+	public void subtractPlaces(final int experienceId) {
 		Experience experience;
 		int places;
 		experience = this.findOne(experienceId);
@@ -237,6 +251,17 @@ public class ExperienceService {
 
 		result = this.experienceRepository.avgPriceOfExperiencesPerCompany();
 
+		return result;
+	}
+
+	public void deleteInBach(final Collection<Experience> experiences) {
+		this.experienceRepository.deleteInBatch(experiences);
+
+	}
+
+	public Collection<Experience> findByFeatureId(final int featureId) {
+		Collection<Experience> result;
+		result = this.experienceRepository.findByFeatureId(featureId);
 		return result;
 	}
 

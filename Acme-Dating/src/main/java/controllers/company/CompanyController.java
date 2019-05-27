@@ -1,0 +1,193 @@
+
+package controllers.company;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import services.CompanyService;
+import services.CustomisationService;
+import services.ExperienceService;
+import controllers.AbstractController;
+import domain.Company;
+import domain.Experience;
+import forms.CompanyForm;
+
+@Controller
+@RequestMapping("/company")
+public class CompanyController extends AbstractController {
+
+	// Services
+
+	@Autowired
+	private CompanyService			companyService;
+
+	@Autowired
+	private CustomisationService	customisationService;
+
+	@Autowired
+	private ExperienceService		experienceService;
+
+
+	//Display
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(required = false) final Integer companyId) {
+		final ModelAndView result;
+		Company company = new Company();
+
+		if (companyId == null)
+			company = this.companyService.findByPrincipal();
+		else
+			company = this.companyService.findOne(companyId);
+
+		Collection<Experience> experiences;
+
+		experiences = this.experienceService.findByCompany(company.getId());
+
+		result = new ModelAndView("company/display");
+		result.addObject("company", company);
+		result.addObject("experiences", experiences);
+
+		return result;
+	}
+
+	//Edit
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		ModelAndView result;
+		Company company;
+		company = this.companyService.findByPrincipal();
+		Assert.notNull(company);
+		result = this.editModelAndView(company);
+
+		return result;
+	}
+
+	// Create
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		Company company;
+		CompanyForm companyForm;
+
+		company = this.companyService.create();
+		companyForm = this.companyService.construct(company);
+		result = this.createEditModelAndView(companyForm);
+
+		return result;
+	}
+
+	//Save de edit
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@ModelAttribute("company") Company company, final BindingResult binding) {
+		ModelAndView result;
+
+		try {
+			company = this.companyService.reconstructPruned(company, binding);
+			if (binding.hasErrors()) {
+				result = this.editModelAndView(company);
+				for (final ObjectError e : binding.getAllErrors())
+					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			} else {
+				company = this.companyService.save(company);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(company, "company.commit.error");
+		}
+		return result;
+	}
+
+	// Save de Register
+	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
+	public ModelAndView register(@ModelAttribute("companyForm") @Valid final CompanyForm companyForm, final BindingResult binding) {
+		ModelAndView result;
+		Company company;
+
+		try {
+			company = this.companyService.reconstruct(companyForm, binding);
+			if (binding.hasErrors()) {
+				for (final ObjectError e : binding.getAllErrors())
+					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+				result = this.createEditModelAndView(companyForm);
+			} else {
+				company = this.companyService.save(company);
+				result = new ModelAndView("welcome/index");
+			}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(companyForm, "company.commit.error");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/delete")
+	public ModelAndView delete() {
+		ModelAndView result;
+
+		try {
+			this.companyService.delete();
+
+			result = new ModelAndView("redirect:/j_spring_security_logout");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/company/display.do");
+		}
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(final CompanyForm companyForm) {
+		ModelAndView result;
+		result = this.createEditModelAndView(companyForm, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(final CompanyForm companyForm, final String message) {
+		ModelAndView result;
+		String countryCode;
+
+		countryCode = this.customisationService.find().getCountryCode();
+		if (companyForm.getId() != 0)
+			result = new ModelAndView("company/edit");
+		else
+			result = new ModelAndView("company/register");
+
+		result.addObject("companyForm", companyForm);
+		result.addObject("countryCode", countryCode);
+
+		result.addObject("message", message);
+
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Company company) {
+		ModelAndView result;
+		result = this.editModelAndView(company, null);
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Company company, final String messageCode) {
+		ModelAndView result;
+		String countryCode;
+
+		countryCode = this.customisationService.find().getCountryCode();
+
+		result = new ModelAndView("company/edit");
+		result.addObject("company", company);
+		result.addObject("countryCode", countryCode);
+		result.addObject("message", messageCode);
+		return result;
+	}
+}
