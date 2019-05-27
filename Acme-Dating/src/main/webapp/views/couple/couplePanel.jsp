@@ -10,7 +10,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-
+<security:authorize access="hasRole('USER')">
 <jstl:choose>
 <jstl:when test="${hasCouple}">
 <!-- Couple members -->
@@ -59,15 +59,10 @@
 <tr><td style="text-align:center; vertical-align: middle;"><a href="record/couple/list.do"><img src="images/icons/diary.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="task/couple/list.do"><img src="images/icons/to-do-list.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="challenge/user/list.do"><img src="images/icons/creativity.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="experience/list.do"><img src="images/icons/waterfall.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="book/couple/list.do"><img src="images/icons/luggage.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="couple/delete.do"><img src="images/icons/broken-heart.png" /></a></td></tr>
 </table>
 </div>
-
-<security:authorize access="hasRole('USER')">
-	<br/>
-		<a href="couple/delete.do?coupleId=${couple.id}" ><spring:message code="couple.breakUp" /></a><br/>								
-</security:authorize>
-
 </jstl:when>
 <jstl:otherwise>
 <spring:message code="couple.single" /><a href="coupleRequest/user/list.do"><spring:message code="couple.coupleRequest"/></a>
 </jstl:otherwise>
 </jstl:choose>
+</security:authorize>
 
