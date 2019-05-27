@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +27,7 @@ import domain.Company;
 import domain.CreditCard;
 import domain.Experience;
 import domain.Message;
+import domain.MessageBox;
 import forms.CompanyForm;
 
 @Service
@@ -65,6 +67,9 @@ public class CompanyService {
 	private BookService					bookService;
 
 	@Autowired
+	private MessageBoxService			messageBoxService;
+
+	@Autowired
 	private Validator					validator;
 
 
@@ -95,6 +100,7 @@ public class CompanyService {
 
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
+		result.setMessageBoxes(new ArrayList<MessageBox>());
 
 		return result;
 	}
@@ -103,6 +109,7 @@ public class CompanyService {
 		Company saved;
 		UserAccount logedUserAccount;
 		Md5PasswordEncoder encoder;
+		final List<MessageBox> messageBoxes;
 
 		encoder = new Md5PasswordEncoder();
 		logedUserAccount = this.actorService.createUserAccount(Authority.COMPANY);
@@ -125,6 +132,8 @@ public class CompanyService {
 			creditCard = this.creditCardService.saveNew(company.getCreditCard());
 			company.setCreditCard(creditCard);
 			saved = this.companyRepository.saveAndFlush(company);
+			messageBoxes = this.messageBoxService.createSystemBoxes(saved);
+			saved.setMessageBoxes(messageBoxes);
 		}
 		return saved;
 	}

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -84,15 +85,13 @@ public class UserService {
 		CreditCard creditCard;
 		result = new User();
 		creditCard = new CreditCard();
-		List<MessageBox> boxes;
 
 		//Nuevo userAccount con user en la lista de authorities
 		final UserAccount userAccount = this.actorService.createUserAccount(Authority.USER);
-		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
-		result.setMessageBoxes(boxes);
+		result.setMessageBoxes(new ArrayList<MessageBox>());
 
 		return result;
 	}
@@ -100,6 +99,7 @@ public class UserService {
 	public User save(final User user) {
 		User saved;
 		UserAccount logedUserAccount;
+		final List<MessageBox> messageBoxes;
 
 		final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 		logedUserAccount = this.actorService.createUserAccount(Authority.USER);
@@ -111,6 +111,8 @@ public class UserService {
 			creditCard = this.creditCardService.saveNew(user.getCreditCard());
 			user.setCreditCard(creditCard);
 			saved = this.userRepository.saveAndFlush(user);
+			messageBoxes = this.messageBoxService.createSystemBoxes(saved);
+			saved.setMessageBoxes(messageBoxes);
 		} else {
 			logedUserAccount = LoginService.getPrincipal();
 			Assert.notNull(logedUserAccount, "provider.notLogged");

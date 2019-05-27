@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -82,19 +83,17 @@ public class AdministratorService {
 		UserAccount userAccount;
 		Authority authority;
 		CreditCard creditCard;
-		List<MessageBox> boxes;
 
 		result = new Administrator();
 		userAccount = new UserAccount();
 		authority = new Authority();
 		creditCard = this.creditCardService.create();
-		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		authority.setAuthority("ADMIN");
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
-		result.setMessageBoxes(boxes);
+		result.setMessageBoxes(new ArrayList<MessageBox>());
 
 		return result;
 
@@ -103,6 +102,7 @@ public class AdministratorService {
 	public Administrator save(final Administrator administrator) {
 		Administrator saved;
 		UserAccount logedUserAccount;
+		final List<MessageBox> messageBoxes;
 
 		final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 		logedUserAccount = this.actorService.createUserAccount(Authority.ADMIN);
@@ -114,6 +114,8 @@ public class AdministratorService {
 			creditCard = this.creditCardService.saveNew(administrator.getCreditCard());
 			administrator.setCreditCard(creditCard);
 			saved = this.administratorRepository.saveAndFlush(administrator);
+			messageBoxes = this.messageBoxService.createSystemBoxes(saved);
+			saved.setMessageBoxes(messageBoxes);
 
 		} else {
 			logedUserAccount = LoginService.getPrincipal();
