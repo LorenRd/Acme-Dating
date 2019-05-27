@@ -45,6 +45,12 @@ public class AdministratorService {
 	@Autowired
 	private BookService bookService;
 
+	@Autowired
+	private ChallengeService challengeService;
+	
+	@Autowired
+	private UserService userService;
+
 	public Administrator findByPrincipal() {
 		Administrator res;
 		UserAccount userAccount;
@@ -170,20 +176,23 @@ public class AdministratorService {
 	public void computeTrophies(){
 		Collection<Trophy> trophies;
 		Collection<Couple> couples;
-		Collection<Challenge> challenges;
-		Collection<Experience> experiences;
-		Collection<User> 		users;
 		
 		trophies = this.trophyService.findAll();
 		couples = this.coupleService.findAll();
-		challenges = this.challengeService.findAll();
-		experiences = this.experienceService.findAll();
 		
 		for(Couple c : couples){
 			Collection<Trophy> reachedTrophies = new ArrayList<Trophy>();
 			Collection<Book> books = this.bookService.findAllByCoupleId(c.getId());
+			Collection<User> users = this.userService.findByCoupleId(c.getId());
+			Integer cont = 0;
+			Integer numberOfCompletedChallenges;
+			for(User u : users){
+				Collection<Challenge> challenges = this.challengeService.findAllCompletedBySenderId(u);
+				numberOfCompletedChallenges = challenges.size();
+				cont = cont + numberOfCompletedChallenges;
+			}
 			for(Trophy t : trophies){
-				if((c.getScore() >= t.getScoreToReach()) || (books.size() >= t.getExperiencesToShare()) ||  ){
+				if((c.getScore() >= t.getScoreToReach()) || (books.size() >= t.getExperiencesToShare()) || (cont >= t.getChallengesToComplete()) ){
 					reachedTrophies.add(t);
 				}
 			}
