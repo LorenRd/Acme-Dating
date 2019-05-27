@@ -17,6 +17,7 @@
 		<value>/views/security/messages</value>
 		<value>/views/welcome/messages</value>
 		<value>/views/company/messages</value>		
+		<value>/views/category/messages</value>	
 		<value>/views/administrator/messages</value>
 		<value>/views/couple/messages</value>
 		<value>/views/task/messages</value>

@@ -118,6 +118,12 @@
 		<security:intercept-url pattern="/record/couple/delete.do" access="hasRole('USER')"/>		
 		<security:intercept-url pattern="/record/couple/cancel.do" access="hasRole('USER')"/>	
 	
+		<security:intercept-url pattern="/category/administrator/list.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/category/administrator/create.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/category/administrator/edit.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/category/administrator/delete.do" access="hasRole('ADMIN')"/>		
+		<security:intercept-url pattern="/category/administrator/cancel.do" access="hasRole('ADMIN')"/>
+	
 		<security:intercept-url pattern="/recordComment/create.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/recordComment/createReply.do" access="hasRole('USER')"/>
 	

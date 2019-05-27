@@ -22,6 +22,7 @@ public class Category extends DomainEntity{
 		this.title = title;
 	}
 	
+	@NotBlank
 	@URL
 	public String getPicture() {
 		return this.picture;

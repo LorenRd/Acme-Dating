@@ -37,17 +37,6 @@
 			<display:column property="title" title="${titleHeader}"
 				sortable="true" />
 
-			<spring:message code="record.body" var="bodyHeader" />
-			<display:column property="body" title="${bodyHeader}" sortable="true" />
-
-			<spring:message code="record.photo" var="photoHeader" />
-			<display:column property="photo" title="${photoHeader}"
-				sortable="true" />
-
-			<spring:message code="record.category" var="categoryHeader" />
-			<display:column property="category.title" title="${categoryHeader}"
-				sortable="true" />
-
 			<security:authorize access="hasRole('USER')">
 
 				<!-- Display -->

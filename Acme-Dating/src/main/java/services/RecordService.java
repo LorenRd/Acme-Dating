@@ -110,8 +110,7 @@ public class RecordService {
 		Calendar c = Calendar.getInstance();
 		c.setTime(dt);
 		c.add(Calendar.DATE, 1);
-		
-		
+
 		if (record.getId() == 0) {
 			result = record;
 			result.setCouple(this.coupleService.findByUser());

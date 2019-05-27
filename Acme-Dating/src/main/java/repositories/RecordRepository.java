@@ -13,4 +13,7 @@ public interface RecordRepository extends JpaRepository<Record, Integer> {
 
 	@Query("select r from Record r where r.couple.id = ?1")
 	Collection<Record> findByCoupleId(int coupleId);
+
+	@Query("select r from Record r where r.category.id = ?1")
+	Collection<Record> findByCategoryId(int categoryId);
 }
