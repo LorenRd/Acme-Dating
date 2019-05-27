@@ -33,7 +33,7 @@ public class RecordCommentController extends AbstractController {
 		ModelAndView result;
 		RecordComment recordComment;
 
-		recordComment = this.recordCommentService.create(true, recordId);
+		recordComment = this.recordCommentService.create(true,recordId);
 
 		result = this.createModelAndView(recordComment);
 
@@ -46,25 +46,48 @@ public class RecordCommentController extends AbstractController {
 		ModelAndView result;
 		RecordComment recordComment;
 
-		recordComment = this.recordCommentService
-				.create(false, recordCommentId);
+		recordComment = this.recordCommentService.create(false, recordCommentId);
 
 		result = this.createModelAndView(recordComment);
 
 		return result;
 	}
 
-	// SAVE DE CREATE
+	// SAVE DE COMENTARIO RAIZ
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView createFinal(
 			@ModelAttribute("recordComment") RecordComment recordComment,
+			@RequestParam final int recordId, final BindingResult binding) {
+		ModelAndView result;
+		try {
+			recordComment = this.recordCommentService.reconstruct(recordComment, true, recordId, binding);
+			if (binding.hasErrors()) {
+				result = this.createModelAndView(recordComment);
+				for (final ObjectError e : binding.getAllErrors())
+					System.out.println(e.getObjectName() + " error ["
+							+ e.getDefaultMessage() + "] "
+							+ Arrays.toString(e.getCodes()));
+			} else {
+				recordComment = this.recordCommentService.save(recordComment);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		} catch (final Throwable oops) {
+			result = this.createModelAndView(recordComment,"recordComment.commit.error");
+		}
+		return result;
+	}
+
+	// SAVE DE COMENTARIO HIJO
+	@RequestMapping(value = "/createReply", method = RequestMethod.POST, params = "save")
+	public ModelAndView createHijo(
+			@ModelAttribute("recordComment") RecordComment recordComment,
+			@RequestParam final int recordCommentId,
 			final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			recordComment = this.recordCommentService.reconstruct(
-					recordComment, binding);
+			recordComment = this.recordCommentService.reconstruct(recordComment, false, recordCommentId, binding);
 			if (binding.hasErrors()) {
 				result = this.createModelAndView(recordComment);
 				for (final ObjectError e : binding.getAllErrors())
@@ -77,8 +100,7 @@ public class RecordCommentController extends AbstractController {
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createModelAndView(recordComment,
-					"recordComment.commit.error");
+			result = this.createModelAndView(recordComment,"recordComment.commit.error");
 		}
 		return result;
 	}
@@ -92,8 +114,7 @@ public class RecordCommentController extends AbstractController {
 		return result;
 	}
 
-	private ModelAndView createModelAndView(final RecordComment recordComment,
-			final String messageCode) {
+	private ModelAndView createModelAndView(final RecordComment recordComment, final String messageCode) {
 		ModelAndView result;
 
 		if (recordComment.getRecordComment() != null) {
@@ -105,5 +126,6 @@ public class RecordCommentController extends AbstractController {
 		result.addObject("message", messageCode);
 		return result;
 	}
+
 
 }

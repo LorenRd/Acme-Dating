@@ -31,14 +31,6 @@
 		<acme:textbox code="task.title" path="title" placeholder="Task title" />
 		<br />
 
-		<spring:message code="task.isCompleted" />
-		<form:radiobutton path="isCompleted" value="true"/>
-		<spring:message code="task.isCompleted.true" />
-		<form:radiobutton path="isCompleted" value="false"/>
-		<spring:message code="task.isCompleted.false" />
-   		<br />
-   		<br />  
-   		
 		<acme:submit name="save" code="task.save" />
 
 		<acme:cancel url="welcome/index.do" code="task.cancel" />

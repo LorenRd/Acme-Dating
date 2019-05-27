@@ -1118,7 +1118,6 @@
 	<bean class="domain.RecordComment" id="recordComment1">
 		<property name="body" value="body recordComment1" />
 		<property name="record" ref="record1" />
-		<property name="recordComment" ref="recordComment1" />
 	</bean>
 
 	<!-- Experiences -->

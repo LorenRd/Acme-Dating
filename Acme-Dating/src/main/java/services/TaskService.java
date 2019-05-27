@@ -109,4 +109,12 @@ public class TaskService {
 		return result;
 	}
 
+	public void changeStatus(Task task) {
+		if(task.getIsCompleted()){
+			task.setIsCompleted(false);
+		}else{
+			task.setIsCompleted(true);
+		}
+	}
+
 }

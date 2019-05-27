@@ -89,7 +89,8 @@
 					<li><a href="couple/display.do"><spring:message code="master.page.couple.display" /></a></li>					
 					<li><a href="book/couple/list.do"><spring:message code="master.page.couple.book" /></a></li>
 					<li><a href="task/couple/list.do"><spring:message code="master.page.couple.tasks" /></a></li>	
-					<li><a href="record/couple/list.do"><spring:message code="master.page.couple.records" /></a></li>									
+					<li><a href="record/couple/list.do"><spring:message code="master.page.couple.records" /></a></li>
+					<li><a href="challenge/user/list.do"><spring:message code="master.page.couple.challenge" /></a></li>									
 				</ul>
 			</li>
 		</security:authorize>		

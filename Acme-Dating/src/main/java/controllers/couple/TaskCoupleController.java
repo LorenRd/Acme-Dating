@@ -111,7 +111,7 @@ public class TaskCoupleController extends AbstractController {
 							+ Arrays.toString(e.getCodes()));
 			} else {
 				task = this.taskService.save(task);
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:list.do");
 			}
 
 		} catch (final Throwable oops) {
@@ -135,7 +135,7 @@ public class TaskCoupleController extends AbstractController {
 							+ Arrays.toString(e.getCodes()));
 			} else {
 				task = this.taskService.save(task);
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:list.do");
 			}
 
 		} catch (final Throwable oops) {
@@ -155,13 +155,32 @@ public class TaskCoupleController extends AbstractController {
 
 		try {
 			this.taskService.delete(task);
-			result = new ModelAndView("redirect:/welcome/index.do");
+			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(task, "task.commit.error");
 		}
 		return result;
 	}
 
+	// Change status
+
+	@RequestMapping(value = "/changeStatus", method = RequestMethod.GET)
+	public ModelAndView changeStatus(final int taskId) {
+		ModelAndView result;
+		Task task;
+
+		task = this.taskService.findOne(taskId);
+
+		try {
+			this.taskService.changeStatus(task);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(task, "task.commit.error");
+		}
+		return result;
+	}
+
+	
 	// ------------------- Ancillary Methods
 
 	protected ModelAndView createEditModelAndView(final Task task) {

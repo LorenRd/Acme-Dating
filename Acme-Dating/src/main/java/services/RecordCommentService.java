@@ -32,7 +32,6 @@ public class RecordCommentService {
 	private RecordService recordService;
 
 	// Simple CRUD Methods
-
 	public RecordComment create(final boolean isFather, final int id) {
 		RecordComment result;
 
@@ -77,21 +76,20 @@ public class RecordCommentService {
 		Assert.notNull(result);
 		return result;
 	}
-
-	public RecordComment reconstruct(final RecordComment recordComment,
-			final BindingResult binding) {
+	
+	public RecordComment reconstruct(final RecordComment recordComment,boolean isFather, final int id, final BindingResult binding) {
 		RecordComment result;
+		Record record;
 
-		if (recordComment.getId() == 0) {
-			result = recordComment;
-			result.setBody(recordComment.getBody());
-
-		} else {
-			result = this.recordCommentRepository
-					.findOne(recordComment.getId());
-			result.setBody(recordComment.getBody());
+		result = recordComment;
+		if(isFather){
+			record = this.recordService.findOne(id);
+			result.setRecord(record);
+		}else{
+			result.setRecordComment(this.findOne(id));
 
 		}
+		result.setBody(recordComment.getBody());
 
 		this.validator.validate(result, binding);
 		return result;
@@ -116,4 +114,5 @@ public class RecordCommentService {
 	public void flush() {
 		this.recordCommentRepository.flush();
 	}
+
 }

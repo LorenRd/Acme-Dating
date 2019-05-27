@@ -27,8 +27,8 @@
 		<form:hidden path="id" />
 		<form:hidden path="version" />
 
-		<acme:datebox code="record.day" path="day" placeholder="dd/MM/yyyy" />
-		<br />
+		<spring:message code="record.day"/> <form:input path="day" type="text" id="datepicker"/><form:errors cssClass="error" path="day" />		
+		<br /><br />
 
 		<acme:textbox code="record.title" path="title" placeholder="Record title" />
 		<br />
@@ -56,3 +56,9 @@
 				code="couple.coupleRequest" /></a>
 	</jstl:otherwise>
 </jstl:choose>
+
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  } );
+  </script>
