@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,13 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
+import domain.Challenge;
+import domain.Couple;
+import domain.CoupleRequest;
 import domain.CreditCard;
+import domain.Message;
+import domain.MessageBox;
+import domain.SocialNetwork;
 import domain.User;
 import forms.UserForm;
 
@@ -43,8 +50,23 @@ public class UserService {
 
 	@Autowired
 	private CoupleService			coupleService;
+
+	@Autowired
+	private ChallengeService		challengeService;
+
+	@Autowired
+	private MessageService			messageService;
+
+	@Autowired
+	private CoupleRequestService	coupleRequestService;
+
+	@Autowired
+	private SocialNetworkService	socialNetworkService;
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private MessageBoxService		messageBoxService;
 
 	@Autowired
 	private CreditCardService		creditCardService;
@@ -62,12 +84,15 @@ public class UserService {
 		CreditCard creditCard;
 		result = new User();
 		creditCard = new CreditCard();
+		List<MessageBox> boxes;
 
 		//Nuevo userAccount con user en la lista de authorities
 		final UserAccount userAccount = this.actorService.createUserAccount(Authority.USER);
+		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
+		result.setMessageBoxes(boxes);
 
 		return result;
 	}
@@ -145,6 +170,48 @@ public class UserService {
 
 	public boolean exists(final Integer arg0) {
 		return this.userRepository.exists(arg0);
+	}
+
+	public void delete() {
+		/*
+		 * Orden de borrado:
+		 * 1 Couple
+		 * 2 SocialNetwork
+		 * 3 CoupleRequest
+		 * 4 Challenge
+		 * 5 Mensajes
+		 * 6 CC
+		 * 7 Company
+		 */
+
+		User principal;
+		Couple couple;
+		Collection<SocialNetwork> socialNetworks;
+		final Collection<CoupleRequest> coupleRequests;
+		final Collection<Challenge> challenges;
+		final Collection<Message> messages;
+
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+
+		couple = this.coupleService.findByUser();
+		this.coupleService.delete(couple);
+
+		socialNetworks = this.socialNetworkService.findByUserId(principal.getId());
+		this.socialNetworkService.deleteInBach(socialNetworks);
+
+		coupleRequests = this.coupleRequestService.findAllCoupleRequestsByUserId(principal.getId());
+		this.coupleRequestService.deleteInBach(coupleRequests);
+
+		challenges = this.challengeService.findAllChallengesByUserId(principal.getId());
+		this.challengeService.deleteInBach(challenges);
+
+		messages = this.messageService.findBySenderId(principal.getId());
+		this.messageService.deleteInBach(messages);
+
+		this.userRepository.delete(principal);
+
+		this.creditCardService.delete(principal.getCreditCard());
 	}
 
 	public User findDarling(final int coupleId) {

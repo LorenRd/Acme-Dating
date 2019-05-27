@@ -24,21 +24,20 @@ public class ExperienceCommentService {
 	@Autowired
 	private ExperienceCommentRepository	experienceCommentRepository;
 
-
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ActorService actorService;
-	
+	private ActorService				actorService;
+
 	@Autowired
-	private Validator validator;
-	
+	private Validator					validator;
+
 	@Autowired
 	private ExperienceService			experienceService;
-	
-	
+
+
 	// Simple CRUD Methods
-	
+
 	public ExperienceComment create(final boolean isFather, final int id) {
 		ExperienceComment result;
 		final Actor principal;
@@ -48,16 +47,16 @@ public class ExperienceCommentService {
 
 		result = new ExperienceComment();
 		result.setActor(principal);
-		if(isFather){
+		if (isFather) {
 			Experience experience;
 			experience = this.experienceService.findOne(id);
 			result.setExperience(experience);
-		}else{
+		} else {
 			ExperienceComment experienceComment;
 			experienceComment = this.findOne(id);
 			result.setExperienceComment(experienceComment);
 		}
-		
+
 		return result;
 	}
 
@@ -80,8 +79,6 @@ public class ExperienceCommentService {
 		Assert.notNull(result);
 		return result;
 	}
-	
-	
 
 	public ExperienceComment save(final ExperienceComment experienceComment) {
 		ExperienceComment result;
@@ -90,20 +87,18 @@ public class ExperienceCommentService {
 		Assert.notNull(result);
 		return result;
 	}
-	
-	public ExperienceComment reconstruct(final ExperienceComment experienceComment,boolean isFather, final int id, final BindingResult binding) {
+
+	public ExperienceComment reconstruct(final ExperienceComment experienceComment, final boolean isFather, final int id, final BindingResult binding) {
 		ExperienceComment result;
 		Experience experience;
 
 		result = experienceComment;
 		result.setActor(this.actorService.findByPrincipal());
-		if(isFather){
+		if (isFather) {
 			experience = this.experienceService.findOne(id);
 			result.setExperience(experience);
-		}else{
+		} else
 			result.setExperienceComment(this.findOne(id));
-
-		}
 		result.setBody(experienceComment.getBody());
 
 		this.validator.validate(result, binding);
@@ -118,12 +113,16 @@ public class ExperienceCommentService {
 		result = this.experienceCommentRepository.findByExperienceId(experienceId);
 		Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
 
-		for (ExperienceComment eC : result) {
+		for (final ExperienceComment eC : result) {
 			childs = new ArrayList<ExperienceComment>();
 			childs.addAll(this.experienceCommentRepository.findChilds(eC.getId()));
 		}
 		result.addAll(childs);
 		return result;
+	}
+
+	public void delete(final ExperienceComment comment) {
+		this.experienceCommentRepository.delete(comment);
 	}
 
 	public void flush() {

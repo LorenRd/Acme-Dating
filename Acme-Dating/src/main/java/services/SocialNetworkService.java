@@ -86,4 +86,8 @@ public class SocialNetworkService {
 		return result;
 	}
 
+	public void deleteInBach(final Collection<SocialNetwork> socialNetworks) {
+		this.socialNetworkRepository.deleteInBatch(socialNetworks);
+	}
+
 }

@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,17 +27,17 @@ public class ExperienceService {
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private CompanyService		companyService;
+	private CompanyService			companyService;
 
 	@Autowired
-	private BookService			bookService;
-	
+	private BookService				bookService;
+
 	@Autowired
-	private FeatureService		featureService;
-	
+	private FeatureService			featureService;
+
 	@Autowired
-	private Validator validator;
-	
+	private Validator				validator;
+
 
 	// Simple CRUD Methods
 
@@ -103,12 +104,11 @@ public class ExperienceService {
 
 		for (final Book b : books)
 			this.bookService.delete(b);
-		
+
 		features = experience.getFeatures();
-		
-		for (Feature f : features) {
+
+		for (final Feature f : features)
 			this.featureService.delete(f);
-		}
 
 		this.experienceRepository.delete(experience);
 	}
@@ -121,46 +121,50 @@ public class ExperienceService {
 		result = this.experienceRepository.findByCompanyId(companyId);
 		return result;
 	}
-	
+
 	public Collection<Experience> findByKeywordAll(final String keyword) {
 		final Collection<Experience> result = this.experienceRepository.findByKeyword(keyword);
 
 		return result;
 	}
-	
+
 	public Collection<Experience> findByKeywordCompany(final String keyword, final int companyId) {
 		final Collection<Experience> result = this.experienceRepository.findByKeywordCompany(keyword, companyId);
 
 		return result;
 	}
-	
+
 	public Experience reconstruct(final Experience experience, final BindingResult binding) {
 		Experience original;
 		if (experience.getId() == 0) {
 			original = experience;
 			original.setCompany(this.companyService.findByPrincipal());
-		} else{
+		} else {
 			original = this.experienceRepository.findOne(experience.getId());
 			experience.setCompany(this.companyService.findByPrincipal());
 
 		}
 
-		
 		this.validator.validate(experience, binding);
 
 		return experience;
-	}	
+	}
 	public void flush() {
 		this.experienceRepository.flush();
 	}
 
-	public void subtractPlaces(int experienceId) {
+	public void subtractPlaces(final int experienceId) {
 		Experience experience;
 		int places;
 		experience = this.findOne(experienceId);
 		places = experience.getCoupleLimit();
-		places = places -1;
+		places = places - 1;
 		experience.setCoupleLimit(places);
+	}
+
+	public void deleteInBach(final Collection<Experience> experiences) {
+		this.experienceRepository.deleteInBatch(experiences);
+
 	}
 
 }

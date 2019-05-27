@@ -47,6 +47,9 @@ public class AdministratorService {
 	private CreditCardService		creditCardService;
 
 	@Autowired
+	private MessageBoxService		messageBoxService;
+
+	@Autowired
 	private Validator				validator;
 
 

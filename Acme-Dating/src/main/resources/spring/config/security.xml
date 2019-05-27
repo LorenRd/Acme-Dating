@@ -117,6 +117,7 @@
 		<security:intercept-url pattern="/user/register.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/user/display.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/user/delete.do" access="hasRole('USER')" /> 
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

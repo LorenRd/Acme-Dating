@@ -194,4 +194,16 @@ public class MessageService {
 	public void flush() {
 		this.messageRepository.flush();
 	}
+
+	public Collection<Message> findBySenderId(final int actorId) {
+		Collection<Message> result;
+
+		result = this.messageRepository.findBySenderId(actorId);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public void deleteInBach(final Collection<Message> messages) {
+		this.messageRepository.deleteInBatch(messages);
+	}
 }

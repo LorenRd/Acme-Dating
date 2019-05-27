@@ -3,8 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +11,6 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -23,12 +20,13 @@ import repositories.CustomisationRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Book;
 import security.UserAccountRepository;
+import domain.Book;
 import domain.Company;
 import domain.CreditCard;
 import domain.Experience;
-import domain.MessageBox;
+import domain.ExperienceComment;
+import domain.Message;
 import forms.CompanyForm;
 
 @Service
@@ -37,32 +35,37 @@ public class CompanyService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CompanyRepository	companyRepository;
+	private CompanyRepository			companyRepository;
 
 	@Autowired
-	private CustomisationRepository	customisationRepository;
+	private CustomisationRepository		customisationRepository;
 
 	@Autowired
-	private UserAccountRepository	useraccountRepository;
+	private UserAccountRepository		useraccountRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private ActorService		actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private CreditCardService	creditCardService;
+	private CreditCardService			creditCardService;
 
 	@Autowired
-	private ExperienceService experienceService;
-	 
-	@Autowired
-	private BookService bookService;
-	 // Simple CRUD Methods
-	@Autowired
-	private MessageBoxService	messageBoxService;
-	@Autowired
-	private Validator				validator;
+	private ExperienceService			experienceService;
 
+	@Autowired
+	private MessageService				messageService;
+
+	@Autowired
+	private ExperienceCommentService	experienceCommentService;
+
+	@Autowired
+	private BookService					bookService;
+	// Simple CRUD Methods
+	@Autowired
+	private MessageBoxService			messageBoxService;
+	@Autowired
+	private Validator					validator;
 
 
 	// Simple CRUD Methods
@@ -76,13 +79,11 @@ public class CompanyService {
 		UserAccount userAccount;
 		Authority authority;
 		CreditCard creditCard;
-		List<MessageBox> boxes;
 
 		result = new Company();
 		userAccount = new UserAccount();
 		authority = new Authority();
 		creditCard = new CreditCard();
-		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		authority.setAuthority("COMPANY");
 		userAccount.addAuthority(authority);
@@ -92,7 +93,6 @@ public class CompanyService {
 
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
-		result.setMessageBoxes(boxes);
 
 		return result;
 	}
@@ -170,25 +170,22 @@ public class CompanyService {
 		this.companyRepository.flush();
 	}
 
-	public void computeScore(){
+	public void computeScore() {
 		Collection<Experience> experiences;
-		
+
 		experiences = this.experienceService.findAll();
-		for (Experience e : experiences) {
+		for (final Experience e : experiences) {
 			Collection<Book> books = new ArrayList<Book>();
 			Double score = 0.0;
 			int i = 0;
 			books = this.bookService.findAllByCompanyId(e.getCompany().getId());
-			for (Book b : books) {
-				if (b.getScore() != null)
-				{
+			for (final Book b : books)
+				if (b.getScore() != null) {
 					i++;
 					score += b.getScore();
 				}
-			}
-			if(i>0){
-				score = score/i;
-			}
+			if (i > 0)
+				score = score / i;
 			e.setScore(score);
 		}
 	}
@@ -274,6 +271,40 @@ public class CompanyService {
 		this.validator.validate(result, binding);
 		this.companyRepository.flush();
 		return result;
+	}
+
+	public void delete() {
+		/*
+		 * Orden de borrado:
+		 * 1 Comments de la experience
+		 * 2 Experience
+		 * 3 Mensajes
+		 * 4 CC
+		 * 5 Company
+		 */
+		Company principal;
+		Collection<Experience> experiences;
+		final Collection<Message> messages;
+		Collection<ExperienceComment> comments;
+
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+
+		experiences = this.experienceService.findByCompany(principal.getId());
+		for (final Experience e : experiences) {
+			comments = this.experienceCommentService.findByExperienceId(e.getId());
+			for (final ExperienceComment comment : comments)
+				this.experienceCommentService.delete(comment);
+			this.experienceService.delete(e);
+		}
+
+		messages = this.messageService.findBySenderId(principal.getId());
+		this.messageService.deleteInBach(messages);
+
+		this.companyRepository.delete(principal);
+
+		this.creditCardService.delete(principal.getCreditCard());
+
 	}
 
 }
