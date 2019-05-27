@@ -25,27 +25,26 @@ public class CoupleService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CoupleRepository		coupleRepository;
+	private CoupleRepository coupleRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private UserService				userService;
+	private UserService userService;
 
 	@Autowired
-	private RecordService			recordService;
+	private RecordService recordService;
 
 	@Autowired
-	private TaskService				taskService;
+	private TaskService taskService;
 
 	@Autowired
-	private BookService				bookService;
+	private BookService bookService;
 
 	@Autowired
-	private ChallengeService		challengeService;
+	private ChallengeService challengeService;
 
 	@Autowired
-	private CoupleRequestService	coupleRequestService;
-
+	private CoupleRequestService coupleRequestService;
 
 	public Couple create(final User sender, final User recipient) {
 		Couple result;
@@ -135,7 +134,8 @@ public class CoupleService {
 			this.bookService.delete(b);
 
 		challenges = this.challengeService.findByRecipientId(principal.getId());
-		challenges.addAll(this.challengeService.findBySenderId(principal.getId()));
+		challenges.addAll(this.challengeService.findBySenderId(principal
+				.getId()));
 		for (final Challenge c : challenges)
 			this.challengeService.delete(c);
 
@@ -143,7 +143,8 @@ public class CoupleService {
 
 		users = this.findUsersOfACouple(couple.getId());
 		for (final User u1 : users) {
-			requests = this.coupleRequestService.findCoupleRequestsByRecipientId(u1.getId());
+			requests = this.coupleRequestService
+					.findCoupleRequestsByRecipientId(u1.getId());
 			for (final CoupleRequest cR : requests)
 				this.coupleRequestService.delete(cR);
 		}
@@ -174,4 +175,14 @@ public class CoupleService {
 	public void flush() {
 		this.coupleRepository.flush();
 	}
+
+	public Collection<Couple> findByTrophyId(final int trophyId) {
+		Collection<Couple> result;
+
+		result = this.coupleRepository.findByTrophyId(trophyId);
+
+		return result;
+
+	}
+
 }

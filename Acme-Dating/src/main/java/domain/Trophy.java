@@ -12,9 +12,9 @@ public class Trophy extends DomainEntity {
 
 	private String title;
 	private String picture;
-	private int scoreToReach;
-	private int challengesToComplete;
-	private int experiencesToShare;
+	private Integer scoreToReach;
+	private Integer challengesToComplete;
+	private Integer experiencesToShare;
 
 	@NotBlank
 	public String getTitle() {
@@ -25,6 +25,7 @@ public class Trophy extends DomainEntity {
 		this.title = title;
 	}
 
+	@NotBlank
 	@URL
 	public String getPicture() {
 		return this.picture;
@@ -34,7 +35,11 @@ public class Trophy extends DomainEntity {
 		this.picture = picture;
 	}
 
-	public int getScoreToReach() {
+	// @NotNull
+	// @NotBlank
+	// @Range(min = 0)
+	// @Pattern(regexp = "[\\s]*[0-9]*[1-9]+", message = ">0   -.-")
+	public Integer getScoreToReach() {
 		return scoreToReach;
 	}
 
@@ -42,7 +47,7 @@ public class Trophy extends DomainEntity {
 		this.scoreToReach = scoreToReach;
 	}
 
-	public int getChallengesToComplete() {
+	public Integer getChallengesToComplete() {
 		return challengesToComplete;
 	}
 
@@ -50,7 +55,7 @@ public class Trophy extends DomainEntity {
 		this.challengesToComplete = challengesToComplete;
 	}
 
-	public int getExperiencesToShare() {
+	public Integer getExperiencesToShare() {
 		return experiencesToShare;
 	}
 

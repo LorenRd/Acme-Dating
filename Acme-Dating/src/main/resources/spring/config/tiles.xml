@@ -23,6 +23,7 @@
 
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/task/tiles.xml</value>
+		<value>/views/trophy/tiles.xml</value>
 		<value>/views/record/tiles.xml</value>
 		<value>/views/recordComment/tiles.xml</value>
 		<value>/views/experience/tiles.xml</value>
