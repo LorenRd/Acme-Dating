@@ -10,7 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CoupleRepository;
+import domain.Book;
+import domain.Challenge;
 import domain.Couple;
+import domain.CoupleRequest;
+import domain.Record;
+import domain.Task;
 import domain.Trophy;
 import domain.User;
 
@@ -20,11 +25,27 @@ public class CoupleService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CoupleRepository coupleRepository;
+	private CoupleRepository		coupleRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private UserService userService;
+	private UserService				userService;
+
+	@Autowired
+	private RecordService			recordService;
+
+	@Autowired
+	private TaskService				taskService;
+
+	@Autowired
+	private BookService				bookService;
+
+	@Autowired
+	private ChallengeService		challengeService;
+
+	@Autowired
+	private CoupleRequestService	coupleRequestService;
+
 
 	public Couple create(final User sender, final User recipient) {
 		Couple result;
@@ -86,6 +107,62 @@ public class CoupleService {
 		return users;
 	}
 
+	public void delete(final Couple couple) {
+		User principal;
+		Collection<Record> records;
+		Collection<Task> tasks;
+		Collection<Book> books;
+		Collection<Challenge> challenges;
+		Collection<User> users;
+		Collection<CoupleRequest> requests;
+
+		Assert.notNull(couple);
+		Assert.isTrue(couple.getId() != 0);
+
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+
+		records = this.recordService.findByCoupleId(couple.getId());
+		for (final Record r : records)
+			this.recordService.delete(r);
+
+		tasks = this.taskService.findByCoupleId(couple.getId());
+		for (final Task t : tasks)
+			this.taskService.delete(t);
+
+		books = this.bookService.findAllByCoupleId(couple.getId());
+		for (final Book b : books)
+			this.bookService.delete(b);
+
+		challenges = this.challengeService.findByRecipientId(principal.getId());
+		challenges.addAll(this.challengeService.findBySenderId(principal.getId()));
+		for (final Challenge c : challenges)
+			this.challengeService.delete(c);
+
+		couple.getTrophies().clear();
+
+		users = this.findUsersOfACouple(couple.getId());
+		for (final User u1 : users) {
+			requests = this.coupleRequestService.findCoupleRequestsByRecipientId(u1.getId());
+			for (final CoupleRequest cR : requests)
+				this.coupleRequestService.delete(cR);
+		}
+
+		for (final User u2 : users)
+			u2.setCouple(null);
+
+		this.coupleRepository.delete(couple);
+		this.flush();
+	}
+
+	public Couple findOne(final int coupleId) {
+		Couple result;
+
+		result = this.coupleRepository.findOne(coupleId);
+		Assert.notNull(result);
+		return result;
+	}
+
 	public Collection<Couple> findAll() {
 		Collection<Couple> result;
 
@@ -94,4 +171,7 @@ public class CoupleService {
 		return result;
 	}
 
+	public void flush() {
+		this.coupleRepository.flush();
+	}
 }

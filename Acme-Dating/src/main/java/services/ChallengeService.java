@@ -160,6 +160,18 @@ public class ChallengeService {
 		this.challengeRepository.save(c);
 	}
 
+	public void delete(final Challenge challenge) {
+
+		User principal;
+
+		Assert.notNull(challenge);
+
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+
+		this.challengeRepository.delete(challenge);
+	}
+
 	public Challenge findOne(final int cRId) {
 		Challenge result;
 

@@ -4,6 +4,7 @@ package controllers.couple;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.BookService;
+import services.CoupleService;
+import services.CustomisationService;
+import services.ExperienceCommentService;
+import services.ExperienceService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Book;
 import domain.Couple;
@@ -27,35 +34,29 @@ import domain.Feature;
 import domain.User;
 import forms.BookForm;
 
-import services.BookService;
-import services.CoupleService;
-import services.CustomisationService;
-import services.ExperienceCommentService;
-import services.ExperienceService;
-import services.UserService;
-
 @Controller
 @RequestMapping("/book/couple")
 public class BookCoupleController extends AbstractController {
 
 	//Services
 	@Autowired
-	private CoupleService		coupleService;
+	private CoupleService				coupleService;
 
 	@Autowired
-	private BookService			bookService;
+	private BookService					bookService;
 
 	@Autowired
-	private ExperienceService	experienceService;
-	
+	private ExperienceService			experienceService;
+
 	@Autowired
-	private CustomisationService customisationService;
+	private CustomisationService		customisationService;
 
 	@Autowired
 	private ExperienceCommentService	experienceCommentService;
-	
+
 	@Autowired
 	private UserService					userService;
+
 
 	//List
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -63,19 +64,26 @@ public class BookCoupleController extends AbstractController {
 		final ModelAndView result;
 		final Collection<Book> books;
 		Couple principal;
-		
+
 		principal = this.coupleService.findByUser();
 
-		books = this.bookService.findAllByCoupleId(principal.getId());
-
 		result = new ModelAndView("book/list");
-		result.addObject("books", books);
 		result.addObject("requestURI", "book/couple/list.do");
 
+		if (principal == null) {
+			result.addObject("couple", null);
 
-		return result;
+			return result;
+		} else {
+
+			books = this.bookService.findAllByCoupleId(principal.getId());
+
+			result.addObject("books", books);
+			result.addObject("couple", principal);
+
+			return result;
+		}
 	}
-
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -86,33 +94,31 @@ public class BookCoupleController extends AbstractController {
 		Customisation customisation;
 		Double vat;
 		boolean scored = false;
-		
+
 		customisation = this.customisationService.find();
-		vat = (customisation.getVatNumber())/100 + 1.0;
-		
+		vat = (customisation.getVatNumber()) / 100 + 1.0;
+
 		Double price = 0.0;
-		
+
 		book = this.bookService.findOne(bookId);
 		features = book.getFeatures();
-		
+
 		price += book.getExperience().getPrice();
-		for (Feature f : features) {
+		for (final Feature f : features)
 			price += f.getSupplement();
-		}
-		
-		if(book.getScore() != null){
+
+		if (book.getScore() != null)
 			scored = true;
-		}
-		
+
 		result = new ModelAndView("book/display");
 		result.addObject("book", book);
 		result.addObject("scored", scored);
-		result.addObject("totalPrice", price*vat);
-		result.addObject("features", book.getFeatures());		
-		
+		result.addObject("totalPrice", price * vat);
+		result.addObject("features", book.getFeatures());
+
 		return result;
 	}
-	
+
 	//Edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int bookId) {
@@ -128,7 +134,6 @@ public class BookCoupleController extends AbstractController {
 		return result;
 	}
 
-
 	//Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int experienceId) {
@@ -136,24 +141,23 @@ public class BookCoupleController extends AbstractController {
 		Experience experience;
 		Book book;
 		BookForm bookForm;
-		
+
 		experience = this.experienceService.findOne(experienceId);
-		try{
-			Assert.isTrue(experience.getCoupleLimit()>0);
-		}catch (final Throwable oops) {
+		try {
+			Assert.isTrue(experience.getCoupleLimit() > 0);
+		} catch (final Throwable oops) {
 			result = this.createModelAndView(experience, "book.no.places");
 			return result;
 		}
-		
+
 		book = this.bookService.create();
 		book.setExperience(experience);
-		
+
 		bookForm = this.bookService.construct(book);
 		result = this.createEditModelAndView(bookForm);
 
 		return result;
 	}
-
 
 	//Save de create
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
@@ -220,7 +224,7 @@ public class BookCoupleController extends AbstractController {
 		result.addObject("message", messageCode);
 		return result;
 	}
-	
+
 	protected ModelAndView createModelAndView(final Experience experience) {
 		ModelAndView result;
 		result = this.createModelAndView(experience, null);
@@ -235,14 +239,13 @@ public class BookCoupleController extends AbstractController {
 
 		comments = this.experienceCommentService.findByExperienceId(experience.getId());
 
-		try{
+		try {
 			user = this.userService.findByPrincipal();
-			if(user.getCouple() != null){
+			if (user.getCouple() != null)
 				hasCouple = true;
-			}
-		}catch (Exception e) {
+		} catch (final Exception e) {
 		}
-		
+
 		result = new ModelAndView("experience/display");
 
 		result.addObject("experience", experience);

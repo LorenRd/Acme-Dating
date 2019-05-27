@@ -1,12 +1,16 @@
+
 package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
@@ -18,6 +22,7 @@ import domain.Couple;
 import domain.CreditCard;
 import domain.Trophy;
 import domain.User;
+import domain.MessageBox;
 
 @Service
 @Transactional
@@ -26,14 +31,14 @@ public class AdministratorService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private AdministratorRepository administratorRepository;
+	private AdministratorRepository	administratorRepository;
 
 	// Supporting services-------------------------------------------
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private CreditCardService creditCardService;
+	private CreditCardService		creditCardService;
 
 	@Autowired
 	private TrophyService trophyService;
@@ -50,13 +55,16 @@ public class AdministratorService {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private MessageBoxService		messageBoxService;
+
+
 	public Administrator findByPrincipal() {
 		Administrator res;
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
-		res = this.administratorRepository.findByUserAccountId(userAccount
-				.getId());
+		res = this.administratorRepository.findByUserAccountId(userAccount.getId());
 		Assert.notNull(res);
 		return res;
 	}
@@ -74,16 +82,19 @@ public class AdministratorService {
 		UserAccount userAccount;
 		Authority authority;
 		CreditCard creditCard;
+		List<MessageBox> boxes;
 
 		result = new Administrator();
 		userAccount = new UserAccount();
 		authority = new Authority();
 		creditCard = this.creditCardService.create();
+		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		authority.setAuthority("ADMIN");
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
+		result.setMessageBoxes(boxes);
 
 		return result;
 
@@ -99,26 +110,19 @@ public class AdministratorService {
 
 		if (administrator.getId() == 0) {
 			CreditCard creditCard;
-			administrator.getUserAccount().setPassword(
-					passwordEncoder.encodePassword(administrator
-							.getUserAccount().getPassword(), null));
-			creditCard = this.creditCardService.saveNew(administrator
-					.getCreditCard());
+			administrator.getUserAccount().setPassword(passwordEncoder.encodePassword(administrator.getUserAccount().getPassword(), null));
+			creditCard = this.creditCardService.saveNew(administrator.getCreditCard());
 			administrator.setCreditCard(creditCard);
 			saved = this.administratorRepository.saveAndFlush(administrator);
 
 		} else {
 			logedUserAccount = LoginService.getPrincipal();
 			Assert.notNull(logedUserAccount, "administrator.notLogged");
-			Assert.isTrue(
-					logedUserAccount.equals(administrator.getUserAccount()),
-					"administrator.notEqual.userAccount");
+			Assert.isTrue(logedUserAccount.equals(administrator.getUserAccount()), "administrator.notEqual.userAccount");
 			saved = this.administratorRepository.findOne(administrator.getId());
 			Assert.notNull(saved, "administrator.not.null");
-			Assert.isTrue(saved.getUserAccount().getUsername()
-					.equals(administrator.getUserAccount().getUsername()));
-			Assert.isTrue(saved.getUserAccount().getPassword()
-					.equals(administrator.getUserAccount().getPassword()));
+			Assert.isTrue(saved.getUserAccount().getUsername().equals(administrator.getUserAccount().getUsername()));
+			Assert.isTrue(saved.getUserAccount().getPassword().equals(administrator.getUserAccount().getPassword()));
 			saved = this.administratorRepository.saveAndFlush(administrator);
 		}
 
