@@ -163,7 +163,7 @@
 	<bean class="domain.Administrator" id="administrator1">
 		<property name="name" value="Lorenzo" />
 		<property name="surname" value="Rondán Domínguez" />
-		<property name="photo" value="http://mifoto.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+34912123123" />
 		<property name="email" value="loren@" />
 		<property name="userAccount" ref="userAccount1" />
@@ -180,7 +180,7 @@
 	<bean class="domain.Administrator" id="administrator2">
 		<property name="name" value="Sergio" />
 		<property name="surname" value="Adebayors Amorebieta" />
-		<property name="photo" value="http://fotogyazo.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+34912126453" />
 		<property name="email" value="adebayors@" />
 		<property name="userAccount" ref="userAccount2" />
@@ -197,7 +197,7 @@
 	<bean class="domain.Administrator" id="administrator3">
 		<property name="name" value="Francisco" />
 		<property name="surname" value="Elena Fernández" />
-		<property name="photo" value="http://fotogyazo2.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+34912126464" />
 		<property name="email" value="fraelefer@" />
 		<property name="userAccount" ref="userAccount3" />
@@ -216,7 +216,7 @@
 	<bean class="domain.Company" id="company1">
 		<property name="name" value="Francisco" />
 		<property name="surname" value="Ferreras Villén" />
-		<property name="photo" value="http://www.fotolog.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="612123234" />
 		<property name="commercialName" value="commercialName1" />
 		<property name="email" value="fran@gmail.com" />
@@ -234,7 +234,7 @@
 	<bean class="domain.Company" id="company2">
 		<property name="name" value="Antonio" />
 		<property name="surname" value="Lucía del Toro" />
-		<property name="photo" value="http://www.mifoto.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+34678123456" />
 		<property name="commercialName" value="commercialName2" />
 		<property name="email" value="antonio@gmail.com" />
@@ -252,7 +252,7 @@
 	<bean class="domain.Company" id="company3">
 		<property name="name" value="Maria" />
 		<property name="surname" value="del Mar García" />
-		<property name="photo" value="http://www.tuenti.com" />
+		<property name="photo" value="https://i.imgur.com/P5h47Qc.png" />
 		<property name="phone" value="+33923680976" />
 		<property name="commercialName" value="commercialName3" />
 		<property name="email" value="maria@gmail.com" />
@@ -272,7 +272,7 @@
 	<bean class="domain.User" id="user1">
 		<property name="name" value="Maria" />
 		<property name="surname" value="González" />
-		<property name="photo" value="http://www.tuenti3.com" />
+		<property name="photo" value="https://i.imgur.com/P5h47Qc.png" />
 		<property name="phone" value="+33924580976" />
 		<property name="email" value="mariag@gmail.com" />
 		<property name="userAccount" ref="userAccount4" />
@@ -290,7 +290,7 @@
 	<bean class="domain.User" id="user2">
 		<property name="name" value="Antonia" />
 		<property name="surname" value="Perez Castellanos" />
-		<property name="photo" value="http://www.mifoto.com/perfil" />
+		<property name="photo" value="https://i.imgur.com/P5h47Qc.png" />
 		<property name="phone" value="+34678918234" />
 		<property name="email" value="antonia@gmail.com" />
 		<property name="userAccount" ref="userAccount5" />
@@ -308,7 +308,7 @@
 	<bean class="domain.User" id="user3">
 		<property name="name" value="Julia" />
 		<property name="surname" value="Galán Ortiz" />
-		<property name="photo" value="http://www.mifoto.com/perfil" />
+		<property name="photo" value="https://i.imgur.com/P5h47Qc.png" />
 		<property name="phone" value="+34678918234" />
 		<property name="email" value="julia@gmail.com" />
 		<property name="userAccount" ref="userAccount6" />
@@ -325,7 +325,7 @@
 	<bean class="domain.User" id="user4">
 		<property name="name" value="Pepe" />
 		<property name="surname" value="Domingo" />
-		<property name="photo" value="http://www.facebook.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+34923230976" />
 		<property name="email" value="pepe@gmail.com" />
 		<property name="userAccount" ref="userAccount7" />
@@ -337,12 +337,13 @@
 				<ref bean="messageBox30" />
 			</list>
 		</property>
+		<property name="couple" ref="couple2" />
 	</bean>
 
 	<bean class="domain.User" id="user5">
 		<property name="name" value="Jose" />
 		<property name="surname" value="Félix" />
-		<property name="photo" value="http://www.googlephotos.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+34923740510" />
 		<property name="email" value="josef@gmail.com" />
 		<property name="userAccount" ref="userAccount8" />
@@ -359,7 +360,7 @@
 	<bean class="domain.User" id="user6">
 		<property name="name" value="Juanfe" />
 		<property name="surname" value="Moreno" />
-		<property name="photo" value="http://www.googlephotos2.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+33923740510" />
 		<property name="email" value="juanfe@gmail.com" />
 		<property name="userAccount" ref="userAccount9" />
@@ -371,6 +372,7 @@
 				<ref bean="messageBox36" />
 			</list>
 		</property>
+		<property name="couple" ref="couple2" />
 	</bean>
 
 	<!-- Categories -->
@@ -539,7 +541,7 @@
 		<property name="CVV" value="543" />
 	</bean>
 
-	<!-- Couple -->
+	<!-- Couples -->
 
 	<bean class="domain.Couple" id="couple1">
 		<property name="startDate" value="2018/03/01 13:00" />
@@ -548,6 +550,15 @@
 			<list>
 				<ref bean="trophy1" />
 				<ref bean="trophy5" />
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.Couple" id="couple2">
+		<property name="startDate" value="2018/04/05 11:00" />
+		<property name="score" value="100" />
+		<property name="trophies">
+			<list>
 			</list>
 		</property>
 	</bean>
@@ -1051,24 +1062,24 @@
 	<!-- CoupleRequests -->
 
 	<bean class="domain.CoupleRequest" id="coupleRequest1">
-		<property name="moment" value="2018/12/01 22:30" />
-		<property name="status" value="PENDING" />
-		<property name="sender" ref="user4" />
-		<property name="recipient" ref="user3" />
-	</bean>
-
-	<bean class="domain.CoupleRequest" id="coupleRequest2">
 		<property name="moment" value="2018/11/11 11:11" />
 		<property name="status" value="PENDING" />
 		<property name="sender" ref="user5" />
 		<property name="recipient" ref="user3" />
 	</bean>
 
-	<bean class="domain.CoupleRequest" id="coupleRequest3">
+	<bean class="domain.CoupleRequest" id="coupleRequest2">
 		<property name="moment" value="2019/02/11 12:10" />
 		<property name="status" value="ACCEPTED" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
+	</bean>
+
+	<bean class="domain.CoupleRequest" id="coupleRequest3">
+		<property name="moment" value="2018/04/05 11:00" />
+		<property name="status" value="ACCEPTED" />
+		<property name="sender" ref="user6" />
+		<property name="recipient" ref="user4" />
 	</bean>
 
 	<!-- ExperienceComments -->
@@ -1107,7 +1118,6 @@
 	<bean class="domain.RecordComment" id="recordComment1">
 		<property name="body" value="body recordComment1" />
 		<property name="record" ref="record1" />
-		<property name="recordComment" ref="recordComment1" />
 	</bean>
 
 	<!-- Experiences -->

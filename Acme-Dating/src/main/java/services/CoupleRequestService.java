@@ -124,6 +124,18 @@ public class CoupleRequestService {
 			this.coupleRequestRepository.delete(nAR);
 	}
 
+	public void delete(final CoupleRequest cR) {
+		User principal;
+
+		Assert.notNull(cR);
+		Assert.isTrue(cR.getId() != 0);
+
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+
+		this.coupleRequestRepository.delete(cR);
+	}
+
 	public CoupleRequest findOne(final int cRId) {
 		CoupleRequest result;
 

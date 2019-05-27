@@ -23,15 +23,21 @@ public class ChallengeService {
 	// Managed Repository
 
 	@Autowired
-	private ChallengeRepository	challengeRepository;
+	private ChallengeRepository		challengeRepository;
 
 	// Supporting services
 
 	@Autowired
-	private UserService			userService;
+	private UserService				userService;
 
 	@Autowired
-	private Validator			validator;
+	private CoupleService			coupleService;
+
+	@Autowired
+	private CustomisationService	customisationService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	// Simple CRUD methods
@@ -78,11 +84,17 @@ public class ChallengeService {
 		Challenge result;
 		User principal;
 		Date moment;
+		Collection<String> spamWords;
 
 		Assert.notNull(c);
 
 		principal = this.userService.findByPrincipal();
 		Assert.isTrue(c.getSender().getId() == principal.getId());
+
+		spamWords = this.customisationService.find().getScoreWords();
+		for (final String spam : spamWords)
+			if (c.getDescription().toLowerCase().contains(spam.toLowerCase()) && c.getScore() < 100)
+				c.setScore(c.getScore() + 10);
 
 		moment = new Date(System.currentTimeMillis() - 1);
 		Assert.notNull(moment);
@@ -127,6 +139,7 @@ public class ChallengeService {
 
 	public void complete(final Challenge c) {
 		User principal;
+		Couple couple;
 
 		Assert.notNull(c);
 		Assert.isTrue(c.getId() != 0);
@@ -135,11 +148,25 @@ public class ChallengeService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(c.getStatus().equals("ACCEPTED"));
-		Assert.isTrue(principal.getId() == c.getRecipient().getId());
+		Assert.isTrue(principal.getId() == c.getSender().getId());
 
 		c.setStatus("COMPLETED");
+		couple = this.coupleService.findByUser();
+		couple.setScore(couple.getScore() + c.getScore());
 
 		this.challengeRepository.save(c);
+	}
+
+	public void delete(final Challenge challenge) {
+
+		User principal;
+
+		Assert.notNull(challenge);
+
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+
+		this.challengeRepository.delete(challenge);
 	}
 
 	public Challenge findOne(final int cRId) {

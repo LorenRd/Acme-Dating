@@ -76,16 +76,19 @@ public class AdministratorService {
 		UserAccount userAccount;
 		Authority authority;
 		CreditCard creditCard;
+		List<MessageBox> boxes;
 
 		result = new Administrator();
 		userAccount = new UserAccount();
 		authority = new Authority();
 		creditCard = this.creditCardService.create();
+		boxes = this.messageBoxService.createSystemBoxes(result);
 
 		authority.setAuthority("ADMIN");
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
+		result.setMessageBoxes(boxes);
 
 		return result;
 

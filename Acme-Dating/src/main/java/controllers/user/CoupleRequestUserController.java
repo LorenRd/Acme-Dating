@@ -132,7 +132,7 @@ public class CoupleRequestUserController extends AbstractController {
 			this.coupleRequestService.reject(coupleRequest);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:display.do");
+			result = new ModelAndView("redirect:display.do?coupleRequestId=" + coupleRequestId);
 		}
 		return result;
 

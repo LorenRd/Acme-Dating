@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CategoryService;
 import services.CoupleService;
+import services.RecordCommentService;
 import services.RecordService;
 import services.UserService;
 
@@ -24,6 +25,7 @@ import controllers.AbstractController;
 import domain.Category;
 import domain.Couple;
 import domain.Record;
+import domain.RecordComment;
 import domain.User;
 
 @Controller
@@ -41,6 +43,45 @@ public class RecordCoupleController extends AbstractController {
 
 	@Autowired
 	private CategoryService categoryService;
+
+	@Autowired
+	private RecordCommentService recordCommentService;
+
+	// Display
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int recordId) {
+		// Inicializa resultado
+		final ModelAndView result;
+		Record record;
+		Collection<RecordComment> comments;
+		User user;
+		boolean hasCouple = false;
+
+		// Busca en el repositorio
+		record = this.recordService.findOne(recordId);
+		Assert.notNull(record);
+
+		comments = this.recordCommentService.findByRecordId(recordId);
+
+		try {
+			user = this.userService.findByPrincipal();
+			if (user.getCouple() != null) {
+				hasCouple = true;
+			}
+		} catch (Exception e) {
+		}
+
+		// Crea y añade objetos a la vista
+		result = new ModelAndView("record/display");
+		result.addObject("requestURI", "record/couple/display.do");
+		result.addObject("record", record);
+		result.addObject("hasCouple", hasCouple);
+		result.addObject("comments", comments);
+
+		// Envía la vista
+		return result;
+	}
 
 	// List
 

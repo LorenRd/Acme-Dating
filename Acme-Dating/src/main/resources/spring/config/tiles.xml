@@ -23,6 +23,7 @@
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/task/tiles.xml</value>
 		<value>/views/record/tiles.xml</value>
+		<value>/views/recordComment/tiles.xml</value>
 		<value>/views/experience/tiles.xml</value>
 		<value>/views/experienceComment/tiles.xml</value>
 		<value>/views/feature/tiles.xml</value>
@@ -32,6 +33,7 @@
 		<value>/views/message/tiles.xml</value>
 		<value>/views/messageBox/tiles.xml</value>
 		<value>/views/coupleRequest/tiles.xml</value>
+		<value>/views/challenge/tiles.xml</value>
 		<value>/views/socialNetwork/tiles.xml</value>
 		<value>/views/user/tiles.xml</value>
 	</util:list>

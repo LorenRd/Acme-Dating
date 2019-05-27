@@ -61,11 +61,12 @@
 		<security:intercept-url pattern="/company/delete.do" access="hasRole('COMPANY')" />
 
 		<security:intercept-url pattern="/couple/display.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/couple/delete.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/experience/display.do" access="permitAll"/>
 		<security:intercept-url pattern="/experience/list.do" access="permitAll"/>
-		<security:intercept-url pattern="/experienceComment/create.do" access="hasAnyRole('COMPANY','USER')"/>
-		<security:intercept-url pattern="/experienceComment/createReply.do" access="hasAnyRole('COMPANY','USER')"/>
+		<security:intercept-url pattern="/experienceComment/create.do" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/experienceComment/createReply.do" access="isAuthenticated()"/>
 		
 		<security:intercept-url pattern="/experience/listCompanyId.do" access="permitAll"/>		
 		<security:intercept-url pattern="/experience/company/list.do" access="hasRole('COMPANY')"/>
@@ -99,17 +100,29 @@
 		<security:intercept-url pattern="/coupleRequest/user/reject.do" access="hasRole('USER')" />
 		 
 	
+		<security:intercept-url pattern="/challenge/user/list.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/challenge/user/display.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/challenge/user/create.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/challenge/user/accept.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/challenge/user/reject.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/challenge/user/complete.do" access="hasRole('USER')" />
+		
 		<security:intercept-url pattern="/task/couple/list.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/task/couple/create.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/task/couple/edit.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/task/couple/delete.do" access="hasRole('USER')"/>		
 		<security:intercept-url pattern="/task/couple/cancel.do" access="hasRole('USER')"/>	
+		<security:intercept-url pattern="/task/couple/changeStatus.do" access="hasRole('USER')"/>	
 		
 		<security:intercept-url pattern="/record/couple/list.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/record/couple/display.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/record/couple/create.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/record/couple/edit.do" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/record/couple/delete.do" access="hasRole('USER')"/>		
 		<security:intercept-url pattern="/record/couple/cancel.do" access="hasRole('USER')"/>	
+	
+		<security:intercept-url pattern="/recordComment/create.do" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/recordComment/createReply.do" access="hasRole('USER')"/>
 	
 		<security:intercept-url pattern="/socialNetwork/edit.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/socialNetwork/create.do" access="hasRole('USER')" />

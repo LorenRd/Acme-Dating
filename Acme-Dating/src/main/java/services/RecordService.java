@@ -1,7 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +34,7 @@ public class RecordService {
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private RecordCommentService	recordCommentService;
-
-	@Autowired
-	private CoupleService			coupleService;
+	private CoupleService coupleService;
 
 	@Autowired
 	private Validator				validator;
@@ -90,9 +90,17 @@ public class RecordService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(record.getCouple().getId() == principal.getId());
-
-		for (final RecordComment rC : recordComments)
-			this.recordCommentService.delete(rC);
+		
+		for (RecordComment rC : recordComments) {
+			if(rC.getRecord()!=null){
+				Collection<RecordComment> childs = new ArrayList<RecordComment>();
+				childs = this.recordCommentRepository.findChilds(rC.getId());
+				for (RecordComment rCC : childs) {
+					this.recordCommentRepository.delete(rCC);
+				}
+				this.recordCommentRepository.delete(rC);
+			}
+		}
 		this.recordRepository.delete(record);
 	}
 
@@ -107,6 +115,12 @@ public class RecordService {
 
 	public Record reconstruct(final Record record, final BindingResult binding) {
 		Record result;
+		Date dt = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(dt);
+		c.add(Calendar.DATE, 1);
+		
+		
 		if (record.getId() == 0) {
 			result = record;
 			result.setCouple(this.coupleService.findByUser());
@@ -128,7 +142,6 @@ public class RecordService {
 			if (!(record.getCategory() == null))
 				result.setCategory(record.getCategory());
 		}
-
 		this.validator.validate(result, binding);
 
 		return result;
