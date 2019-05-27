@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -88,9 +89,16 @@ public class RecordService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(record.getCouple().getId() == principal.getId());
-
-		for (final RecordComment rC : recordComments) {
-			this.recordCommentRepository.delete(rC);
+		
+		for (RecordComment rC : recordComments) {
+			if(rC.getRecord()!=null){
+				Collection<RecordComment> childs = new ArrayList<RecordComment>();
+				childs = this.recordCommentRepository.findChilds(rC.getId());
+				for (RecordComment rCC : childs) {
+					this.recordCommentRepository.delete(rCC);
+				}
+				this.recordCommentRepository.delete(rC);
+			}
 		}
 		this.recordRepository.delete(record);
 	}

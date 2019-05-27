@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import repositories.ExperienceRepository;
 import domain.Book;
 import domain.Company;
 import domain.Experience;
+import domain.ExperienceComment;
 import domain.Feature;
 
 @Service
@@ -33,6 +35,9 @@ public class ExperienceService {
 	
 	@Autowired
 	private FeatureService		featureService;
+	
+	@Autowired
+	private ExperienceCommentService		experienceCommentService;
 	
 	@Autowired
 	private Validator validator;
@@ -92,6 +97,7 @@ public class ExperienceService {
 		Company principal;
 		Collection<Book> books;
 		Collection<Feature> features;
+		Collection<ExperienceComment> experienceComments;
 		Assert.notNull(experience);
 
 		principal = this.companyService.findByPrincipal();
@@ -108,6 +114,19 @@ public class ExperienceService {
 		
 		for (Feature f : features) {
 			this.featureService.delete(f);
+		}
+		
+		experienceComments = this.experienceCommentService.findByExperienceId(experience.getId());
+		
+		for (ExperienceComment eC : experienceComments) {
+			if(eC.getExperience()!=null){
+				Collection<ExperienceComment> childs = new ArrayList<ExperienceComment>();
+				childs = this.experienceCommentService.findChilds(eC.getId());
+				for (ExperienceComment eCC : childs) {
+					this.experienceCommentService.delete(eCC);
+				}
+				this.experienceCommentService.delete(eC);
+			}
 		}
 
 		this.experienceRepository.delete(experience);

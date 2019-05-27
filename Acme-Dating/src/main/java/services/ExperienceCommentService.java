@@ -78,6 +78,13 @@ public class ExperienceCommentService {
 		return result;
 	}
 
+	public Collection<ExperienceComment> findChilds(final int experienceCommentFatherId) {
+		Collection<ExperienceComment> result;
+
+		result = this.experienceCommentRepository.findChilds(experienceCommentFatherId);
+
+		return result;
+	}
 	public ExperienceComment save(final ExperienceComment experienceComment) {
 		ExperienceComment result;
 
@@ -105,6 +112,10 @@ public class ExperienceCommentService {
 		return result;
 	}
 
+
+	public void delete(ExperienceComment experienceComment) {
+		this.experienceCommentRepository.delete(experienceComment);
+	}
 	// Business Methods
 
 	public Collection<ExperienceComment> findByExperienceId(
