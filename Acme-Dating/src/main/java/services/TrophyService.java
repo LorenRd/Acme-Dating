@@ -91,35 +91,22 @@ public class TrophyService {
 		} else {
 			result = this.trophyRepository.findOne(trophy.getId());
 		}
-		if (!trophy.getTitle().equals("")) {
-			result.setTitle(trophy.getTitle());
+		result.setTitle(trophy.getTitle());
+		result.setPicture(trophy.getPicture());
+		result.setScoreToReach(trophy.getScoreToReach());
+		result.setChallengesToComplete(trophy.getChallengesToComplete());
+		result.setExperiencesToShare(trophy.getExperiencesToShare());
+
+		
+		
+		if ((trophy.getScoreToReach() < 1)) {
+			binding.rejectValue("scoreToReach", "trophy.validation.scoreToReach", "Score to reach must be a positive number");
 		}
-		if (!trophy.getPicture().equals("")) {
-			result.setPicture(trophy.getPicture());
+		if ((trophy.getChallengesToComplete() < 1)) {
+			binding.rejectValue("challengesToComplete", "trophy.validation.challengesToComplete", "Challenges to complete must be a positive number");
 		}
-		if (!(trophy.getScoreToReach() == null)
-				&& !(trophy.getScoreToReach() < 0)) {
-			result.setScoreToReach(trophy.getScoreToReach());
-		} else {
-			binding.rejectValue("scoreToReach",
-					"trophy.validation.scoreToReach",
-					"Score to reach must be a positive number");
-		}
-		if (!(trophy.getChallengesToComplete() == null)
-				&& !(trophy.getChallengesToComplete() < 0)) {
-			result.setChallengesToComplete(trophy.getChallengesToComplete());
-		} else {
-			binding.rejectValue("challengesToComplete",
-					"trophy.validation.challengesToComplete",
-					"Challenges to complete must be a positive number");
-		}
-		if (!(trophy.getExperiencesToShare() == null)
-				&& !(trophy.getExperiencesToShare() < 0)) {
-			result.setExperiencesToShare(trophy.getExperiencesToShare());
-		} else {
-			binding.rejectValue("experiencesToShare",
-					"trophy.validation.experiencesToShare",
-					"Experiences to share must be a positive number");
+		if ((trophy.getExperiencesToShare() < 1)) {
+			binding.rejectValue("experiencesToShare","trophy.validation.experiencesToShare", "Experiences to share must be a positive number");
 		}
 		this.validator.validate(result, binding);
 

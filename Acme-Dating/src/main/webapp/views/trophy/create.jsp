@@ -32,19 +32,20 @@
 	<acme:textbox code="trophy.picture" path="picture"
 		placeholder="http://www.picture.com" />
 	<br />
+	
+	<spring:message code="trophy.scoreToReach" />: <form:input type="number" path="scoreToReach" min="1"/>
+	<form:errors cssClass="error" path="scoreToReach" />	
+	<br /><br />
+	
+	<spring:message code="trophy.challengesToComplete" />: <form:input type="number" path="challengesToComplete" min="1"/>
+	<form:errors cssClass="error" path="challengesToComplete" />	
+	<br /><br />
+	
 
-	<acme:textbox code="trophy.scoreToReach" path="scoreToReach"
-		placeholder="0" />
-	<br />
-
-	<acme:textbox code="trophy.challengesToComplete"
-		path="challengesToComplete" placeholder="0" />
-	<br />
-
-	<acme:textbox code="trophy.experiencesToShare"
-		path="experiencesToShare" placeholder="0" />
-	<br />
-
+	<spring:message code="trophy.experiencesToShare" />: <form:input type="number" path="experiencesToShare" min="1"/>
+	<form:errors cssClass="error" path="experiencesToShare" />	
+	<br /><br />
+	
 	<acme:submit name="save" code="trophy.save" />
 
 	<acme:cancel url="welcome/index.do" code="trophy.cancel" />
