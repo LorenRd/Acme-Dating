@@ -144,8 +144,7 @@ public class RecordCoupleController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("record") Record record,
-			final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("record") Record record, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
@@ -168,8 +167,7 @@ public class RecordCoupleController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView create(@ModelAttribute("record") Record record,
-			final BindingResult binding) {
+	public ModelAndView create(@ModelAttribute("record") Record record, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
@@ -186,7 +184,7 @@ public class RecordCoupleController extends AbstractController {
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(record, "record.commit.error");
+			result = this.createModelAndView(record, "record.commit.error");
 		}
 		return result;
 	}
@@ -229,26 +227,16 @@ public class RecordCoupleController extends AbstractController {
 			result.addObject("couple", null);
 			return result;
 		} else {
-			Collection<Record> records;
-			records = new ArrayList<Record>();
-
 			final Couple couple = this.coupleService.findByUser();
-			records = this.recordService.findByCoupleId(couple.getId());
 
-			if (!records.contains(record)) {
-				result = new ModelAndView("redirect:/welcome/index.do");
-				return result;
-			} else {
+			Collection<Category> categories = this.categoryService.findAll();
 
-				Collection<Category> categories = this.categoryService
-						.findAll();
-
-				result.addObject("record", record);
-				result.addObject("couple", couple);
-				result.addObject("categories", categories);
-				result.addObject("message", messageCode);
-				return result;
-			}
+			result.addObject("record", record);
+			result.addObject("couple", couple);
+			result.addObject("categories", categories);
+			result.addObject("message", messageCode);
+			return result;
+			
 		}
 	}
 
