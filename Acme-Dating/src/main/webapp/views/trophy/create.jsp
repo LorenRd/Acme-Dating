@@ -33,16 +33,16 @@
 		placeholder="http://www.picture.com" />
 	<br />
 	
-	<spring:message code="trophy.scoreToReach" />: <form:input type="number" path="scoreToReach" min="1"/>
+	<spring:message code="trophy.scoreToReach" />: <form:input type="number" path="scoreToReach" min="0"/>
 	<form:errors cssClass="error" path="scoreToReach" />	
 	<br /><br />
 	
-	<spring:message code="trophy.challengesToComplete" />: <form:input type="number" path="challengesToComplete" min="1"/>
+	<spring:message code="trophy.challengesToComplete" />: <form:input type="number" path="challengesToComplete" min="0"/>
 	<form:errors cssClass="error" path="challengesToComplete" />	
 	<br /><br />
 	
 
-	<spring:message code="trophy.experiencesToShare" />: <form:input type="number" path="experiencesToShare" min="1"/>
+	<spring:message code="trophy.experiencesToShare" />: <form:input type="number" path="experiencesToShare" min="0"/>
 	<form:errors cssClass="error" path="experiencesToShare" />	
 	<br /><br />
 	

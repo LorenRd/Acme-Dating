@@ -99,13 +99,13 @@ public class TrophyService {
 
 		
 		
-		if ((trophy.getScoreToReach() < 1)) {
+		if ((trophy.getScoreToReach() < 0)) {
 			binding.rejectValue("scoreToReach", "trophy.validation.scoreToReach", "Score to reach must be a positive number");
 		}
-		if ((trophy.getChallengesToComplete() < 1)) {
+		if ((trophy.getChallengesToComplete() < 0)) {
 			binding.rejectValue("challengesToComplete", "trophy.validation.challengesToComplete", "Challenges to complete must be a positive number");
 		}
-		if ((trophy.getExperiencesToShare() < 1)) {
+		if ((trophy.getExperiencesToShare() < 0)) {
 			binding.rejectValue("experiencesToShare","trophy.validation.experiencesToShare", "Experiences to share must be a positive number");
 		}
 		this.validator.validate(result, binding);
