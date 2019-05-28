@@ -230,10 +230,11 @@ public class ChallengeService {
 		result.setScore(c.getScore());
 		result.setTitle(c.getTitle());
 		
-		if (c.getEndDate().before(dt)) {
-			binding.rejectValue("endDate", "challenge.validation.endDate", "End date must be future");
+		if(c.getEndDate()!=null){
+			if (c.getEndDate().before(dt)) {
+				binding.rejectValue("endDate", "challenge.validation.endDate", "End date must be future");
+			}
 		}
-
 		this.validator.validate(result, binding);
 
 		return result;
