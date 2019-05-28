@@ -122,25 +122,21 @@ public class RecordService {
 
 		if (record.getId() == 0) {
 			result = record;
-			result.setCouple(this.coupleService.findByUser());
-			result.setCategory(record.getCategory());
 		} else {
 			result = this.recordRepository.findOne(record.getId());
-
-			if (!(record.getDay() == null))
-				result.setDay(record.getDay());
-
-			if (!record.getTitle().equals(""))
-				result.setTitle(record.getTitle());
-
-			if (!record.getBody().equals(""))
-				result.setBody(record.getBody());
-
-			result.setPhoto(record.getPhoto());
-
-			if (!(record.getCategory() == null))
-				result.setCategory(record.getCategory());
 		}
+		result.setCouple(this.coupleService.findByUser());
+		result.setDay(record.getDay());
+		result.setTitle(record.getTitle());
+		result.setBody(record.getBody());
+		result.setPhoto(record.getPhoto());
+		result.setCategory(record.getCategory());
+		
+		if (record.getDay().after(dt)) {
+			binding.rejectValue("day", "record.validation.day", "Date must be past");
+		}
+		
+		
 		this.validator.validate(result, binding);
 
 		return result;

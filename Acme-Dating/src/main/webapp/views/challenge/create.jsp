@@ -20,12 +20,11 @@
 		<form:hidden path="sender"/>
 		<form:hidden path="recipient"/>
 		
-		
 		<acme:textbox code="challenge.title" path="title" placeholder="Title"/>
 		<br />
 		<acme:textarea code="challenge.description" path="description"/>
 		<br />		
-		<spring:message code="challenge.endDate"/> <form:input path="endDate" type="text" id="datepicker"/><form:errors cssClass="error" path="endDate" />		
+		<spring:message code="challenge.endDate"/> <form:input path="endDate" type="text" id="idFechaAltaConv" class="form-control input-sm datepicker " /><form:errors cssClass="error" path="endDate" />		
 		<br /><br />
 		
 		
@@ -34,7 +33,10 @@
 		<acme:cancel url="welcome/index.do" code="challenge.cancel"/>
 	</form:form>
   <script>
-  $( function() {
-    $( "#datepicker" ).datetimepicker({ dateFormat: 'dd/mm/yy' });
-  } );
+  $(function(){
+	  $(".datepicker").datetimepicker({
+	    format: "d/m/Y H:m"
+	  });
+	  $.datetimepicker.setLocale('es');
+	})
   </script>

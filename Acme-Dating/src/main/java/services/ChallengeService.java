@@ -214,6 +214,8 @@ public class ChallengeService {
 
 	public Challenge reconstruct(final Challenge c, final BindingResult binding) {
 		Challenge result;
+		Date dt = new Date();
+		
 		if (c.getId() == 0)
 			result = c;
 		else
@@ -227,6 +229,10 @@ public class ChallengeService {
 		result.setEndDate(c.getEndDate());
 		result.setScore(c.getScore());
 		result.setTitle(c.getTitle());
+		
+		if (c.getEndDate().before(dt)) {
+			binding.rejectValue("endDate", "challenge.validation.endDate", "End date must be future");
+		}
 
 		this.validator.validate(result, binding);
 

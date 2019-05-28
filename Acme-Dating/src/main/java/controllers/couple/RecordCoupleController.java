@@ -151,7 +151,7 @@ public class RecordCoupleController extends AbstractController {
 		try {
 			record = this.recordService.reconstruct(record, binding);
 			if (binding.hasErrors()) {
-				result = this.createModelAndView(record);
+				result = this.createEditModelAndView(record);
 				for (final ObjectError e : binding.getAllErrors())
 					System.out.println(e.getObjectName() + " error ["
 							+ e.getDefaultMessage() + "] "
@@ -162,7 +162,7 @@ public class RecordCoupleController extends AbstractController {
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createModelAndView(record, "record.commit.error");
+			result = this.createEditModelAndView(record, "record.commit.error");
 		}
 		return result;
 	}
@@ -219,8 +219,7 @@ public class RecordCoupleController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Record record,
-			final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Record record, final String messageCode) {
 		ModelAndView result;
 		result = new ModelAndView("record/edit");
 
