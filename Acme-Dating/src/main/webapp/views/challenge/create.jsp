@@ -25,11 +25,16 @@
 		<br />
 		<acme:textarea code="challenge.description" path="description"/>
 		<br />		
-		<acme:textbox code="challenge.endDate" path="endDate" placeholder="dd/MM/yyyy HH:mm" />
-		<br />
+		<spring:message code="challenge.endDate"/> <form:input path="endDate" type="text" id="datepicker"/><form:errors cssClass="error" path="endDate" />		
+		<br /><br />
 		
 		
 		<acme:submit name="save" code="challenge.save"/>
 		
 		<acme:cancel url="welcome/index.do" code="challenge.cancel"/>
 	</form:form>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datetimepicker({ dateFormat: 'dd/mm/yy' });
+  } );
+  </script>
