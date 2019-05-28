@@ -27,7 +27,9 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/administrator/register.do"><spring:message code="master.page.administrator.register"/></a></li>
 					<li><a href="customisation/administrator/display.do"><spring:message code="master.page.administrator.customisation" /></a></li>	
-					<li><a href="dashboard/administrator/display.do"><spring:message code="master.page.administrator.dashboard" /></a></li>						
+					<li><a href="dashboard/administrator/display.do"><spring:message code="master.page.administrator.dashboard" /></a></li>		
+					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.categories" /></a></li>
+					<li><a href="trophy/administrator/list.do"><spring:message code="master.page.administrator.trophies" /></a></li>					
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>

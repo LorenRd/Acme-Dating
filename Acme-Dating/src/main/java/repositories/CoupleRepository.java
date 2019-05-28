@@ -15,4 +15,7 @@ public interface CoupleRepository extends JpaRepository<Couple, Integer> {
 	@Query("select u from User u where u.couple.id = ?1")
 	Collection<User> findUsersOfACouple(int coupleId);
 
+	@Query("select distinct c from Couple c join c.trophies t where t.id = ?1")
+	Collection<Couple> findByTrophyId(int trophyId);
+	
 }

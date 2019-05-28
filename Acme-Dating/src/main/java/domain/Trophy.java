@@ -25,6 +25,7 @@ public class Trophy extends DomainEntity {
 		this.title = title;
 	}
 
+	@NotBlank
 	@URL
 	public String getPicture() {
 		return this.picture;
@@ -34,6 +35,10 @@ public class Trophy extends DomainEntity {
 		this.picture = picture;
 	}
 
+	// @NotNull
+	// @NotBlank
+	// @Range(min = 0)
+	// @Pattern(regexp = "[\\s]*[0-9]*[1-9]+", message = ">0   -.-")
 	public int getScoreToReach() {
 		return scoreToReach;
 	}

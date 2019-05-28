@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -12,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ExperienceRepository;
+import security.Authority;
+import domain.Actor;
 import domain.Book;
 import domain.Company;
 import domain.Experience;
@@ -24,25 +25,25 @@ public class ExperienceService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ExperienceRepository		experienceRepository;
+	private ExperienceRepository experienceRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private CompanyService				companyService;
+	private CompanyService companyService;
 
 	@Autowired
-	private BookService					bookService;
+	private BookService bookService;
 
 	@Autowired
-	private FeatureService				featureService;
+	private FeatureService featureService;
 
 	@Autowired
 	private ExperienceCommentService	experienceCommentService;
+	private Validator validator;
 
 	@Autowired
-	private Validator					validator;
-
+	private ActorService actorService;
 
 	// Simple CRUD Methods
 
@@ -139,18 +140,22 @@ public class ExperienceService {
 	}
 
 	public Collection<Experience> findByKeywordAll(final String keyword) {
-		final Collection<Experience> result = this.experienceRepository.findByKeyword(keyword);
+		final Collection<Experience> result = this.experienceRepository
+				.findByKeyword(keyword);
 
 		return result;
 	}
 
-	public Collection<Experience> findByKeywordCompany(final String keyword, final int companyId) {
-		final Collection<Experience> result = this.experienceRepository.findByKeywordCompany(keyword, companyId);
+	public Collection<Experience> findByKeywordCompany(final String keyword,
+			final int companyId) {
+		final Collection<Experience> result = this.experienceRepository
+				.findByKeywordCompany(keyword, companyId);
 
 		return result;
 	}
 
-	public Experience reconstruct(final Experience experience, final BindingResult binding) {
+	public Experience reconstruct(final Experience experience,
+			final BindingResult binding) {
 		Experience original;
 		if (experience.getId() == 0) {
 			original = experience;
@@ -165,6 +170,7 @@ public class ExperienceService {
 
 		return experience;
 	}
+
 	public void flush() {
 		this.experienceRepository.flush();
 	}
@@ -176,6 +182,76 @@ public class ExperienceService {
 		places = experience.getCoupleLimit();
 		places = places - 1;
 		experience.setCoupleLimit(places);
+	}
+
+	public Double avgExperiencesPerCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.experienceRepository.avgExperiencesPerCompany();
+
+		return result;
+	}
+
+	public Double minExperiencesPerCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.experienceRepository.minExperiencesPerCompany();
+
+		return result;
+	}
+
+	public Double maxExperiencesPerCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.experienceRepository.maxExperiencesPerCompany();
+
+		return result;
+	}
+
+	public Double stddevExperiencesPerCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.experienceRepository.stddevExperiencesPerCompany();
+
+		return result;
+	}
+
+	public Double avgPriceOfExperiencesPerCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.experienceRepository.avgPriceOfExperiencesPerCompany();
+
+		return result;
 	}
 
 	public void deleteInBach(final Collection<Experience> experiences) {

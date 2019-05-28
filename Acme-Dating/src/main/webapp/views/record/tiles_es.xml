@@ -27,12 +27,12 @@
 	</definition>
 	
 	<definition name="record/create" extends="master.page">
-		<put-attribute name="title" value="Crear una entrada nueva" />
+		<put-attribute name="title" value="Crear entrada" />
 		<put-attribute name="body" value="/views/record/create.jsp" />
 	</definition>
 
 	<definition name="record/edit" extends="master.page">
-		<put-attribute name="title" value="Editar la entrada" />
+		<put-attribute name="title" value="Editar entrada" />
 		<put-attribute name="body" value="/views/record/edit.jsp" />
 	</definition>
 	

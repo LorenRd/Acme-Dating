@@ -23,7 +23,12 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
 import domain.Administrator;
+import domain.Book;
+import domain.Challenge;
+import domain.Couple;
 import domain.CreditCard;
+import domain.Trophy;
+import domain.User;
 import domain.Message;
 import domain.MessageBox;
 import forms.AdministratorForm;
@@ -49,6 +54,21 @@ public class AdministratorService {
 
 	@Autowired
 	private CreditCardService		creditCardService;
+
+	@Autowired
+	private TrophyService trophyService;
+
+	@Autowired
+	private CoupleService coupleService;
+
+	@Autowired
+	private BookService bookService;
+
+	@Autowired
+	private ChallengeService challengeService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private MessageService			messageService;
@@ -150,6 +170,28 @@ public class AdministratorService {
 
 	public void flush() {
 		this.administratorRepository.flush();
+	}
+
+	public void computeTrophies(){
+		Collection<Trophy> trophies = this.trophyService.findAll();
+		Collection<Couple> couples = this.coupleService.findAll();
+		
+		for(Couple c : couples){
+			Collection<Trophy> reachedTrophies = new ArrayList<Trophy>();
+			Collection<Book> books = this.bookService.findAllByCoupleId(c.getId());
+			Collection<User> users = this.userService.findByCoupleId(c.getId());
+			int numberOfCompletedChallenges = 0;
+			for(User u : users){
+				Collection<Challenge> challenges = this.challengeService.findAllCompletedBySenderId(u.getId());
+				numberOfCompletedChallenges += challenges.size();
+			}
+			for(Trophy t : trophies){
+				if(((c.getScore() >= t.getScoreToReach())&& t.getScoreToReach()>0) || ((books.size() >= t.getExperiencesToShare())&& t.getExperiencesToShare()>0) || ((numberOfCompletedChallenges >= t.getChallengesToComplete())&& t.getChallengesToComplete()> 0) ){
+					reachedTrophies.add(t);
+				}
+			}
+			c.setTrophies(reachedTrophies);
+		}
 	}
 
 	public AdministratorForm construct(final Administrator administrator) {

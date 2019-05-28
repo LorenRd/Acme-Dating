@@ -17,11 +17,13 @@
 		<value>/views/security/tiles.xml</value>
 		<value>/views/welcome/tiles.xml</value>
 		<value>/views/company/tiles.xml</value>
+		<value>/views/category/tiles.xml</value>
 		<value>/views/couple/tiles.xml</value>	
 		<value>/views/customisation/tiles.xml</value>	
 
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/task/tiles.xml</value>
+		<value>/views/trophy/tiles.xml</value>
 		<value>/views/record/tiles.xml</value>
 		<value>/views/recordComment/tiles.xml</value>
 		<value>/views/experience/tiles.xml</value>
