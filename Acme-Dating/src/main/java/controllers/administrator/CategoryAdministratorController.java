@@ -135,8 +135,7 @@ public class CategoryAdministratorController extends AbstractController {
 			this.categoryService.delete(category);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(category,
-					"category.commit.error");
+			result = this.createListModelAndView(category, "category.isInUse");
 		}
 		return result;
 	}
@@ -177,4 +176,26 @@ public class CategoryAdministratorController extends AbstractController {
 		result.addObject("message", messageCode);
 		return result;
 	}
+
+	protected ModelAndView createListModelAndView(final Category category) {
+		ModelAndView result;
+
+		result = this.createListModelAndView(category, null);
+
+		return result;
+	}
+
+	protected ModelAndView createListModelAndView(final Category category,
+			final String messageCode) {
+		ModelAndView result;
+		result = new ModelAndView("category/list");
+
+		Collection<Category> categories = this.categoryService.findAll();
+
+		result.addObject("categories", categories);
+		result.addObject("category", category);
+		result.addObject("message", messageCode);
+		return result;
+	}
+
 }
