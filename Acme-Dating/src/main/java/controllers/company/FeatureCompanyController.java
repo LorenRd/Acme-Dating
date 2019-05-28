@@ -1,4 +1,3 @@
-
 package controllers.company;
 
 import java.util.ArrayList;
@@ -28,15 +27,15 @@ import domain.Feature;
 public class FeatureCompanyController {
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private FeatureService	featureService;
+	private FeatureService featureService;
 
 	@Autowired
 	private CustomisationService customisationService;
 
-	//List
+	// List
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -65,7 +64,8 @@ public class FeatureCompanyController {
 		Customisation customisation;
 		Double vat;
 		customisation = this.customisationService.find();
-		vat = (customisation.getVatNumber())/100 + 1.0;
+		vat = (customisation.getVatNumber()) / 100 + 1.0;
+
 		// Busca en el repositorio
 		feature = this.featureService.findOne(featureId);
 		Assert.notNull(feature);
@@ -80,7 +80,7 @@ public class FeatureCompanyController {
 		return result;
 	}
 
-	//Create
+	// Create
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -110,7 +110,7 @@ public class FeatureCompanyController {
 		return result;
 	}
 
-	//Edit
+	// Edit
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int featureId) {
@@ -124,10 +124,11 @@ public class FeatureCompanyController {
 		return result;
 	}
 
-	//Save Final --- CREATE
+	// Save Final --- CREATE
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "saveFinal")
-	public ModelAndView createFinal(@ModelAttribute("feature") Feature feature, final BindingResult binding) {
+	public ModelAndView createFinal(@ModelAttribute("feature") Feature feature,
+			final BindingResult binding) {
 		ModelAndView result;
 
 		try {
@@ -135,7 +136,9 @@ public class FeatureCompanyController {
 			if (binding.hasErrors()) {
 				result = this.createModelAndView(feature);
 				for (final ObjectError e : binding.getAllErrors())
-					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+					System.out.println(e.getObjectName() + " error ["
+							+ e.getDefaultMessage() + "] "
+							+ Arrays.toString(e.getCodes()));
 			} else {
 				feature = this.featureService.save(feature);
 				result = new ModelAndView("redirect:/welcome/index.do");
@@ -150,7 +153,8 @@ public class FeatureCompanyController {
 	// Save Final --- Edit
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveFinal")
-	public ModelAndView saveFinal(@ModelAttribute("feature") Feature feature, final BindingResult binding) {
+	public ModelAndView saveFinal(@ModelAttribute("feature") Feature feature,
+			final BindingResult binding) {
 		ModelAndView result;
 
 		try {
@@ -179,7 +183,8 @@ public class FeatureCompanyController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Feature feature, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Feature feature,
+			final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("feature/edit");
@@ -190,7 +195,8 @@ public class FeatureCompanyController {
 		return result;
 	}
 
-	protected ModelAndView displayModelAndView(final Feature feature, final String messageCode) {
+	protected ModelAndView displayModelAndView(final Feature feature,
+			final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("feature/display");
@@ -207,7 +213,8 @@ public class FeatureCompanyController {
 		return result;
 	}
 
-	private ModelAndView createModelAndView(final Feature feature, final String messageCode) {
+	private ModelAndView createModelAndView(final Feature feature,
+			final String messageCode) {
 		ModelAndView result;
 		result = new ModelAndView("feature/create");
 		result.addObject("feature", feature);
@@ -222,7 +229,8 @@ public class FeatureCompanyController {
 		return result;
 	}
 
-	private ModelAndView editModelAndView(final Feature feature, final String messageCode) {
+	private ModelAndView editModelAndView(final Feature feature,
+			final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("feature/edit");

@@ -1,4 +1,3 @@
-
 package controllers.any;
 
 import java.util.ArrayList;
@@ -13,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CompanyService;
+import services.CustomisationService;
 import services.ExperienceCommentService;
 import services.ExperienceService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Customisation;
 import domain.Experience;
 import domain.ExperienceComment;
 import domain.User;
@@ -26,20 +27,26 @@ import domain.User;
 public class ExperienceController extends AbstractController {
 
 	@Autowired
-	private ExperienceService			experienceService;
+	private ExperienceService experienceService;
 
 	@Autowired
-	private ExperienceCommentService	experienceCommentService;
+	private ExperienceCommentService experienceCommentService;
 
 	@Autowired
-	private UserService					userService;
-	
+	private UserService userService;
+
 	@Autowired
-	private CompanyService	companyService;
-	//List
+	private CompanyService companyService;
+
+	@Autowired
+	private CustomisationService customisationService;
+
+	// List
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final String keyword, @RequestParam(required = false, defaultValue = "false") final Boolean keywordBool) {
+	public ModelAndView list(
+			@RequestParam(required = false) final String keyword,
+			@RequestParam(required = false, defaultValue = "false") final Boolean keywordBool) {
 		final ModelAndView result;
 		Collection<Experience> experiences;
 		experiences = new ArrayList<Experience>();
@@ -66,19 +73,24 @@ public class ExperienceController extends AbstractController {
 		Collection<ExperienceComment> comments;
 		User user;
 		boolean hasCouple = false;
-		
+		Customisation customisation;
+		Double vat;
+		customisation = this.customisationService.find();
+		vat = (customisation.getVatNumber()) / 100 + 1.0;
+
 		// Busca en el repositorio
 		experience = this.experienceService.findOne(experienceId);
 		Assert.notNull(experience);
 
-		comments = this.experienceCommentService.findByExperienceId(experienceId);
-		
-		try{
+		comments = this.experienceCommentService
+				.findByExperienceId(experienceId);
+
+		try {
 			user = this.userService.findByPrincipal();
-			if(user.getCouple() != null){
+			if (user.getCouple() != null) {
 				hasCouple = true;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 		}
 
 		// Crea y añade objetos a la vista
@@ -87,19 +99,20 @@ public class ExperienceController extends AbstractController {
 		result.addObject("experience", experience);
 		result.addObject("hasCouple", hasCouple);
 		result.addObject("comments", comments);
+		result.addObject("vat", vat);
 
 		// Envía la vista
 		return result;
 	}
-	
-	@RequestMapping(value = "/list", method = RequestMethod.GET, params ="computeScore")
-	public ModelAndView computeScore(){
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET, params = "computeScore")
+	public ModelAndView computeScore() {
 		final ModelAndView result;
-		
+
 		this.companyService.computeScore();
-		
+
 		result = new ModelAndView("redirect:list.do");
-		
+
 		return result;
 	}
 
