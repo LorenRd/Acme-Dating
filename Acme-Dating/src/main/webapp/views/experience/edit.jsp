@@ -23,7 +23,7 @@
 		<form:hidden path="version"/>
 		
 		
-		<acme:textbox code="experience.title" path="title" placeholder="experience.title"/>
+		<acme:textbox code="experience.title" path="title"/>
 		<br />
 		<acme:textarea code="experience.body" path="body"/>
 		<br />		

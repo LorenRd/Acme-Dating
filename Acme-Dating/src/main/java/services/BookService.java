@@ -128,25 +128,24 @@ public class BookService {
 		return bookForm;
 	}
 
+
 	public Book reconstruct(final BookForm bookForm, final BindingResult binding) {
 		Book result;
-		if (bookForm.getId() == 0) {
-			result = this.create();
-			result.setMoment(new Date(System.currentTimeMillis() - 1));
-			result.setCouple(this.coupleService.findByUser());
-			result.setExperience(bookForm.getExperience());
-			result.setDate(bookForm.getDate());
+		
+		result = this.create();
+		result.setMoment(new Date(System.currentTimeMillis() - 1));
+		result.setCouple(this.coupleService.findByUser());
+		result.setExperience(bookForm.getExperience());
+		result.setDate(bookForm.getDate());
+		if(bookForm.getFeatures()==null)
+			result.setFeatures(new ArrayList<Feature>());
+		else
 			result.setFeatures(bookForm.getFeatures());
-
+		
+		if(result.getDate()!=null)
 			if (result.getDate().before(Calendar.getInstance().getTime()))
-				binding.rejectValue("date", "book.validation.date",
-						"Date must be future");
+				binding.rejectValue("date", "book.validation.date","Date must be future");
 
-		} else {
-			result = this.bookRepository.findOne(bookForm.getId());
-			result.setScore(bookForm.getScore());
-
-		}
 
 		this.validator.validate(result, binding);
 		return result;
