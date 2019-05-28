@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,9 +23,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Date				moment;
-	private String				subject;
-	private String				body;
+	private Date	moment;
+	private String	subject;
+	private String	body;
+
 
 	@NotNull
 	@Past
@@ -56,15 +58,16 @@ public class Message extends DomainEntity {
 		this.body = body;
 	}
 
+
 	// Relationships----------------------------------------------
-	
+
 	private Actor				sender;
 	private Collection<Actor>	recipients;
 	private List<MessageBox>	messageBoxes;
 
-	@NotNull
+
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Actor getSender() {
 		return this.sender;
 	}
