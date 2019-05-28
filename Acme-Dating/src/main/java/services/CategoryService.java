@@ -78,9 +78,9 @@ public class CategoryService {
 
 		Assert.notNull(category);
 
-		if (!this.isInUse(category)) {
-			this.categoryRepository.delete(category);
-		}
+		Assert.isTrue(!this.isInUse(category), "category.isInUse");
+		this.categoryRepository.delete(category);
+		
 	}
 
 	public Category mostUsedCategory() {
