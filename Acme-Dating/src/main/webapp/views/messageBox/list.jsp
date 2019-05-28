@@ -71,6 +71,12 @@
 	<spring:message code="messageBox.message.sender" var="sender" />
 	<display:column title="${sender}" sortable="true" >
 		
+		<%-- Caso normal, el sender ha sido eliminado tras enviar el mensaje --%>
+		<jstl:if test="${message.sender == null}">
+			<spring:message code="messageBox.message.null" var ="anonimous"/>
+			<jstl:out value ="${anonimous }"/>
+		</jstl:if>
+		
 		<%-- Caso normal, se muestra el username del sender --%>
 		<jstl:if test="${!message.recipients.contains(message.sender)}">
 			<jstl:out value="${message.sender.userAccount.username }"></jstl:out>

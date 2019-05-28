@@ -56,9 +56,6 @@ public class UserService {
 	private ChallengeService		challengeService;
 
 	@Autowired
-	private MessageService			messageService;
-
-	@Autowired
 	private CoupleRequestService	coupleRequestService;
 
 	@Autowired
@@ -202,8 +199,8 @@ public class UserService {
 		final Collection<CoupleRequest> coupleRequests;
 		final Collection<Challenge> challengesR;
 		final Collection<Challenge> challengesS;
-		final Collection<Message> messagesR;
-		final Collection<Message> messagesS;
+		Collection<MessageBox> boxes;
+		Collection<Message> messages;
 
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
@@ -223,13 +220,12 @@ public class UserService {
 		challengesS = this.challengeService.findBySenderId(principal.getId());
 		this.challengeService.deleteInBach(challengesS);
 
-		messagesR = this.messageService.findByRecipientId(principal.getId());
-		for (final Message m : messagesR)
-			this.messageService.deleteRecipient(m);
-
-		messagesS = this.messageService.findBySenderId(principal.getId());
-		for (final Message m : messagesS)
-			this.messageService.deleteSender(m);
+		boxes = principal.getMessageBoxes();
+		for (final MessageBox box : boxes) {
+			messages = box.getMessages();
+			for (final Message m : messages)
+				m.setSender(null);
+		}
 
 		this.userRepository.delete(principal);
 
