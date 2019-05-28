@@ -127,6 +127,16 @@ public class UserService {
 		return saved;
 	}
 
+	public User save2(final User user) {
+		User saved;
+
+		Assert.notNull(user, "user.not.null");
+
+		saved = this.userRepository.saveAndFlush(user);
+
+		return saved;
+	}
+
 	public User findOne(final int userId) {
 		User result;
 
