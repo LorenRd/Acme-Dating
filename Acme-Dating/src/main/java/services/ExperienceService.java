@@ -40,6 +40,8 @@ public class ExperienceService {
 
 	@Autowired
 	private ExperienceCommentService	experienceCommentService;
+	
+	@Autowired
 	private Validator validator;
 
 	@Autowired
@@ -76,6 +78,7 @@ public class ExperienceService {
 
 		result = new Experience();
 		result.setCompany(principal);
+		result.setScore(0.0);
 		return result;
 	}
 
@@ -154,21 +157,37 @@ public class ExperienceService {
 		return result;
 	}
 
-	public Experience reconstruct(final Experience experience,
-			final BindingResult binding) {
-		Experience original;
+	public Experience reconstruct(final Experience experience, final BindingResult binding) {
+		Experience result;
 		if (experience.getId() == 0) {
-			original = experience;
-			original.setCompany(this.companyService.findByPrincipal());
+			result = experience;
+			result.setCompany(this.companyService.findByPrincipal());
+			result.setScore(0.0);
 		} else {
-			original = this.experienceRepository.findOne(experience.getId());
-			experience.setCompany(this.companyService.findByPrincipal());
-
+			result = this.experienceRepository.findOne(experience.getId());
+			result.setCompany(this.companyService.findByPrincipal());
+			if(experience.getScore()==null)
+				result.setScore(0.0);
 		}
+		result.setCategory(experience.getCategory());
+		result.setBody(experience.getBody());
+		result.setCoupleLimit(experience.getCoupleLimit());
+		if(experience.getFeatures()==null)
+			result.setFeatures(new ArrayList<Feature>());
+		else
+			result.setFeatures(experience.getFeatures());
+		result.setPhoto(experience.getPhoto());
+		result.setPrice(experience.getPrice());
+		result.setTitle(experience.getTitle());
+		result.setUbication(experience.getUbication());
+		result.setScore(experience.getScore());
+		
 
-		this.validator.validate(experience, binding);
+		this.validator.validate(result, binding);
 
-		return experience;
+		this.flush();
+		
+		return result;
 	}
 
 	public void flush() {

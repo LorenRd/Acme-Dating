@@ -206,7 +206,8 @@ public class UserService {
 		Assert.notNull(principal);
 
 		couple = this.coupleService.findByUser();
-		this.coupleService.delete(couple);
+		if(couple!=null)
+			this.coupleService.delete(couple);
 
 		socialNetworks = this.socialNetworkService.findByUserId(principal.getId());
 		this.socialNetworkService.deleteInBach(socialNetworks);

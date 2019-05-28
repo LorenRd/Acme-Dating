@@ -69,7 +69,6 @@ public class Experience extends DomainEntity{
 		this.score = score;
 	}
 	
-	@NotNull
 	public double getPrice() {
 		return price;
 	}
@@ -77,7 +76,6 @@ public class Experience extends DomainEntity{
 		this.price = price;
 	}
 	
-	@NotNull
 	public int getCoupleLimit() {
 		return coupleLimit;
 	}

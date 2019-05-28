@@ -94,7 +94,6 @@ public class BookForm {
 		this.experience = experience;
 	}
 	
-	@NotNull
 	@ManyToMany
 	public Collection<Feature> getFeatures() {
 		return this.features;
