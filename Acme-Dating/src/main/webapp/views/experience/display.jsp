@@ -21,11 +21,14 @@
 		<b><spring:message code="experience.photo" /></b>:
 		<acme:image src="${experience.photo}" /><br/>
 			
+		<b><spring:message code="experience.score" /></b>:
+		<jstl:out value="${experience.score }"/><br/>	
+			
 		<b><spring:message code="experience.ubication" /></b>:
 		<jstl:out value="${experience.ubication }"/><br/>
 		
 		<b><spring:message code="experience.price" /></b>:
-		<jstl:out value="${experience.price * vat}"/><br/>
+		<fmt:formatNumber type="number" maxFractionDigits="2" value="${experience.price * vat}"/> <spring:message code="experience.vat" /><br/>	
 		
 		<b><spring:message code="experience.coupleLimit" /></b>:
 		<jstl:out value="${experience.coupleLimit }"/><br/>
