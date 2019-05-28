@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -36,44 +35,35 @@ public class CompanyService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CompanyRepository			companyRepository;
+	private CompanyRepository companyRepository;
 
 	@Autowired
-	private CustomisationRepository		customisationRepository;
+	private CustomisationRepository customisationRepository;
 
 	@Autowired
-	private UserAccountRepository		useraccountRepository;
+	private UserAccountRepository useraccountRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private ActorService				actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private CreditCardService			creditCardService;
+	private CreditCardService creditCardService;
 
 	@Autowired
-	private ExperienceService			experienceService;
+	private ExperienceService experienceService;
 
 	@Autowired
-	private FeatureService				featureService;
+	private MessageService messageService;
 
 	@Autowired
-	private MessageService				messageService;
+	private BookService bookService;
 
 	@Autowired
-	private ExperienceCommentService	experienceCommentService;
+	private MessageBoxService messageBoxService;
 
 	@Autowired
-	private BookService					bookService;
-
-	@Autowired
-	private MessageBoxService			messageBoxService;
-
-	@Autowired
-	private Validator					validator;
-
-
-	// Simple CRUD Methods
+	private Validator validator;
 
 	// Simple CRUD Methods
 
@@ -112,24 +102,35 @@ public class CompanyService {
 		final List<MessageBox> messageBoxes;
 
 		encoder = new Md5PasswordEncoder();
-		logedUserAccount = this.actorService.createUserAccount(Authority.COMPANY);
+		logedUserAccount = this.actorService
+				.createUserAccount(Authority.COMPANY);
 		Assert.notNull(company, "company.not.null");
 
 		if (this.exists(company.getId())) {
 			logedUserAccount = LoginService.getPrincipal();
 			Assert.notNull(logedUserAccount, "company.notLogged");
-			Assert.isTrue(logedUserAccount.equals(company.getUserAccount()), "company.notEqual.userAccount");
+			Assert.isTrue(logedUserAccount.equals(company.getUserAccount()),
+					"company.notEqual.userAccount");
 			saved = this.companyRepository.findOne(company.getId());
 			Assert.notNull(saved, "company.not.null");
-			Assert.isTrue(saved.getUserAccount().getUsername().equals(company.getUserAccount().getUsername()), "company.notEqual.username");
-			Assert.isTrue(saved.getUserAccount().getPassword().equals(company.getUserAccount().getPassword()), "company.notEqual.password");
+			Assert.isTrue(
+					saved.getUserAccount().getUsername()
+							.equals(company.getUserAccount().getUsername()),
+					"company.notEqual.username");
+			Assert.isTrue(
+					saved.getUserAccount().getPassword()
+							.equals(company.getUserAccount().getPassword()),
+					"company.notEqual.password");
 
 			saved = this.companyRepository.save(company);
 
 		} else {
 			CreditCard creditCard;
-			company.getUserAccount().setPassword(encoder.encodePassword(company.getUserAccount().getPassword(), null));
-			creditCard = this.creditCardService.saveNew(company.getCreditCard());
+			company.getUserAccount().setPassword(
+					encoder.encodePassword(company.getUserAccount()
+							.getPassword(), null));
+			creditCard = this.creditCardService
+					.saveNew(company.getCreditCard());
 			company.setCreditCard(creditCard);
 			saved = this.companyRepository.saveAndFlush(company);
 			messageBoxes = this.messageBoxService.createSystemBoxes(saved);
@@ -163,7 +164,8 @@ public class CompanyService {
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
-		result = this.companyRepository.findByUserAccountId(userAccount.getId());
+		result = this.companyRepository
+				.findByUserAccountId(userAccount.getId());
 		Assert.notNull(result);
 
 		return result;
@@ -208,8 +210,10 @@ public class CompanyService {
 		companyForm.setCommercialName(company.getCommercialName());
 		companyForm.setCVV(company.getCreditCard().getCVV());
 		companyForm.setEmail(company.getEmail());
-		companyForm.setExpirationMonth(company.getCreditCard().getExpirationMonth());
-		companyForm.setExpirationYear(company.getCreditCard().getExpirationYear());
+		companyForm.setExpirationMonth(company.getCreditCard()
+				.getExpirationMonth());
+		companyForm.setExpirationYear(company.getCreditCard()
+				.getExpirationYear());
 		companyForm.setHolderName(company.getCreditCard().getHolderName());
 		companyForm.setId(company.getId());
 		companyForm.setName(company.getName());
@@ -221,7 +225,8 @@ public class CompanyService {
 		return companyForm;
 	}
 
-	public Company reconstruct(final CompanyForm companyForm, final BindingResult binding) {
+	public Company reconstruct(final CompanyForm companyForm,
+			final BindingResult binding) {
 		Company result;
 
 		result = this.create();
@@ -234,25 +239,36 @@ public class CompanyService {
 		result.setSurname(companyForm.getSurname());
 		result.getCreditCard().setBrandName(companyForm.getBrandName());
 		result.getCreditCard().setCVV(companyForm.getCVV());
-		result.getCreditCard().setExpirationMonth(companyForm.getExpirationMonth());
-		result.getCreditCard().setExpirationYear(companyForm.getExpirationYear());
+		result.getCreditCard().setExpirationMonth(
+				companyForm.getExpirationMonth());
+		result.getCreditCard().setExpirationYear(
+				companyForm.getExpirationYear());
 		result.getCreditCard().setHolderName(companyForm.getHolderName());
 		result.getCreditCard().setNumber(companyForm.getNumber());
 
 		if (!StringUtils.isEmpty(companyForm.getPhone())) {
-			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
+			final Pattern pattern = Pattern.compile("^\\d{4,}$",
+					Pattern.CASE_INSENSITIVE);
 			final Matcher matcher = pattern.matcher(companyForm.getPhone());
 			if (matcher.matches())
-				companyForm.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + companyForm.getPhone());
+				companyForm.setPhone(this.customisationRepository.findAll()
+						.iterator().next().getCountryCode()
+						+ companyForm.getPhone());
 		}
 		result.setPhone(companyForm.getPhone());
 
 		if (!companyForm.getPassword().equals(companyForm.getPasswordChecker()))
-			binding.rejectValue("passwordChecker", "company.validation.passwordsNotMatch", "Passwords doesnt match");
-		if (!this.useraccountRepository.findUserAccountsByUsername(companyForm.getUsername()).isEmpty())
-			binding.rejectValue("username", "company.validation.usernameExists", "This username already exists");
+			binding.rejectValue("passwordChecker",
+					"company.validation.passwordsNotMatch",
+					"Passwords doesnt match");
+		if (!this.useraccountRepository.findUserAccountsByUsername(
+				companyForm.getUsername()).isEmpty())
+			binding.rejectValue("username",
+					"company.validation.usernameExists",
+					"This username already exists");
 		if (companyForm.getCheckBox() == false)
-			binding.rejectValue("checkBox", "company.validation.checkBox", "This checkbox must be checked");
+			binding.rejectValue("checkBox", "company.validation.checkBox",
+					"This checkbox must be checked");
 
 		this.validator.validate(result, binding);
 		this.companyRepository.flush();
@@ -260,7 +276,8 @@ public class CompanyService {
 		return result;
 	}
 
-	public Company reconstructPruned(final Company company, final BindingResult binding) {
+	public Company reconstructPruned(final Company company,
+			final BindingResult binding) {
 		Company result;
 		if (company.getId() == 0)
 			result = company;
@@ -273,10 +290,13 @@ public class CompanyService {
 		result.setSurname(company.getSurname());
 
 		if (!StringUtils.isEmpty(company.getPhone())) {
-			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
+			final Pattern pattern = Pattern.compile("^\\d{4,}$",
+					Pattern.CASE_INSENSITIVE);
 			final Matcher matcher = pattern.matcher(company.getPhone());
 			if (matcher.matches())
-				company.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + company.getPhone());
+				company.setPhone(this.customisationRepository.findAll()
+						.iterator().next().getCountryCode()
+						+ company.getPhone());
 		}
 		result.setPhone(company.getPhone());
 		this.validator.validate(result, binding);
@@ -286,12 +306,8 @@ public class CompanyService {
 
 	public void delete() {
 		/*
-		 * Orden de borrado:
-		 * 1 Comments de la experience
-		 * 2 Experience
-		 * 3 Mensajes
-		 * 4 CC
-		 * 5 Company
+		 * Orden de borrado: 1 Comments de la experience 2 Experience 3 Mensajes
+		 * 4 CC 5 Company
 		 */
 		Company principal;
 		Collection<Experience> experiences;
