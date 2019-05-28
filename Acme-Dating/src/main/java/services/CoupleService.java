@@ -81,7 +81,7 @@ public class CoupleService {
 		sender.setCouple(result);
 		recipient.setCouple(result);
 
-		this.userService.save(sender);
+		this.userService.save2(sender);
 		this.userService.save(recipient);
 
 		Assert.notNull(result);
