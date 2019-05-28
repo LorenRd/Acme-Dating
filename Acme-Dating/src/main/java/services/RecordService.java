@@ -127,16 +127,18 @@ public class RecordService {
 		}
 		result.setCouple(this.coupleService.findByUser());
 		result.setDay(record.getDay());
-		result.setTitle(record.getTitle());
-		result.setBody(record.getBody());
+		if(record.getTitle()!=null)
+			result.setTitle(record.getTitle());
+		if(record.getBody()!= null)
+			result.setBody(record.getBody());
 		result.setPhoto(record.getPhoto());
 		result.setCategory(record.getCategory());
 		
-		if (record.getDay().after(dt)) {
-			binding.rejectValue("day", "record.validation.day", "Date must be past");
+		if(record.getDay() != null){
+			if (record.getDay().after(dt)) {
+				binding.rejectValue("day", "record.validation.day", "Date must be past");
+			}
 		}
-		
-		
 		this.validator.validate(result, binding);
 
 		return result;
