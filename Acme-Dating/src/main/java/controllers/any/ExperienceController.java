@@ -71,6 +71,8 @@ public class ExperienceController extends AbstractController {
 		final ModelAndView result;
 		Experience experience;
 		Collection<ExperienceComment> comments;
+		Collection<ExperienceComment> commentsChild = new ArrayList<ExperienceComment>();
+
 		User user;
 		boolean hasCouple = false;
 		Customisation customisation;
@@ -84,7 +86,10 @@ public class ExperienceController extends AbstractController {
 
 		comments = this.experienceCommentService
 				.findByExperienceId(experienceId);
-
+		
+		for (ExperienceComment eC : comments) {
+			commentsChild.addAll(this.experienceCommentService.findChilds(eC.getId()));
+		}
 		try {
 			user = this.userService.findByPrincipal();
 			if (user.getCouple() != null) {
@@ -99,6 +104,7 @@ public class ExperienceController extends AbstractController {
 		result.addObject("experience", experience);
 		result.addObject("hasCouple", hasCouple);
 		result.addObject("comments", comments);
+		result.addObject("commentsChild", commentsChild);
 		result.addObject("vat", vat);
 
 		// Envía la vista
