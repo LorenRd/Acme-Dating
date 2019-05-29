@@ -44,6 +44,13 @@
 	<form:errors cssClass="error" path="countryCode" />
 	<br />
 	<br />
+	<form:label path="vatNumber">
+		<spring:message code="customisation.vat" />:
+	</form:label>
+	<form:input path="vatNumber" />
+	<form:errors cssClass="error" path="vatNumber" />
+	<br />
+	<br />
 	<form:label path="scoreWords">
 		<spring:message code="customisation.scoreWords" />:
 	</form:label>
