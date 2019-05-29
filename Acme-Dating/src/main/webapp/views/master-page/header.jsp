@@ -22,6 +22,14 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
+			<li><a class="fNiv"><spring:message
+						code="master.page.experiences" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="experience/list.do"><spring:message
+								code="master.page.customer.list.experiences" /></a></li>
+				</ul>
+			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
