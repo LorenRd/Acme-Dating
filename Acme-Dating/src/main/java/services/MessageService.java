@@ -158,8 +158,6 @@ public class MessageService {
 		message.setMoment(moment);
 		message.setSender(principal);
 
-		Assert.isTrue(!message.getRecipients().contains(principal));
-
 		recipients = this.actorService.findAll();
 		boxes = message.getMessageBoxes();
 		Assert.notNull(boxes);

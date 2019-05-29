@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.CategoryService;
 import services.CompanyService;
 import services.CustomisationService;
+import services.ExperienceCommentService;
 import services.ExperienceService;
 import services.FeatureService;
 import controllers.AbstractController;
@@ -25,6 +26,7 @@ import domain.Category;
 import domain.Company;
 import domain.Customisation;
 import domain.Experience;
+import domain.ExperienceComment;
 import domain.Feature;
 
 @Controller
@@ -45,6 +47,9 @@ public class ExperienceCompanyController extends AbstractController {
 
 	@Autowired
 	private CustomisationService customisationService;
+	
+	@Autowired
+	private ExperienceCommentService experienceCommentService;
 
 	// List
 
@@ -81,9 +86,20 @@ public class ExperienceCompanyController extends AbstractController {
 		Experience experience;
 		Customisation customisation;
 		Double vat;
+		Collection<ExperienceComment> comments;
+		Collection<ExperienceComment> commentsChild = new ArrayList<ExperienceComment>();
+
+
 		customisation = this.customisationService.find();
 		vat = (customisation.getVatNumber()) / 100 + 1.0;
 
+		comments = this.experienceCommentService
+				.findByExperienceId(experienceId);
+		
+		for (ExperienceComment eC : comments) {
+			commentsChild.addAll(this.experienceCommentService.findChilds(eC.getId()));
+		}
+		
 		// Busca en el repositorio
 		experience = this.experienceService.findOne(experienceId);
 		Assert.notNull(experience);
@@ -93,6 +109,8 @@ public class ExperienceCompanyController extends AbstractController {
 		result.addObject("requestURI", "experience/display.do");
 		result.addObject("vat", vat);
 		result.addObject("experience", experience);
+		result.addObject("comments", comments);
+		result.addObject("commentsChild", commentsChild);
 
 		// Envía la vista
 		return result;

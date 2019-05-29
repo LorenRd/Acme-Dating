@@ -45,7 +45,7 @@
   		<li><jstl:out value="${comment.body}"/> <a href="recordComment/createReply.do?recordCommentId=${comment.id}"><spring:message code="record.comment.reply"/></a></li>
   	    	<!-- Hijos, habrá que volver a recorrer todos los comments buscando cuales son los hijos y poniendolos -->
 			<ul>
-			<c:forEach items="${comments}" var="commentChild">
+			<c:forEach items="${commentsChild}" var="commentChild">
 			  	<jstl:if test="${comment.id == commentChild.recordComment.id}">
 			  		<li><jstl:out value="${commentChild.body}"/></li>
 				</jstl:if>

@@ -10,7 +10,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 		<b><spring:message code="experience.title" /></b>:
 		<jstl:out value="${experience.title}"/><br/>
@@ -57,11 +57,11 @@
 <c:forEach items="${comments}" var="comment">
     <!-- Padres: Tienen referencia a experience pero no a experience comment, opcion de reply -->
   	<jstl:if test="${empty comment.experienceComment}">
-  		<li><jstl:if test="${comment.actor.id == experience.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${comment.actor.name}"/>:</b> <jstl:out value="${comment.body}"/> <a href="experienceComment/createReply.do?experienceCommentId=${comment.id}"><spring:message code="experience.comment.reply"/></a></li>
+  		<li><jstl:if test="${comment.actor.id eq experience.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${comment.actor.name}"/>:</b> <jstl:out value="${comment.body}"/> <a href="experienceComment/createReply.do?experienceCommentId=${comment.id}"><spring:message code="experience.comment.reply"/></a></li>
   	    	<!-- Hijos, habrá que volver a recorrer todos los comments buscando cuales son los hijos y poniendolos -->
 			<ul>
-			<c:forEach items="${comments}" var="commentChild">
-			  	<jstl:if test="${comment.id == commentChild.experienceComment.id}">
+			<c:forEach items="${commentsChild}" var="commentChild">
+			  	<jstl:if test="${comment.id eq commentChild.experienceComment.id}">
 			  		<li><jstl:if test="${commentChild.actor.id == experience.company.id}"><img src="images/badge.png" /></jstl:if><b> <jstl:out value="${commentChild.actor.name}"/>:</b> <jstl:out value="${commentChild.body}"/></li>
 				</jstl:if>
 			</c:forEach>

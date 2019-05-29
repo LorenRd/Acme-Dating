@@ -55,6 +55,8 @@ public class RecordCoupleController extends AbstractController {
 		final ModelAndView result;
 		Record record;
 		Collection<RecordComment> comments;
+		Collection<RecordComment> commentsChild = new ArrayList<RecordComment>();
+
 		User user;
 		boolean hasCouple = false;
 
@@ -63,7 +65,9 @@ public class RecordCoupleController extends AbstractController {
 		Assert.notNull(record);
 
 		comments = this.recordCommentService.findByRecordId(recordId);
-
+		for (RecordComment rC : comments) {
+			commentsChild.addAll(this.recordCommentService.findChilds(rC.getId()));
+		}
 		try {
 			user = this.userService.findByPrincipal();
 			if (user.getCouple() != null) {
@@ -78,6 +82,7 @@ public class RecordCoupleController extends AbstractController {
 		result.addObject("record", record);
 		result.addObject("hasCouple", hasCouple);
 		result.addObject("comments", comments);
+		result.addObject("commentsChild", commentsChild);
 
 		// Envía la vista
 		return result;

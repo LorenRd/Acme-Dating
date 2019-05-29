@@ -94,6 +94,14 @@ public class RecordCommentService {
 		this.validator.validate(result, binding);
 		return result;
 	}
+	
+	public Collection<RecordComment> findChilds(final int recordCommentFatherId) {
+		Collection<RecordComment> result;
+
+		result = this.recordCommentRepository.findChilds(recordCommentFatherId);
+
+		return result;
+	}
 
 	// Business Methods
 
