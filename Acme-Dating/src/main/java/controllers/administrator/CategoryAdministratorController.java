@@ -65,7 +65,7 @@ public class CategoryAdministratorController extends AbstractController {
 		category = this.categoryService.findOne(categoryId);
 		Assert.notNull(category);
 		if (this.categoryService.isInUse(category)) {
-			result = new ModelAndView("redirect:/welcome/index.do");
+			result = this.createListModelAndView(category, "category.isInUse");
 		} else {
 			result = this.createEditModelAndView(category);
 		}
@@ -81,7 +81,7 @@ public class CategoryAdministratorController extends AbstractController {
 		try {
 			category = this.categoryService.reconstruct(category, binding);
 			if (binding.hasErrors()) {
-				result = this.createModelAndView(category);
+				result = this.createEditModelAndView(category);
 				for (final ObjectError e : binding.getAllErrors())
 					System.out.println(e.getObjectName() + " error ["
 							+ e.getDefaultMessage() + "] "
@@ -92,7 +92,7 @@ public class CategoryAdministratorController extends AbstractController {
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createModelAndView(category, "category.commit.error");
+			result = this.createEditModelAndView(category, "category.commit.error");
 		}
 		return result;
 	}

@@ -124,15 +124,10 @@ public class CategoryService {
 		} else {
 			result = this.categoryRepository.findOne(category.getId());
 
-			if (!category.getTitle().equals("")) {
-				result.setTitle(category.getTitle());
-			}
-
-			if (!category.getPicture().equals("")) {
-				result.setPicture(category.getPicture());
-			}
-
 		}
+		result.setTitle(category.getTitle());
+		result.setPicture(category.getPicture());
+		
 		this.validator.validate(result, binding);
 
 		return result;
