@@ -35,6 +35,15 @@
 <td> <jstl:out value="${customisation.welcomeMessageEs}" /> </td>
 </tr>
 
+<tr>
+<td> <strong> <spring:message code="customisation.vat" /> : </strong> </td>
+<td> <jstl:out value="${customisation.vatNumber}" /> </td>
+</tr>
+
+<tr>
+<td> <strong> <spring:message code="customisation.scoreWords" /> : </strong> </td>
+<td> <jstl:out value="${customisation.scoreWords}" /> </td>
+</tr>
 
 <tr>
 <td> <strong> <spring:message code="customisation.countryCode" /> : </strong> </td>
