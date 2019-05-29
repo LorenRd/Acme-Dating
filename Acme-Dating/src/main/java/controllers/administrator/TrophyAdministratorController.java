@@ -78,7 +78,7 @@ public class TrophyAdministratorController extends AbstractController {
 		try {
 			trophy = this.trophyService.reconstruct(trophy, binding);
 			if (binding.hasErrors()) {
-				result = this.createModelAndView(trophy);
+				result = this.createEditModelAndView(trophy);
 				for (final ObjectError e : binding.getAllErrors())
 					System.out.println(e.getObjectName() + " error ["
 							+ e.getDefaultMessage() + "] "
@@ -89,7 +89,7 @@ public class TrophyAdministratorController extends AbstractController {
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createModelAndView(trophy, "trophy.commit.error");
+			result = this.createEditModelAndView(trophy, "trophy.commit.error");
 		}
 		return result;
 	}

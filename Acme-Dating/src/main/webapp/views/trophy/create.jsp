@@ -20,8 +20,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<form:form action="trophy/administrator/create.do"
-	modelAttribute="trophy">
+<form:form action="trophy/administrator/create.do" modelAttribute="trophy">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 
