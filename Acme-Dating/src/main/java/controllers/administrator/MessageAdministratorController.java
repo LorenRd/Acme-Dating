@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,12 +50,13 @@ public class MessageAdministratorController extends AbstractController {
 
 	// Broadcast
 	@RequestMapping(value = "/broadcast", method = RequestMethod.POST, params = "save")
-	public ModelAndView broadcast(@Valid final Message mensaje, final BindingResult binding) {
+	public ModelAndView broadcast(@ModelAttribute("mensaje") @Valid final Message mensaje, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			System.out.println(binding.getAllErrors());
 			result = this.createEditModelAndView(mensaje);
-		else
+		} else
 			try {
 				this.messageService.broadcast(mensaje);
 				result = new ModelAndView("redirect:/messageBox/actor/list.do");
