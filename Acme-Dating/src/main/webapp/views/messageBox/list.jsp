@@ -17,6 +17,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 
 
@@ -64,7 +65,7 @@
 
 <jstl:if test="${not empty messages}">
 <display:table pagesize="5" class="displaytag" 
-	name="messages" requestURI="messageBox/actor/list.do" id="message">
+	name="messages" requestURI="messageBox/actor/list.do" id="mensaje">
 	
 	<jstl:if test="${currentMessageBox.name != 'out box'}">
 	
@@ -72,21 +73,21 @@
 	<display:column title="${sender}" sortable="true" >
 		
 		<%-- Caso normal, el sender ha sido eliminado tras enviar el mensaje --%>
-		<jstl:if test="${message.sender == null}">
+		<jstl:if test="${mensaje.sender == null}">
 			<spring:message code="messageBox.message.null" var ="anonimous"/>
 			<jstl:out value ="${anonimous }"/>
 		</jstl:if>
 		
 		<%-- Caso normal, se muestra el username del sender --%>
-		<jstl:if test="${!message.recipients.contains(message.sender)}">
-			<jstl:out value="${message.sender.userAccount.username }"></jstl:out>
+		<jstl:if test="${!fn:contains(mensaje.recipients, mensaje.sender)}">
+			<jstl:out value="${mensaje.sender.userAccount.username }"></jstl:out>
 		</jstl:if>
 		
 		<%-- Caso para las notificaciones de cambio de status de application,
 		se ha modelado que si el sender y el recipient son el mismo actor, 
 		en la columna de sender debe aparecer SYSTEM para especificar que es un mensaje del sistema --%>
 		
-		<jstl:if test="${message.recipients.contains(message.sender)}">
+		<jstl:if test="${fn:contains(mensaje.recipients, mensaje.sender)}">
 			<spring:message code="messageBox.message.system" var ="system"/>
 			<jstl:out value ="${system }"/>
 		</jstl:if>
@@ -99,9 +100,9 @@
 		<display:column title="${recipients}" sortable="true">
 		
 		<%-- Caso normal en el que es un mensaje de una actor a otro actor diferente --%>
-		<jstl:if test="${!message.recipients.contains(message.sender) }">
+		<jstl:if test="${!fn:contains(mensaje.recipients, mensaje.sender)}">
 		
-		<jstl:forEach items="${message.recipients}" var="recipient">
+		<jstl:forEach items="${mensaje.recipients}" var="recipient">
 		<jstl:out value = "${recipient.userAccount.username}"></jstl:out>
 				</jstl:forEach>
 		
@@ -111,7 +112,7 @@
 		<%-- Caso broadcast, seg�n hemos modelado cuando el sender es un administrador significa que es un mensaje broadcast que hay que guardar 
 		 en el out box del admin que realiz� dicho broadcast --%>
 		  
-		<jstl:if test="${message.recipients.contains(message.sender) && (message.sender.userAccount.authorities[0].authority == 'ADMIN') }">
+		<jstl:if test="${fn:contains(mensaje.recipients, mensaje.sender)}">
 		<spring:message code="messageBox.message.broadcast" var="broadcast" />
 		<jstl:out value="${broadcast}" />
 		</jstl:if>
