@@ -38,8 +38,7 @@
 <link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
