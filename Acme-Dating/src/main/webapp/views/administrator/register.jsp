@@ -21,7 +21,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="administrator/register.do" modelAttribute="administratorForm">
+<form:form action="administrator/register.do" modelAttribute="administratorForm" onsubmit="return validatePhone()">
 		
 		<form:hidden path="id" />
 		
@@ -72,7 +72,3 @@
 
 		<acme:cancel url="welcome/index.do" code="administrator.cancel"/>
 	</form:form>
-	
-	<script type="text/javascript">
-	$("#register").on("click",function(){validatePhone("<spring:message code='administrator.confirmationPhone'/>","${countryCode}");}); 
-</script>

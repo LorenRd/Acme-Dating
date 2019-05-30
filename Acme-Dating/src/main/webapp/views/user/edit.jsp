@@ -17,7 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="user/edit.do" modelAttribute="user">
+<form:form action="user/edit.do" modelAttribute="user" onsubmit="return validatePhone()">
 	<form:hidden path="id" />
 	<form:hidden path="version"/>
 
@@ -45,8 +45,3 @@
 
 
 </form:form>
-
-
-<script type="text/javascript">
-$("#save").on("click",function(){validatePhone("<spring:message code='user.confirmationPhone'/>","${countryCode}");});
-</script>

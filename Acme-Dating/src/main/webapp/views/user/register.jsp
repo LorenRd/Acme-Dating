@@ -21,7 +21,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 		
 
-	<form:form action="user/register.do" modelAttribute="userForm">
+	<form:form action="user/register.do" modelAttribute="userForm" onsubmit="return validatePhone()">
 		
 		<form:hidden path="id" />
 		
@@ -72,8 +72,3 @@
 		
 		<acme:cancel url="welcome/index.do" code="user.cancel"/>
 	</form:form>
-	
-	
-	<script type="text/javascript">
-	$("#register").on("click",function(){validatePhone("<spring:message code='user.confirmationPhone'/>","${countryCode}");}); 
-</script>
