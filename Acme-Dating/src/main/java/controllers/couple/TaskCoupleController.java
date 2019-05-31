@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import repositories.UserRepository;
+import security.LoginService;
+import security.UserAccount;
 import services.CoupleService;
 import services.TaskService;
 import services.UserService;
@@ -35,6 +38,9 @@ public class TaskCoupleController extends AbstractController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	// List
 
@@ -72,7 +78,9 @@ public class TaskCoupleController extends AbstractController {
 		final User principal = this.userService.findByPrincipal();
 
 		if (principal.getCouple() == null) {
-			result = new ModelAndView("redirect:/welcome/index.do");
+			result = new ModelAndView("task/create");
+			result.addObject("requestURI", "task/couple/create.do");
+			result.addObject("couple", null);
 			return result;
 		} else {
 			task = this.taskService.create();
@@ -91,7 +99,7 @@ public class TaskCoupleController extends AbstractController {
 
 		task = this.taskService.findOne(taskId);
 		Assert.notNull(task);
-		result = this.createEditModelAndView(task);
+		result = this.editModelAndView(task);
 
 		return result;
 	}
@@ -104,18 +112,18 @@ public class TaskCoupleController extends AbstractController {
 		try {
 			task = this.taskService.reconstruct(task, binding);
 			if (binding.hasErrors()) {
-				result = this.createModelAndView(task);
+				result = this.editModelAndView(task);
 				for (final ObjectError e : binding.getAllErrors())
 					System.out.println(e.getObjectName() + " error ["
 							+ e.getDefaultMessage() + "] "
 							+ Arrays.toString(e.getCodes()));
 			} else {
 				task = this.taskService.save(task);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createModelAndView(task, "task.commit.error");
+			result = this.editModelAndView(task, "task.commit.error");
 		}
 		return result;
 	}
@@ -180,7 +188,6 @@ public class TaskCoupleController extends AbstractController {
 		return result;
 	}
 
-	
 	// ------------------- Ancillary Methods
 
 	protected ModelAndView createEditModelAndView(final Task task) {
@@ -246,6 +253,38 @@ public class TaskCoupleController extends AbstractController {
 			result.addObject("couple", couple);
 			result.addObject("message", messageCode);
 			return result;
+		}
+	}
+
+	protected ModelAndView editModelAndView(final Task task) {
+		ModelAndView result;
+
+		result = this.editModelAndView(task, null);
+
+		return result;
+	}
+
+	protected ModelAndView editModelAndView(final Task task,
+			final String messageCode) {
+		ModelAndView result;
+		result = new ModelAndView("task/edit");
+
+		final UserAccount userAccountPrincipal = LoginService.getPrincipal();
+		User principal = this.userRepository
+				.findByUserAccountId(userAccountPrincipal.getId());
+
+		if (principal.getCouple() == null) {
+			result.addObject("couple", null);
+			return result;
+		} else {
+
+			Couple couple = principal.getCouple();
+
+			result.addObject("task", task);
+			result.addObject("couple", couple);
+			result.addObject("message", messageCode);
+			return result;
+
 		}
 	}
 

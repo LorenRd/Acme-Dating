@@ -42,7 +42,8 @@
 		<acme:cancel url="welcome/index.do" code="task.cancel"/>
 		
 </form:form>
-
+	
+	
 </jstl:when>
 	<jstl:otherwise>
 		<spring:message code="couple.single" />

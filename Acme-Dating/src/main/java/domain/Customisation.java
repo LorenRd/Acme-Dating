@@ -70,7 +70,7 @@ public class Customisation extends DomainEntity {
 	public void setVatNumber(Double vatNumber) {
 		this.vatNumber = vatNumber;
 	}
-	
+
 	@ElementCollection
 	@EachNotBlank
 	public Collection<String> getScoreWords() {

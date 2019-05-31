@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import repositories.CategoryRepository;
+import repositories.UserRepository;
+import security.LoginService;
+import security.UserAccount;
 import services.CategoryService;
 import services.CoupleService;
 import services.RecordCommentService;
@@ -47,6 +51,12 @@ public class RecordCoupleController extends AbstractController {
 	@Autowired
 	private RecordCommentService recordCommentService;
 
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private CategoryRepository categoryRepository;
+
 	// Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -66,7 +76,8 @@ public class RecordCoupleController extends AbstractController {
 
 		comments = this.recordCommentService.findByRecordId(recordId);
 		for (RecordComment rC : comments) {
-			commentsChild.addAll(this.recordCommentService.findChilds(rC.getId()));
+			commentsChild.addAll(this.recordCommentService.findChilds(rC
+					.getId()));
 		}
 		try {
 			user = this.userService.findByPrincipal();
@@ -124,7 +135,9 @@ public class RecordCoupleController extends AbstractController {
 		final User principal = this.userService.findByPrincipal();
 
 		if (principal.getCouple() == null) {
-			result = new ModelAndView("redirect:/welcome/index.do");
+			result = new ModelAndView("record/create");
+			result.addObject("requestURI", "record/couple/create.do");
+			result.addObject("couple", null);
 			return result;
 		} else {
 			record = this.recordService.create();
@@ -143,19 +156,20 @@ public class RecordCoupleController extends AbstractController {
 
 		record = this.recordService.findOne(recordId);
 		Assert.notNull(record);
-		result = this.createEditModelAndView(record);
+		result = this.editModelAndView(record);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("record") Record record, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("record") Record record,
+			final BindingResult binding) {
 		ModelAndView result;
 
 		try {
 			record = this.recordService.reconstruct(record, binding);
 			if (binding.hasErrors()) {
-				result = this.createEditModelAndView(record);
+				result = this.editModelAndView(record);
 				for (final ObjectError e : binding.getAllErrors())
 					System.out.println(e.getObjectName() + " error ["
 							+ e.getDefaultMessage() + "] "
@@ -166,13 +180,14 @@ public class RecordCoupleController extends AbstractController {
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(record, "record.commit.error");
+			result = this.editModelAndView(record, "record.commit.error");
 		}
 		return result;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView create(@ModelAttribute("record") Record record, final BindingResult binding) {
+	public ModelAndView create(@ModelAttribute("record") Record record,
+			final BindingResult binding) {
 		ModelAndView result;
 
 		try {
@@ -222,7 +237,8 @@ public class RecordCoupleController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Record record, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Record record,
+			final String messageCode) {
 		ModelAndView result;
 		result = new ModelAndView("record/edit");
 
@@ -241,7 +257,7 @@ public class RecordCoupleController extends AbstractController {
 			result.addObject("categories", categories);
 			result.addObject("message", messageCode);
 			return result;
-			
+
 		}
 	}
 
@@ -274,4 +290,39 @@ public class RecordCoupleController extends AbstractController {
 			return result;
 		}
 	}
+
+	protected ModelAndView editModelAndView(final Record record) {
+		ModelAndView result;
+
+		result = this.editModelAndView(record, null);
+
+		return result;
+	}
+
+	protected ModelAndView editModelAndView(final Record record,
+			final String messageCode) {
+		ModelAndView result;
+		result = new ModelAndView("record/edit");
+
+		final UserAccount userAccountPrincipal = LoginService.getPrincipal();
+		User principal = this.userRepository
+				.findByUserAccountId(userAccountPrincipal.getId());
+
+		if (principal.getCouple() == null) {
+			result.addObject("couple", null);
+			return result;
+		} else {
+
+			Couple couple = principal.getCouple();
+			Collection<Category> categories = this.categoryRepository.findAll();
+
+			result.addObject("record", record);
+			result.addObject("couple", couple);
+			result.addObject("categories", categories);
+			result.addObject("message", messageCode);
+			return result;
+
+		}
+	}
+
 }

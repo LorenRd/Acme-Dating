@@ -230,6 +230,14 @@
 				<value>Sorprende</value>
 				<value>Lleva</value>
 				<value>Ponte</value>
+				<value>Buy</value>
+				<value>Bring</value>
+				<value>Gift</value>
+				<value>Prepare</value>
+				<value>Improvise</value>
+				<value>Surprise</value>
+				<value>Take</value>
+				<value>Get</value>
 			</list>
 		</property>
 	</bean>

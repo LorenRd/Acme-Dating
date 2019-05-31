@@ -12,8 +12,12 @@ import org.springframework.validation.Validator;
 
 import domain.Record;
 import domain.RecordComment;
+import domain.User;
 
 import repositories.RecordCommentRepository;
+import repositories.UserRepository;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -22,6 +26,9 @@ public class RecordCommentService {
 	// Managed repository -----------------------------------------------------
 	@Autowired
 	private RecordCommentRepository recordCommentRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	// Supporting services ----------------------------------------------------
 
@@ -72,20 +79,24 @@ public class RecordCommentService {
 	public RecordComment save(final RecordComment recordComment) {
 		RecordComment result;
 
+		Assert.notNull(recordComment);
+		Assert.isTrue(this.owner(recordComment));
+
 		result = this.recordCommentRepository.save(recordComment);
 		Assert.notNull(result);
 		return result;
 	}
-	
-	public RecordComment reconstruct(final RecordComment recordComment,boolean isFather, final int id, final BindingResult binding) {
+
+	public RecordComment reconstruct(final RecordComment recordComment,
+			boolean isFather, final int id, final BindingResult binding) {
 		RecordComment result;
 		Record record;
 
 		result = recordComment;
-		if(isFather){
+		if (isFather) {
 			record = this.recordService.findOne(id);
 			result.setRecord(record);
-		}else{
+		} else {
 			result.setRecordComment(this.findOne(id));
 
 		}
@@ -94,7 +105,7 @@ public class RecordCommentService {
 		this.validator.validate(result, binding);
 		return result;
 	}
-	
+
 	public Collection<RecordComment> findChilds(final int recordCommentFatherId) {
 		Collection<RecordComment> result;
 
@@ -121,6 +132,19 @@ public class RecordCommentService {
 
 	public void flush() {
 		this.recordCommentRepository.flush();
+	}
+
+	public boolean owner(RecordComment recordComment) {
+		boolean result = true;
+
+		UserAccount userAccountPrincipal = LoginService.getPrincipal();
+		User principal = this.userRepository
+				.findByUserAccountId(userAccountPrincipal.getId());
+
+		if (recordComment.getRecord().getCouple() != principal.getCouple()) {
+			result = false;
+		}
+		return result;
 	}
 
 }

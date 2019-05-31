@@ -11,8 +11,12 @@ import org.springframework.validation.Validator;
 
 import domain.Couple;
 import domain.Task;
+import domain.User;
 
 import repositories.TaskRepository;
+import repositories.UserRepository;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -21,6 +25,9 @@ public class TaskService {
 	// Managed repository -----------------------------------------------------
 	@Autowired
 	private TaskRepository taskRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	// Supporting services ----------------------------------------------------
 
@@ -45,14 +52,10 @@ public class TaskService {
 	}
 
 	public Task save(final Task task) {
-		Couple principal;
 		Task result;
 
-		principal = this.coupleService.findByUser();
-		Assert.notNull(principal);
-
 		Assert.notNull(task);
-		Assert.isTrue(task.getCouple() == principal);
+		Assert.isTrue(this.owner(task));
 
 		result = this.taskRepository.save(task);
 		Assert.notNull(result);
@@ -97,12 +100,9 @@ public class TaskService {
 			result.setCouple(this.coupleService.findByUser());
 		} else {
 			result = this.taskRepository.findOne(task.getId());
-
-			if (!task.getTitle().equals("")) {
-				result.setTitle(task.getTitle());
-			}
-			result.setIsCompleted(task.getIsCompleted());
 		}
+		result.setTitle(task.getTitle());
+		result.setIsCompleted(task.getIsCompleted());
 
 		this.validator.validate(result, binding);
 
@@ -110,11 +110,24 @@ public class TaskService {
 	}
 
 	public void changeStatus(Task task) {
-		if(task.getIsCompleted()){
+		if (task.getIsCompleted()) {
 			task.setIsCompleted(false);
-		}else{
+		} else {
 			task.setIsCompleted(true);
 		}
+	}
+
+	public boolean owner(Task task) {
+		boolean result = true;
+
+		UserAccount userAccountPrincipal = LoginService.getPrincipal();
+		User principal = this.userRepository
+				.findByUserAccountId(userAccountPrincipal.getId());
+
+		if (task.getCouple() != principal.getCouple()) {
+			result = false;
+		}
+		return result;
 	}
 
 }

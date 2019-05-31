@@ -20,6 +20,9 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <jstl:choose>
+	<jstl:when test="${not empty couple}">
+
+<jstl:choose>
 	<jstl:when test="${not empty recordComment.recordComment}">
 		<b><spring:message code="recordComment.reply" /></b>: <jstl:out value="${recordComment.recordComment.body}" />
 	</jstl:when>
@@ -37,3 +40,11 @@
 	<acme:cancel url="welcome/index.do" code="recordComment.cancel" />
 
 </form:form>
+
+</jstl:when>
+	<jstl:otherwise>
+		<spring:message code="couple.single" />
+		<a href="coupleRequest/user/list.do"><spring:message
+				code="couple.coupleRequest" /></a>
+	</jstl:otherwise>
+</jstl:choose>

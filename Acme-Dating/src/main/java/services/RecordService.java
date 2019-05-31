@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -15,10 +14,14 @@ import org.springframework.validation.Validator;
 
 import repositories.RecordCommentRepository;
 import repositories.RecordRepository;
+import repositories.UserRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Category;
 import domain.Couple;
 import domain.Record;
 import domain.RecordComment;
+import domain.User;
 
 @Service
 @Transactional
@@ -26,10 +29,13 @@ public class RecordService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private RecordRepository		recordRepository;
+	private RecordRepository recordRepository;
 
 	@Autowired
-	private RecordCommentRepository	recordCommentRepository;
+	private RecordCommentRepository recordCommentRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	// Supporting services ----------------------------------------------------
 
@@ -37,8 +43,7 @@ public class RecordService {
 	private CoupleService coupleService;
 
 	@Autowired
-	private Validator				validator;
-
+	private Validator validator;
 
 	// Simple CRUD Methods
 
@@ -57,14 +62,10 @@ public class RecordService {
 	}
 
 	public Record save(final Record record) {
-		Couple principal;
 		Record result;
 
-		principal = this.coupleService.findByUser();
-		Assert.notNull(principal);
-
 		Assert.notNull(record);
-		Assert.isTrue(record.getCouple() == principal);
+		Assert.isTrue(this.owner(record));
 
 		result = this.recordRepository.save(record);
 		Assert.notNull(result);
@@ -82,7 +83,8 @@ public class RecordService {
 
 	public void delete(final Record record) {
 		Couple principal;
-		final Collection<RecordComment> recordComments = this.recordCommentRepository.findByRecordId(record.getId());
+		final Collection<RecordComment> recordComments = this.recordCommentRepository
+				.findByRecordId(record.getId());
 
 		Assert.notNull(record);
 
@@ -90,9 +92,9 @@ public class RecordService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(record.getCouple().getId() == principal.getId());
-		
+
 		for (RecordComment rC : recordComments) {
-			if(rC.getRecord()!=null){
+			if (rC.getRecord() != null) {
 				Collection<RecordComment> childs = new ArrayList<RecordComment>();
 				childs = this.recordCommentRepository.findChilds(rC.getId());
 				for (RecordComment rCC : childs) {
@@ -127,20 +129,34 @@ public class RecordService {
 		}
 		result.setCouple(this.coupleService.findByUser());
 		result.setDay(record.getDay());
-		if(record.getTitle()!=null)
+		if (record.getTitle() != null)
 			result.setTitle(record.getTitle());
-		if(record.getBody()!= null)
+		if (record.getBody() != null)
 			result.setBody(record.getBody());
 		result.setPhoto(record.getPhoto());
 		result.setCategory(record.getCategory());
-		
-		if(record.getDay() != null){
+
+		if (record.getDay() != null) {
 			if (record.getDay().after(dt)) {
-				binding.rejectValue("day", "record.validation.day", "Date must be past");
+				binding.rejectValue("day", "record.validation.day",
+						"Date must be past");
 			}
 		}
 		this.validator.validate(result, binding);
 
+		return result;
+	}
+
+	public boolean owner(Record record) {
+		boolean result = true;
+
+		UserAccount userAccountPrincipal = LoginService.getPrincipal();
+		User principal = this.userRepository
+				.findByUserAccountId(userAccountPrincipal.getId());
+
+		if (record.getCouple() != principal.getCouple()) {
+			result = false;
+		}
 		return result;
 	}
 

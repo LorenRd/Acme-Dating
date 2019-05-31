@@ -64,7 +64,11 @@ public class FeatureCompanyController {
 		Customisation customisation;
 		Double vat;
 		customisation = this.customisationService.find();
-		vat = (customisation.getVatNumber()) / 100 + 1.0;
+		Double vatNumber = customisation.getVatNumber();
+		if (vatNumber == null) {
+			vatNumber = 0.0;
+		}
+		vat = (vatNumber) / 100 + 1.0;
 
 		// Busca en el repositorio
 		feature = this.featureService.findOne(featureId);

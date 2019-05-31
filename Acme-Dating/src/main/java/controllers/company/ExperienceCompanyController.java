@@ -47,7 +47,7 @@ public class ExperienceCompanyController extends AbstractController {
 
 	@Autowired
 	private CustomisationService customisationService;
-	
+
 	@Autowired
 	private ExperienceCommentService experienceCommentService;
 
@@ -89,17 +89,21 @@ public class ExperienceCompanyController extends AbstractController {
 		Collection<ExperienceComment> comments;
 		Collection<ExperienceComment> commentsChild = new ArrayList<ExperienceComment>();
 
-
 		customisation = this.customisationService.find();
-		vat = (customisation.getVatNumber()) / 100 + 1.0;
+		Double vatNumber = customisation.getVatNumber();
+		if (vatNumber == null) {
+			vatNumber = 0.0;
+		}
+		vat = (vatNumber) / 100 + 1.0;
 
 		comments = this.experienceCommentService
 				.findByExperienceId(experienceId);
-		
+
 		for (ExperienceComment eC : comments) {
-			commentsChild.addAll(this.experienceCommentService.findChilds(eC.getId()));
+			commentsChild.addAll(this.experienceCommentService.findChilds(eC
+					.getId()));
 		}
-		
+
 		// Busca en el repositorio
 		experience = this.experienceService.findOne(experienceId);
 		Assert.notNull(experience);

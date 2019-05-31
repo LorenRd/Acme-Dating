@@ -19,6 +19,9 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<jstl:choose>
+	<jstl:when test="${not empty couple}">
+
 <form:form action="recordComment/create.do?recordId=${param['recordId']}" modelAttribute="recordComment">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -31,3 +34,11 @@
 	<acme:cancel url="welcome/index.do" code="recordComment.cancel" />
 
 </form:form>
+
+</jstl:when>
+	<jstl:otherwise>
+		<spring:message code="couple.single" />
+		<a href="coupleRequest/user/list.do"><spring:message
+				code="couple.coupleRequest" /></a>
+	</jstl:otherwise>
+</jstl:choose>
