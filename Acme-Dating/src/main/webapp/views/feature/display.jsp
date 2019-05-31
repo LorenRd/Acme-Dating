@@ -31,9 +31,9 @@
 		
 <jstl:if test="${feature.company.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>
-	<a href="feature/company/edit.do?featureId=${feature.id}"><spring:message code="feature.edit"/></a><br/>
+	<a href="feature/company/edit.do?featureId=${feature.id}"><spring:message code="feature.delete"/></a><br/>
 <br/>
-	<a href="feature/company/delete.do?featureId=${feature.id}"><spring:message code="feature.delete"/></a><br/>
+	<a href="feature/company/delete.do?featureId=${feature.id}"><spring:message code="feature.edit"/></a><br/>
 </jstl:if>
 
 	

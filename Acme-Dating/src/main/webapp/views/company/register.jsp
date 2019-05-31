@@ -42,7 +42,7 @@
 		<acme:textbox code="creditCard.brandName" path="brandName" placeholder="Mastercard"/>
 		<acme:textbox code="creditCard.number" path="number"/>
 		<acme:textbox code="creditCard.expirationMonth" path="expirationMonth"/>
-		<acme:textbox code="creditCard.expirationYear" path="expirationYear"/>
+		<acme:textbox code="creditCard.expirationMonth" path="expirationYear"/>
 		<acme:textbox code="creditCard.CVV" path="CVV" placeholder="123"/>
 		
 		</fieldset>

@@ -56,7 +56,7 @@
 <h3><spring:message code="couple.options"/></h3>
 <div align="center">
 <table class="tab">
-<tr><td style="text-align:center; vertical-align: middle;"><a href="record/couple/list.do"><img src="images/icons/diary.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="task/couple/list.do"><img src="images/icons/to-do-list.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="challenge/user/list.do"><img src="images/icons/creativity.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="experience/list.do"><img src="images/icons/waterfall.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="book/couple/list.do"><img src="images/icons/luggage.png" /></a></td><td style="text-align:center; vertical-align: middle;"><img onclick="deleteCouple()" src="images/icons/broken-heart.png" /></td></tr>
+<tr><td style="text-align:center; vertical-align: middle;"><a href="record/couple/list.do"><img src="images/icons/diary.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="challenge/user/list.do"><img src="images/icons/to-do-list.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="task/couple/list.do"><img src="images/icons/creativity.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="experience/list.do"><img src="images/icons/waterfall.png" /></a></td><td style="text-align:center; vertical-align: middle;"><a href="book/couple/list.do"><img src="images/icons/luggage.png" /></a></td><td style="text-align:center; vertical-align: middle;"><img onclick="deleteCouple()" src="images/icons/broken-heart.png" /></td></tr>
 </table>
 </div>
 </jstl:when>

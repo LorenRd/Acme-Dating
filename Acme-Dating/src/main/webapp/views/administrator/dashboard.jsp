@@ -70,11 +70,6 @@
 	</table>
 
 	<h3>
-		<spring:message code="administrator.mostUsedCategory" />
-	</h3>
-	<jstl:out value="${mostUsedCategory.title}"></jstl:out>
-
-	<h3>
 		<spring:message code="administrator.leastUsedCategory" />
 	</h3>
 	<jstl:out value="${leastUsedCategory.title}"></jstl:out>

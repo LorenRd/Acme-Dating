@@ -26,7 +26,7 @@
 	<jstl:when test="${not empty couple}">
 	
 		<display:table name="records" id="row" requestURI="${requestURI}"
-			pagesize="5" class="displaytag" defaultsort="1">
+			pagesize="5" class="displaytag">
 
 			<!-- Attributes -->
 

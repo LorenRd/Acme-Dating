@@ -35,7 +35,7 @@
 	<display:column property="date" title="${dateTitle}"
 		sortable="true" />
 
-	<spring:message code="book.experience" var="experienceText" />
+	<spring:message code="book.date" var="experienceText" />
 	<display:column property="experience.title" title="${experienceText}"
 		sortable="true" />
 

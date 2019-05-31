@@ -70,5 +70,4 @@
 		<input type="submit" name="register" id="register"
 		value="<spring:message code="user.save" />" >&nbsp; 
 		
-		<acme:cancel url="welcome/index.do" code="user.cancel"/>
 	</form:form>

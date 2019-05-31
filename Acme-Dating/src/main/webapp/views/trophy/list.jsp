@@ -27,14 +27,14 @@
 
 	<!-- Attributes -->
 
-	<spring:message code="trophy.title" var="titleHeader" />
+	<spring:message code="trophy.scoreToReach" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" sortable="true" />
 
 	<spring:message code="trophy.picture" var="pictureHeader" />
 	<display:column property="picture" title="${pictureHeader}"
 		sortable="true" />
 
-	<spring:message code="trophy.scoreToReach" var="scoreToReachHeader" />
+	<spring:message code="trophy.title" var="scoreToReachHeader" />
 	<display:column property="scoreToReach" title="${scoreToReachHeader}"
 		sortable="true" />
 		

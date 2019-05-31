@@ -37,6 +37,12 @@
 	<display:column property="score" title="${scoreHeader}"
 		sortable="true" />
 		
+	<security:authorize access="hasRole('COMPANY')">
+	<spring:message code="experience.score" var="scoreHeader" />
+	<display:column property="score" title="${scoreHeader}"
+		sortable="true" />
+	</security:authorize> 
+		
 	<spring:message code="experience.price.list" var="priceHeader" />
 	<display:column property="price" title="${priceHeader}"
 		sortable="true" />
@@ -44,7 +50,7 @@
 	<!-- Company -->
 	<spring:message code="experience.company" var="companyHeader"/>
 	<display:column title="${companyHeader}">
-			<a href="company/display.do?companyId=${row.company.id}">
+			<a href="welcome/index.do">
 				<jstl:out value="${row.company.commercialName}"/>
 			</a>
 	</display:column>
