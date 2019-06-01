@@ -141,10 +141,18 @@ public class RecordCommentService {
 		User principal = this.userRepository
 				.findByUserAccountId(userAccountPrincipal.getId());
 
-		if (recordComment.getRecord().getCouple() != principal.getCouple()) {
-			result = false;
+		if(recordComment.getRecord()!=null){
+			if (recordComment.getRecord().getCouple() != principal.getCouple()) {
+				result = false;
+			}
+		}else{
+			if (recordComment.getRecordComment().getRecord().getCouple() != principal.getCouple()) {
+				result = false;
+			}	
 		}
 		return result;
+
 	}
+	
 
 }
