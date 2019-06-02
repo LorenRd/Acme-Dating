@@ -18,7 +18,7 @@ public class TrophyServiceTest extends AbstractTest {
 	@Autowired
 	private TrophyService trophyService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 14,1%
 	 * 
 	 */
 	// --------------------------------------------------

@@ -18,7 +18,7 @@ public class TaskServiceTest extends AbstractTest {
 	@Autowired
 	private TaskService taskService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 15,4%
 	 * 
 	 */
 	// --------------------------------------------------
@@ -37,15 +37,17 @@ public class TaskServiceTest extends AbstractTest {
 	@Test
 	public void createTestFail() {
 		final Object createTest[][] = { {
-			/*
-			 * Test negativo: User sin pareja
-			 */
-			"user3", IllegalArgumentException.class,
 			
 			/*
 			 * Test positivo: user con pareja
 			 */
 			"user1", null,
+
+			/*
+			 * Test negativo: User sin pareja
+			 */
+			"user3", IllegalArgumentException.class,
+			
 
 			/*
 			 * Test negativo: Company

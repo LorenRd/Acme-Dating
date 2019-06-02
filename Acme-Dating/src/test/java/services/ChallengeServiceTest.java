@@ -18,7 +18,7 @@ public class ChallengeServiceTest extends AbstractTest {
 	@Autowired
 	private ChallengeService challengeService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 15,9%
 	 * 
 	 */
 	// --------------------------------------------------
@@ -37,15 +37,17 @@ public class ChallengeServiceTest extends AbstractTest {
 	@Test
 	public void createTestFail() {
 		final Object createTest[][] = { {
-			/*
-			 * Test negativo: User sin pareja
-			 */
-			"user3", IllegalArgumentException.class,
 			
 			/*
 			 * Test positivo: user con pareja
 			 */
 			"user1", null,
+			
+			/*
+			 * Test negativo: User sin pareja
+			 */
+			"user3", IllegalArgumentException.class,
+		
 
 			/*
 			 * Test negativo: Company
@@ -67,7 +69,7 @@ public class ChallengeServiceTest extends AbstractTest {
 	
 	// Ancillary methods ------------------------------------------------------
 
-	private void CreateTemplate(final String actor, final Class<?> class1) {
+	private void CreateTemplate(String actor, Class<?> class1) {
 		Class<?> caught;
 		caught = null;
 		try {
@@ -75,7 +77,7 @@ public class ChallengeServiceTest extends AbstractTest {
 			this.challengeService.create();
 			this.unauthenticate();
 			this.challengeService.flush();
-		} catch (final Throwable oops) {
+		} catch (Throwable oops) {
 			caught = oops.getClass();
 		}
 

@@ -26,7 +26,7 @@ public class DashboardServiceTest extends AbstractTest {
 
 
 	/*
-	 * Percentage of service tested: 
+	 * Percentage of service tested: 22,7%
 	 */
 
 	// --------------------------------------------------

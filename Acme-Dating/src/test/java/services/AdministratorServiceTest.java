@@ -23,7 +23,7 @@ public class AdministratorServiceTest extends AbstractTest {
 	private AdministratorService administratorService;
 
 	/*
-	 * Percentage of service tested: AdministratorService 
+	 * Percentage of service tested: AdministratorService 26%
 	 */
 
 	// --------------------------------------------------

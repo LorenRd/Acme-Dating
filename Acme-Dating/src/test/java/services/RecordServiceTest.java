@@ -18,7 +18,7 @@ public class RecordServiceTest extends AbstractTest {
 	@Autowired
 	private RecordService recordService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 9,1%
 	 * 
 	 */
 	// --------------------------------------------------
@@ -37,16 +37,17 @@ public class RecordServiceTest extends AbstractTest {
 	@Test
 	public void createTestFail() {
 		final Object createTest[][] = { {
-			/*
-			 * Test negativo: User sin pareja
-			 */
-			"user3", IllegalArgumentException.class,
 			
 			/*
 			 * Test positivo: user con pareja
 			 */
 			"user1", null,
 
+			/*
+			 * Test negativo: User sin pareja
+			 */
+			"user3", IllegalArgumentException.class,
+			
 			/*
 			 * Test negativo: Company
 			 */

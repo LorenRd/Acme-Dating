@@ -18,7 +18,7 @@ public class BookServiceTest extends AbstractTest {
 	@Autowired
 	private BookService bookService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 12%
 	 * 
 	 */
 	// --------------------------------------------------

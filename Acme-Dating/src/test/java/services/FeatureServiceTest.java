@@ -18,7 +18,7 @@ public class FeatureServiceTest extends AbstractTest {
 	@Autowired
 	private FeatureService featureService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 11,4%
 	 * 
 	 */
 	// --------------------------------------------------
@@ -38,6 +38,11 @@ public class FeatureServiceTest extends AbstractTest {
 	public void createTestFail() {
 		final Object createTest[][] = { {
 			/*
+			 * Test positivo: Company
+			 */
+			"company1", null,
+
+			/*
 			 * Test negativo: User
 			 */
 			"user1", IllegalArgumentException.class,
@@ -47,10 +52,6 @@ public class FeatureServiceTest extends AbstractTest {
 			 */
 			"admin", IllegalArgumentException.class,
 
-			/*
-			 * Test negativo: Company
-			 */
-			"company1", null,
 
 		
 			} 

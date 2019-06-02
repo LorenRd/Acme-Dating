@@ -25,7 +25,7 @@ public class ExperienceServiceTest extends AbstractTest {
 
 
 	/*
-	 * Percentage of service tested: 
+	 * Percentage of service tested: 37,3%
 	 */
 	// --------------------------------------------------
 
@@ -46,15 +46,17 @@ public class ExperienceServiceTest extends AbstractTest {
 	public void createTest() {
 		final Object createTest[][] = {
 			{
-				/*
-				 * Test negativo: Autenticado como user
-				 */
-				"user1", IllegalArgumentException.class,
 				
 				/*
 				 * Test positivo: Autenticado como company
 				 */
 				"company1", null,
+
+				/*
+				 * Test negativo: Autenticado como user
+				 */
+				"user1", IllegalArgumentException.class,
+				
 
 				/*
 				 * Test negativo: Autenticado como administrator
@@ -84,6 +86,12 @@ public class ExperienceServiceTest extends AbstractTest {
 	public void deleteTest() {
 		final Object deleteTest[][] = {
 			{
+				
+				/*
+				 * Test positivo: Autenticado como company y dueña de la experience
+				 */
+				"company2","experience2", null,
+
 				/*
 				 * Test negativo: Autenticado como user
 				 */
@@ -104,11 +112,6 @@ public class ExperienceServiceTest extends AbstractTest {
 				 */
 				null,"experience2", IllegalArgumentException.class,
 				
-				/*
-				 * Test positivo: Autenticado como company y dueña de la experience
-				 */
-				"company2","experience2", null,
-
 			}
 		};
 		for (int i = 0; i < deleteTest.length; i++)
@@ -126,6 +129,11 @@ public class ExperienceServiceTest extends AbstractTest {
 	public void updateTest() {
 		final Object updateTest[][] = {
 			{
+				/*
+				 * Test positivo: Autenticado como company y dueña de la experience
+				 */
+				"company2","experience2","other description", null,
+
 				/*
 				 * Test negativo: Autenticado como user
 				 */
@@ -151,11 +159,6 @@ public class ExperienceServiceTest extends AbstractTest {
 				 * Deja la descripción vacía.
 				 */
 				"company2","experience2","", IllegalArgumentException.class,
-
-				/*
-				 * Test positivo: Autenticado como company y dueña de la experience
-				 */
-				"company2","experience2","other description", null,
 
 			}
 		};

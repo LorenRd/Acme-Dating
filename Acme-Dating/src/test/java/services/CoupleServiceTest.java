@@ -20,7 +20,7 @@ public class CoupleServiceTest extends AbstractTest {
 	@Autowired
 	private CoupleService coupleService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 65,7%
 	 * 
 	 */
 	// --------------------------------------------------
@@ -39,15 +39,17 @@ public class CoupleServiceTest extends AbstractTest {
 	@Test
 	public void deleteTest() {
 		final Object deleteTest[][] = { {
-			/*
-			 * Test negativo: User sin pareja
-			 */
-			"user3", IllegalArgumentException.class,
 			
 			/*
 			 * Test positivo: user con pareja
 			 */
 			"user1", null,
+
+			/*
+			 * Test negativo: User sin pareja
+			 */
+			"user3", IllegalArgumentException.class,
+			
 
 			/*
 			 * Test negativo: Company

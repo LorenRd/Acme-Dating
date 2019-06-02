@@ -20,7 +20,7 @@ public class CustomisationServiceTest extends AbstractTest {
 	@Autowired
 	private CustomisationService customisationService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 100%
 	 * 
 	 */
 	// --------------------------------------------------

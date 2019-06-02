@@ -24,7 +24,7 @@ public class UserServiceTest extends AbstractTest {
 	@Autowired
 	private UserService userService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 19,8%
 	 * 
 	 */
 	// --------------------------------------------------

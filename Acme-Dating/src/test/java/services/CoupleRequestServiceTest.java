@@ -18,7 +18,7 @@ public class CoupleRequestServiceTest extends AbstractTest {
 	@Autowired
 	private CoupleRequestService coupleRequestService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 14,2%
 	 * 
 	 */
 	// --------------------------------------------------

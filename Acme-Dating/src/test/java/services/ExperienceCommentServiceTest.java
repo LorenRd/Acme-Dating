@@ -18,7 +18,7 @@ public class ExperienceCommentServiceTest extends AbstractTest {
 	@Autowired
 	private ExperienceCommentService experienceCommentService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 20,9%
 	 * 
 	 */
 	// --------------------------------------------------
@@ -38,14 +38,15 @@ public class ExperienceCommentServiceTest extends AbstractTest {
 	public void createTestFail() {
 		final Object createTest[][] = { {
 			/*
+			 * Test positivo: Siendo company
+			 */
+			"company1","experience1", null,
+
+			/*
 			 * Test negativo: Sin estar autenticado
 			 */
 			null,"experience1", IllegalArgumentException.class,
 			
-			/*
-			 * Test positivo: Siendo company
-			 */
-			"company1","experience1", null,
 
 			/*
 			 * Test negativo: Experience inexistente

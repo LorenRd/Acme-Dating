@@ -18,7 +18,7 @@ public class CategoryServiceTest extends AbstractTest {
 	@Autowired
 	private CategoryService categoryService;
 	/*
-	 *  Percentage of service tested:
+	 *  Percentage of service tested: 11,1%
 	 * 
 	 */
 	// --------------------------------------------------
