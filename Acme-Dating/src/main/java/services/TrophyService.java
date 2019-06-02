@@ -11,6 +11,7 @@ import org.springframework.validation.Validator;
 
 import repositories.TrophyRepository;
 
+import domain.Administrator;
 import domain.Couple;
 import domain.Trophy;
 
@@ -31,12 +32,20 @@ public class TrophyService {
 	private CoupleService coupleService;
 
 	@Autowired
+	private AdministratorService administratorService;
+	
+	@Autowired
 	private Validator validator;
 
 	// Simple CRUD Methods
 
 	public Trophy create() {
 		Trophy result;
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		
 		new Trophy();
 
 		result = new Trophy();
@@ -111,6 +120,10 @@ public class TrophyService {
 		this.validator.validate(result, binding);
 
 		return result;
+	}
+
+	public void flush() {
+		this.trophyRepository.flush();
 	}
 
 }

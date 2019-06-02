@@ -12,8 +12,8 @@ import repositories.CategoryRepository;
 import repositories.ExperienceRepository;
 import repositories.RecordRepository;
 import security.Authority;
-
 import domain.Actor;
+import domain.Administrator;
 import domain.Category;
 import domain.Experience;
 import domain.Record;
@@ -37,12 +37,20 @@ public class CategoryService {
 	private ActorService actorService;
 
 	@Autowired
+	private AdministratorService administratorService;
+	
+	@Autowired
 	private Validator validator;
 
 	// Simple CRUD Methods
 
 	public Category create() {
 		Category result;
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		
 		new Category();
 
 		result = new Category();
@@ -146,6 +154,11 @@ public class CategoryService {
 			result = false;
 		}
 		return result;
+	}
+
+	public void flush() {
+		this.categoryRepository.flush();
+		
 	}
 
 }

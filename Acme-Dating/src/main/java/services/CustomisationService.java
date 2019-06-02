@@ -45,4 +45,8 @@ public class CustomisationService {
 		return result;
 
 	}
+
+	public void flush() {
+		this.customisationRepository.flush();		
+	}
 }
