@@ -130,4 +130,8 @@ public class TaskService {
 		return result;
 	}
 
+	public void flush() {
+		this.taskRepository.flush();
+	}
+
 }

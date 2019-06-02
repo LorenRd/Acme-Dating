@@ -300,4 +300,8 @@ public class ChallengeService {
 	public void deleteInBach(final Collection<Challenge> challenges) {
 		this.challengeRepository.deleteInBatch(challenges);
 	}
+
+	public void flush() {
+		this.challengeRepository.flush();
+	}
 }

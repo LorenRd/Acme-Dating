@@ -54,7 +54,7 @@ public class RecordService {
 
 		principal = this.coupleService.findByUser();
 		Assert.notNull(principal);
-
+		
 		result = new Record();
 		result.setCouple(principal);
 		result.setCategory(category);
@@ -158,6 +158,10 @@ public class RecordService {
 			result = false;
 		}
 		return result;
+	}
+
+	public void flush() {
+		this.recordRepository.flush();
 	}
 
 }

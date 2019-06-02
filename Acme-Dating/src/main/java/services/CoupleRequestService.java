@@ -46,6 +46,8 @@ public class CoupleRequestService {
 
 		sender = this.userService.findByPrincipal();
 		Assert.notNull(sender);
+		
+		Assert.isTrue(sender.getCouple() == null);
 
 		result = new CoupleRequest();
 		Assert.notNull(result);
@@ -201,5 +203,9 @@ public class CoupleRequestService {
 
 	public void deleteInBach(final Collection<CoupleRequest> coupleRequests) {
 		this.coupleRequestRepository.deleteInBatch(coupleRequests);
+	}
+
+	public void flush() {
+		this.coupleRequestRepository.flush();
 	}
 }

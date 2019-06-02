@@ -213,4 +213,8 @@ public class BookService {
 		return books;
 	}
 
+	public void flush() {
+		this.bookRepository.flush();
+	}
+
 }
