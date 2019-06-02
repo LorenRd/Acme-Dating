@@ -92,7 +92,8 @@ public class CategoryAdministratorController extends AbstractController {
 			}
 
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(category, "category.commit.error");
+			result = this.createEditModelAndView(category,
+					"category.commit.error");
 		}
 		return result;
 	}
@@ -194,6 +195,7 @@ public class CategoryAdministratorController extends AbstractController {
 
 		result.addObject("categories", categories);
 		result.addObject("category", category);
+		result.addObject("requestURI", "category/administrator/list.do");
 		result.addObject("message", messageCode);
 		return result;
 	}

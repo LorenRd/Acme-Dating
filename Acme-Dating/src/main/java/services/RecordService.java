@@ -1,9 +1,10 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,14 +50,9 @@ public class RecordService {
 
 	public Record create() {
 		Record result;
-		final Couple principal;
 		final Category category = new Category();
 
-		principal = this.coupleService.findByUser();
-		Assert.notNull(principal);
-		
 		result = new Record();
-		result.setCouple(principal);
 		result.setCategory(category);
 		return result;
 	}
@@ -117,32 +113,31 @@ public class RecordService {
 
 	public Record reconstruct(final Record record, final BindingResult binding) {
 		Record result;
-		Date dt = new Date();
-		Calendar c = Calendar.getInstance();
-		c.setTime(dt);
-		c.add(Calendar.DATE, 1);
 
 		if (record.getId() == 0) {
+			final Couple principal = this.coupleService.findByUser();
+			Assert.notNull(principal);
+			record.setCouple(principal);
 			result = record;
 		} else {
 			result = this.recordRepository.findOne(record.getId());
-		}
-		result.setCouple(this.coupleService.findByUser());
-		result.setDay(record.getDay());
-		if (record.getTitle() != null)
+			result.setCouple(this.coupleService.findByUser());
+			result.setDay(record.getDay());
 			result.setTitle(record.getTitle());
-		if (record.getBody() != null)
 			result.setBody(record.getBody());
-		result.setPhoto(record.getPhoto());
-		result.setCategory(record.getCategory());
-
-		if (record.getDay() != null) {
-			if (record.getDay().after(dt)) {
-				binding.rejectValue("day", "record.validation.day",
-						"Date must be past");
-			}
+			result.setPhoto(record.getPhoto());
+			result.setCategory(record.getCategory());
 		}
+
 		this.validator.validate(result, binding);
+
+		if (record.getDay().after(new Date())) {
+			binding.rejectValue("day", "record.validation.day",
+					"Date must be past");
+		}
+
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		return result;
 	}
