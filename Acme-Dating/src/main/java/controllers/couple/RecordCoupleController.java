@@ -1,14 +1,14 @@
 package controllers.couple;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -164,23 +164,19 @@ public class RecordCoupleController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("record") Record record,
 			final BindingResult binding) {
+
 		ModelAndView result;
 
 		try {
 			record = this.recordService.reconstruct(record, binding);
-			if (binding.hasErrors()) {
-				result = this.editModelAndView(record);
-				for (final ObjectError e : binding.getAllErrors())
-					System.out.println(e.getObjectName() + " error ["
-							+ e.getDefaultMessage() + "] "
-							+ Arrays.toString(e.getCodes()));
-			} else {
-				record = this.recordService.save(record);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			}
-
+			this.recordService.save(record);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (ValidationException oops) {
+			result = this.editModelAndView(record);
+			oops.printStackTrace();
 		} catch (final Throwable oops) {
 			result = this.editModelAndView(record, "record.commit.error");
+			oops.printStackTrace();
 		}
 		return result;
 	}
@@ -192,19 +188,14 @@ public class RecordCoupleController extends AbstractController {
 
 		try {
 			record = this.recordService.reconstruct(record, binding);
-			if (binding.hasErrors()) {
-				result = this.createModelAndView(record);
-				for (final ObjectError e : binding.getAllErrors())
-					System.out.println(e.getObjectName() + " error ["
-							+ e.getDefaultMessage() + "] "
-							+ Arrays.toString(e.getCodes()));
-			} else {
-				record = this.recordService.save(record);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			}
-
+			this.recordService.save(record);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (ValidationException oops) {
+			result = this.createModelAndView(record);
+			oops.printStackTrace();
 		} catch (final Throwable oops) {
 			result = this.createModelAndView(record, "record.commit.error");
+			oops.printStackTrace();
 		}
 		return result;
 	}
