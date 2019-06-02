@@ -137,4 +137,8 @@ public class FeatureService {
 		return result;
 	}
 
+	public void flush() {
+		this.featureRepository.flush();
+	}
+
 }
