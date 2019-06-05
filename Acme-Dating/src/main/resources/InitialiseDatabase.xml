@@ -64,6 +64,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox2">
 		<property name="name" value="out box" />
@@ -71,6 +72,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox3">
 		<property name="name" value="notification box" />
@@ -78,6 +80,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 
 	<!-- Categories -->
