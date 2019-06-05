@@ -30,7 +30,7 @@
 		<acme:textbox code="user.name" path="name" placeholder="Homer"/>
 		<acme:textbox code="user.surname" path="surname" placeholder="Simpson"/>
 		<acme:textbox code="user.photo" path="photo" placeholder="https://www.jazzguitar.be/images/bio/homer-simpson.jpg"/>
-		<acme:textbox code="user.phone" path="phone" placeholder="+34 600 1234"/>
+		<acme:textbox code="user.phone" path="phone" placeholder="+34 600364231"/>
 		<acme:textbox code="user.email" path="email" placeholder="homerjsimpson@email.com"/>
 		
 		</fieldset>

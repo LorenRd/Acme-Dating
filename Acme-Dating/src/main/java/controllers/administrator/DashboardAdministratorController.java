@@ -1,5 +1,7 @@
 package controllers.administrator;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,8 +45,8 @@ public class DashboardAdministratorController {
 		final Double avgExperiencesPerCouple, minExperiencesPerCouple, maxExperiencesPerCouple, stddevExperiencesPerCouple;
 		final Double avgExperiencesPerCompany, minExperiencesPerCompany, maxExperiencesPerCompany, stddevExperiencesPerCompany, avgPriceOfExperiencesPerCompany;
 
-		final Category mostUsedCategory;
-		final Category leastUsedCategory;
+		final Collection<Category> mostUsedCategory;
+		final Collection<Category> leastUsedCategory;
 
 		final Double avgCompletedChallengesPerSender, minCompletedChallengesPerSender, maxCompletedChallengesPerSender, stddevCompletedChallengesPerSender;
 

@@ -72,12 +72,19 @@
 	<h3>
 		<spring:message code="administrator.mostUsedCategory" />
 	</h3>
+	<jstl:forEach items="${mostUsedCategory}" var="mostUsedCategory" >
+	
 	<jstl:out value="${mostUsedCategory.title}"></jstl:out>
-
+	
+	</jstl:forEach>
 	<h3>
 		<spring:message code="administrator.leastUsedCategory" />
 	</h3>
+	<jstl:forEach items="${leastUsedCategory}" var="leastUsedCategory" >
+	
 	<jstl:out value="${leastUsedCategory.title}"></jstl:out>
+	
+	</jstl:forEach>
 
 	<!-- Compute -->
 	<h3>

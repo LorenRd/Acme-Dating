@@ -91,34 +91,26 @@ public class CategoryService {
 		
 	}
 
-	public Category mostUsedCategory() {
+	public Collection<Category> mostUsedCategory() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getUserAccount().getAuthorities()
 				.contains(authority));
-		Category result = null;
-
-		if (this.categoryRepository.mostUsedCategory().size() > 0)
-			result = this.categoryRepository.mostUsedCategory().iterator()
-					.next();
+		Collection<Category> result = this.categoryRepository.mostUsedCategory();
 
 		return result;
 	}
 
-	public Category leastUsedCategory() {
+	public Collection<Category> leastUsedCategory() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getUserAccount().getAuthorities()
 				.contains(authority));
-		Category result = null;
-
-		if (this.categoryRepository.leastUsedCategory().size() > 0)
-			result = this.categoryRepository.leastUsedCategory().iterator()
-					.next();
+		Collection<Category> result = this.categoryRepository.leastUsedCategory();
 
 		return result;
 	}
