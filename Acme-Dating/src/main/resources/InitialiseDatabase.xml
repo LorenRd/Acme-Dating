@@ -31,7 +31,7 @@
 	<bean class="domain.Administrator" id="administrator1">
 		<property name="name" value="Lorenzo" />
 		<property name="surname" value="Rondán Domínguez" />
-		<property name="photo" value="http://mifoto.com" />
+		<property name="photo" value="https://i.imgur.com/eUfNHTc.png" />
 		<property name="phone" value="+34912123123" />
 		<property name="email" value="loren@" />
 		<property name="userAccount" ref="userAccount1" />
@@ -64,6 +64,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox2">
 		<property name="name" value="out box" />
@@ -71,6 +72,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 	<bean class="domain.MessageBox" id="messageBox3">
 		<property name="name" value="notification box" />
@@ -78,6 +80,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="actor" ref="administrator1" />
 	</bean>
 
 	<!-- Categories -->
@@ -140,7 +143,7 @@
 
 	<bean class="domain.Trophy" id="trophy1">
 		<property name="title" value="100 points" />
-		<property name="picture" value="http://linktrophy1.com" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
 		<property name="scoreToReach" value="100" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
@@ -148,7 +151,7 @@
 
 	<bean class="domain.Trophy" id="trophy2">
 		<property name="title" value="500 points" />
-		<property name="picture" value="http://linktrophy2.com" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.png" />
 		<property name="scoreToReach" value="500" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
@@ -156,7 +159,7 @@
 
 	<bean class="domain.Trophy" id="trophy3">
 		<property name="title" value="1000 points" />
-		<property name="picture" value="http://linktrophy3.com" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
 		<property name="scoreToReach" value="1000" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="0" />
@@ -164,7 +167,7 @@
 
 	<bean class="domain.Trophy" id="trophy4">
 		<property name="title" value="5 challenges" />
-		<property name="picture" value="http://linktrophy4.com" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="5" />
 		<property name="experiencesToShare" value="0" />
@@ -172,7 +175,7 @@
 
 	<bean class="domain.Trophy" id="trophy5">
 		<property name="title" value="10 challenges" />
-		<property name="picture" value="http://linktrophy5.com" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="10" />
 		<property name="experiencesToShare" value="0" />
@@ -180,7 +183,7 @@
 
 	<bean class="domain.Trophy" id="trophy6">
 		<property name="title" value="100 challenges" />
-		<property name="picture" value="http://linktrophy6.com" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="100" />
 		<property name="experiencesToShare" value="0" />
@@ -188,7 +191,7 @@
 
 	<bean class="domain.Trophy" id="trophy7">
 		<property name="title" value="1 experience" />
-		<property name="picture" value="http://linktrophy7.com" />
+		<property name="picture" value="https://i.imgur.com/AqeveEU.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="1" />
@@ -196,7 +199,7 @@
 
 	<bean class="domain.Trophy" id="trophy8">
 		<property name="title" value="5 experiences" />
-		<property name="picture" value="http://linktrophy8.com" />
+		<property name="picture" value="https://i.imgur.com/FMwj61L.pngm" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="5" />
@@ -204,7 +207,7 @@
 
 	<bean class="domain.Trophy" id="trophy9">
 		<property name="title" value="10 experiences" />
-		<property name="picture" value="http://linktrophy9.com" />
+		<property name="picture" value="https://i.imgur.com/aP0P0qt.png" />
 		<property name="scoreToReach" value="0" />
 		<property name="challengesToComplete" value="0" />
 		<property name="experiencesToShare" value="10" />
