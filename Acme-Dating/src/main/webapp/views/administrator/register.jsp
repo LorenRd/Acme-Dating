@@ -21,7 +21,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="administrator/register.do" modelAttribute="administratorForm" onsubmit="return validatePhone()">
+<form:form action="administrator/register.do" modelAttribute="administratorForm" onsubmit="return validatePhone('Phone does not match the pattern', ${countryCode})">
 		
 		<form:hidden path="id" />
 		
