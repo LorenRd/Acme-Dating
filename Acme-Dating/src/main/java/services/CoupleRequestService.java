@@ -46,7 +46,7 @@ public class CoupleRequestService {
 
 		sender = this.userService.findByPrincipal();
 		Assert.notNull(sender);
-		
+
 		Assert.isTrue(sender.getCouple() == null);
 
 		result = new CoupleRequest();
@@ -192,11 +192,12 @@ public class CoupleRequestService {
 			result = this.coupleRequestRepository.findOne(cR.getId());
 
 		result.setSender(this.userService.findByPrincipal());
-		result.setMoment(cR.getMoment());
-		result.setStatus(cR.getStatus());
+		result.setMoment(new Date(System.currentTimeMillis() - 1));
+		result.setStatus("PENDING");
 		result.setRecipient(cR.getRecipient());
 
 		this.validator.validate(result, binding);
+		this.coupleRequestRepository.flush();
 
 		return result;
 	}

@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -35,7 +36,7 @@ public class ChallengeService {
 	private CoupleService			coupleService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
 	@Autowired
 	private CustomisationService	customisationService;
 
@@ -214,27 +215,38 @@ public class ChallengeService {
 
 	public Challenge reconstruct(final Challenge c, final BindingResult binding) {
 		Challenge result;
-		Date dt = new Date();
-		
+		final Date dt = new Date();
+		Couple couple;
+		Collection<User> users;
+		User recipient = null;
+
 		if (c.getId() == 0)
 			result = c;
 		else
 			result = this.challengeRepository.findOne(c.getId());
 
 		result.setSender(this.userService.findByPrincipal());
-		result.setMoment(c.getMoment());
-		result.setStatus(c.getStatus());
-		result.setRecipient(c.getRecipient());
+
+		couple = result.getSender().getCouple();
+		users = this.userService.findByCoupleId(couple.getId());
+		for (final User u : users)
+			if (u.getId() != result.getSender().getId()) {
+				recipient = u;
+				break;
+			}
+		Assert.notNull(recipient);
+
+		result.setMoment(new Date(System.currentTimeMillis() - 1));
+		result.setStatus("PENDING");
+		result.setRecipient(recipient);
 		result.setDescription(c.getDescription());
 		result.setEndDate(c.getEndDate());
 		result.setScore(c.getScore());
 		result.setTitle(c.getTitle());
-		
-		if(c.getEndDate()!=null){
-			if (c.getEndDate().before(dt)) {
+
+		if (c.getEndDate() != null)
+			if (c.getEndDate().before(dt))
 				binding.rejectValue("endDate", "challenge.validation.endDate", "End date must be future");
-			}
-		}
 		this.validator.validate(result, binding);
 
 		return result;
@@ -245,8 +257,7 @@ public class ChallengeService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.challengeRepository.avgCompletedChallengesPerSender();
@@ -259,8 +270,7 @@ public class ChallengeService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.challengeRepository.minCompletedChallengesPerSender();
@@ -273,8 +283,7 @@ public class ChallengeService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.challengeRepository.maxCompletedChallengesPerSender();
@@ -287,15 +296,13 @@ public class ChallengeService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.challengeRepository.stddevCompletedChallengesPerSender();
 
 		return result;
 	}
-
 
 	public void deleteInBach(final Collection<Challenge> challenges) {
 		this.challengeRepository.deleteInBatch(challenges);
